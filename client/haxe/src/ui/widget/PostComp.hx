@@ -116,6 +116,7 @@ extern class PostComp extends JQ {
                                                 urlComp.hide();
                                                 imageInput.hide();
                                                 audioInput.hide();
+                                                labelInput.hide();
                                             });
 
                     var urlTab: JQ = new JQ("<span class='ui-icon ui-icon-link ui-corner-left'></span>")
@@ -127,6 +128,7 @@ extern class PostComp extends JQ {
                                                 urlComp.show();
                                                 imageInput.hide();
                                                 audioInput.hide();
+                                                labelInput.hide();
                                             });
 
                     var imgTab: JQ = new JQ("<span class='ui-icon ui-icon-image ui-corner-left'></span>")
@@ -138,6 +140,7 @@ extern class PostComp extends JQ {
                                                 urlComp.hide();
                                                 imageInput.show();
                                                 audioInput.hide();
+                                                labelInput.hide();
                                             });
 
                     var audioTab: JQ = new JQ("<span class='ui-icon ui-icon-volume-on ui-corner-left'></span>")
@@ -149,6 +152,7 @@ extern class PostComp extends JQ {
                                                 urlComp.hide();
                                                 imageInput.hide();
                                                 audioInput.show();
+                                                labelInput.hide();
                                             });
 
                     var labelTab: JQ = new JQ("<span class='ui-icon ui-icon-battery-3 ui-corner-left'></span>")
@@ -159,7 +163,8 @@ extern class PostComp extends JQ {
                                                 textInput.hide();
                                                 urlComp.hide();
                                                 imageInput.hide();
-                                                audioInput.show();
+                                                audioInput.hide();
+                                                labelInput.show();
                                             });
                     urlComp.hide();
                     imageInput.hide();

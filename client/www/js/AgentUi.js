@@ -9606,6 +9606,7 @@ var defineWidget = function() {
 			urlComp.hide();
 			imageInput.hide();
 			audioInput.hide();
+			labelInput.hide();
 		});
 		var urlTab = new $("<span class='ui-icon ui-icon-link ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
@@ -9614,6 +9615,7 @@ var defineWidget = function() {
 			urlComp.show();
 			imageInput.hide();
 			audioInput.hide();
+			labelInput.hide();
 		});
 		var imgTab = new $("<span class='ui-icon ui-icon-image ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
@@ -9622,6 +9624,7 @@ var defineWidget = function() {
 			urlComp.hide();
 			imageInput.show();
 			audioInput.hide();
+			labelInput.hide();
 		});
 		var audioTab = new $("<span class='ui-icon ui-icon-volume-on ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
@@ -9630,6 +9633,7 @@ var defineWidget = function() {
 			urlComp.hide();
 			imageInput.hide();
 			audioInput.show();
+			labelInput.hide();
 		});
 		var labelTab = new $("<span class='ui-icon ui-icon-battery-3 ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
@@ -9637,7 +9641,8 @@ var defineWidget = function() {
 			textInput.hide();
 			urlComp.hide();
 			imageInput.hide();
-			audioInput.show();
+			audioInput.hide();
+			labelInput.show();
 		});
 		urlComp.hide();
 		imageInput.hide();
