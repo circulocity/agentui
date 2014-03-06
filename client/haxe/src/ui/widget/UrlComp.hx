@@ -13,65 +13,65 @@ typedef UrlCompOptions = {
 }
 
 typedef UrlCompWidgetDef = {
-	@:optional var options: UrlCompOptions;
-	var _create: Void->Void;
-	var destroy: Void->Void;
-	var valEle: Void->JQ;
+    @:optional var options: UrlCompOptions;
+    var _create: Void->Void;
+    var destroy: Void->Void;
+    var valEle: Void->JQ;
 
-	@:optional var urlInput: JQ;
-	var _post: Void->Void;
+    @:optional var urlInput: JQ;
+    var _post: Void->Void;
 }
 
 class UrlCompHelper {
-	public static function urlInput(m:UrlComp):JQ {
-		return cast m.urlComp("valEle");
-	}
+    public static function urlInput(m:UrlComp):JQ {
+        return cast m.urlComp("valEle");
+    }
 }
 
 @:native("$")
 extern class UrlComp extends JQ {
 
-	private static var API_KEY: String;
+    private static var API_KEY: String;
 
 
-	@:overload(function(cmd : String):Bool{})
-	@:overload(function(cmd:String, opt:String, newVal:Dynamic):JQ{})
-	function urlComp(?opts: UrlCompOptions): UrlComp;
+    @:overload(function(cmd : String):Bool{})
+    @:overload(function(cmd:String, opt:String, newVal:Dynamic):JQ{})
+    function urlComp(?opts: UrlCompOptions): UrlComp;
 
-	private static function __init__(): Void {
-		var defineWidget: Void->UrlCompWidgetDef = function(): UrlCompWidgetDef {
-			return {
-		        _create: function(): Void {
-		        	UrlComp.API_KEY = "2e63db21c89b06a54fd2eac5fd96e488";
-		        	var self: UrlCompWidgetDef = Widgets.getSelf();
-					var selfElement: UrlComp = Widgets.getSelfElement();
-		        	if(!selfElement.is("div")) {
-		        		throw new Exception("Root of UrlComp must be a div element");
-		        	}
+    private static function __init__(): Void {
+        var defineWidget: Void->UrlCompWidgetDef = function(): UrlCompWidgetDef {
+            return {
+                _create: function(): Void {
+                    UrlComp.API_KEY = "2e63db21c89b06a54fd2eac5fd96e488";
+                    var self: UrlCompWidgetDef = Widgets.getSelf();
+                    var selfElement: UrlComp = Widgets.getSelfElement();
+                    if(!selfElement.is("div")) {
+                        throw new Exception("Root of UrlComp must be a div element");
+                    }
 
-		        	selfElement.addClass("urlComp container " + Widgets.getWidgetClasses());
-		        	new JQ("<label class='fleft ui-helper-clearfix' style='margin-left: 5px;'>Enter URL</label>").appendTo(selfElement);
-		        	self.urlInput = new JQ("<input id='' class='clear textInput boxsizingBorder' style='float: left;margin-top: 5px;'/>")
-		        		.appendTo(selfElement);
-		        },
+                    selfElement.addClass("urlComp container " + Widgets.getWidgetClasses());
+                    new JQ("<label class='fleft ui-helper-clearfix' style='margin-left: 5px;'>Enter URL</label>").appendTo(selfElement);
+                    self.urlInput = new JQ("<input id='' class='clear textInput boxsizingBorder' style='float: left;margin-top: 5px;'/>")
+                        .appendTo(selfElement);
+                },
 
-		        _post: function() {
-		        	var self: UrlCompWidgetDef = Widgets.getSelf();
-					var selfElement: JQ = Widgets.getSelfElement();
+                _post: function() {
+                    var self: UrlCompWidgetDef = Widgets.getSelf();
+                    var selfElement: JQ = Widgets.getSelfElement();
 
-					AppContext.LOGGER.debug("post " + self.urlInput.val());
-				},
+                    AppContext.LOGGER.debug("post " + self.urlInput.val());
+                },
 
-		        destroy: function() {
-		            untyped JQ.Widget.prototype.destroy.call( JQ.curNoWrap );
-		        },
+                destroy: function() {
+                    untyped JQ.Widget.prototype.destroy.call( JQ.curNoWrap );
+                },
 
-		        valEle: function(): JQ {
-		        	var self: UrlCompWidgetDef = Widgets.getSelf();
-		        	return self.urlInput;
-		        }
-		    };
-		}
-		JQ.widget( "ui.urlComp", defineWidget());
-	}
+                valEle: function(): JQ {
+                    var self: UrlCompWidgetDef = Widgets.getSelf();
+                    return self.urlInput;
+                }
+            };
+        }
+        JQ.widget( "ui.urlComp", defineWidget());
+    }
 }
