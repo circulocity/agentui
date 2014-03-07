@@ -100,7 +100,7 @@ extern class PostComp extends JQ {
                     var audioInput: UploadComp = new UploadComp("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
                     audioInput.appendTo(section);
 
-                    var labelInput: JQ = new JQ("<div class='postContainer'></div>").appendTo(section);
+                    var labelInput: JQ = new JQ("<div class='postContainer boxsizingBorder'></div>").appendTo(section);
                     var labelTA: JQ = new JQ("<textarea class='boxsizingBorder container' style='resize: none;'></textarea>")
                         .appendTo(textInput)
                         .attr("id", "labelInput_ta")
