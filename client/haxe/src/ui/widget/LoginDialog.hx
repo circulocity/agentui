@@ -57,12 +57,10 @@ extern class LoginDialog extends JQ {
 
 		        	selfElement.addClass("loginDialog").hide();
 
-                                var spliciousLogo : JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);
+                                new JQ("<img src='media/s-blue3.png' height=60 align='middle' style='position: relative; left: -60px'/>").appendTo(selfElement);
                                 new JQ("<br/>").appendTo(selfElement);
 		        	var labels: JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);
-		        	var inputs: JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);                            
-                                
-                                spliciousLogo.append("<img src='media/s-blue3.png' height=60 align='middle' style='position: relative; left: -60px'/>");
+		        	var inputs: JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);                                                              
                                 
 		        	if(ui.AgentUi.agentURI.isBlank()) {
 		        		labels.append("<div class='labelDiv'><label id='un_label' for='login_un'>Email</label></div>");
