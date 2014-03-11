@@ -9248,7 +9248,7 @@ var defineWidget = function() {
 		selfElement.addClass("loginDialog").hide();
 		var labels = new $("<div class='fleft'></div>").appendTo(selfElement);
 		var inputs = new $("<div class='fleft'></div>").appendTo(selfElement);
-		new $("<img src='media/s-blue3.png' height=40 align='middle'/>").appendTo(selfElement);
+		new $("<img src='media/s-blue3.png' height=60 align='middle' style='position: relative; left: -60px'/>").appendTo(selfElement);
 		if(m3.helper.StringHelper.isBlank(ui.AgentUi.agentURI)) labels.append("<div class='labelDiv'><label id='un_label' for='login_un'>Email</label></div>");
 		labels.append("<div class='labelDiv'><label for='login_pw'>Password</label></div>");
 		if(m3.helper.StringHelper.isBlank(ui.AgentUi.agentURI)) {
