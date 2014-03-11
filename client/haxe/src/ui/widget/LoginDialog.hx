@@ -64,7 +64,7 @@ extern class LoginDialog extends JQ {
 		        		labels.append("<div class='labelDiv'><label id='un_label' for='login_un'>Email</label></div>");
 		        	}
 		        	labels.append("<div class='labelDiv'><label for='login_pw'>Password</label></div>");
-                                labels.append("<img src='media/s-blue2.png'/>");
+                                labels.append("<img src='media/s-blue3.png'/>");
 		        	// labels.append("<div class='labelDiv'><label for='login_ag'>Agency</label></div>");
 
 		        	if(ui.AgentUi.agentURI.isBlank()) {

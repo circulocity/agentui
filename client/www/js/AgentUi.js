@@ -9250,7 +9250,7 @@ var defineWidget = function() {
 		var inputs = new $("<div class='fleft'></div>").appendTo(selfElement);
 		if(m3.helper.StringHelper.isBlank(ui.AgentUi.agentURI)) labels.append("<div class='labelDiv'><label id='un_label' for='login_un'>Email</label></div>");
 		labels.append("<div class='labelDiv'><label for='login_pw'>Password</label></div>");
-		labels.append("<img src='media/s-blue2.png'/>");
+		labels.append("<img src='media/s-blue3.png'/>");
 		if(m3.helper.StringHelper.isBlank(ui.AgentUi.agentURI)) {
 			self.input_un = new $("<input id='login_un' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'>").appendTo(inputs);
 			self.placeholder_un = new $("<input id='login_un_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Email'>").appendTo(inputs);
