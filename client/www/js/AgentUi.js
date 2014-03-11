@@ -9246,9 +9246,11 @@ var defineWidget = function() {
 		if(!selfElement["is"]("div")) throw new m3.exception.Exception("Root of LoginDialog must be a div element");
 		self._newUser = false;
 		selfElement.addClass("loginDialog").hide();
-		new $("<img src='media/s-blue3.png' height=60 align='middle' style='position: relative; left: -60px'/>").appendTo(selfElement);
+		var spliciousLogo = new $("<div class='fleft'></div>").appendTo(selfElement);
+		new $("<br/>").appendTo(selfElement);
 		var labels = new $("<div class='fleft'></div>").appendTo(selfElement);
 		var inputs = new $("<div class='fleft'></div>").appendTo(selfElement);
+		spliciousLogo.append("<img src='media/s-blue3.png' height=60 align='middle' style='position: relative; left: -60px'/>");
 		if(m3.helper.StringHelper.isBlank(ui.AgentUi.agentURI)) labels.append("<div class='labelDiv'><label id='un_label' for='login_un'>Email</label></div>");
 		labels.append("<div class='labelDiv'><label for='login_pw'>Password</label></div>");
 		if(m3.helper.StringHelper.isBlank(ui.AgentUi.agentURI)) {
