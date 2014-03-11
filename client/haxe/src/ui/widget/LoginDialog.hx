@@ -57,13 +57,15 @@ extern class LoginDialog extends JQ {
 
 		        	selfElement.addClass("loginDialog").hide();
 
+                                new JQ("<img src='media/s-blue3.png' height=60 align='middle'/>").appendTo(selfElement);
+                                new JQ("<br/>").appendTo(selfElement);
 		        	var labels: JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);
-		        	var inputs: JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);
-
+		        	var inputs: JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);                                                              
+                                
 		        	if(ui.AgentUi.agentURI.isBlank()) {
 		        		labels.append("<div class='labelDiv'><label id='un_label' for='login_un'>Email</label></div>");
 		        	}
-		        	labels.append("<div class='labelDiv'><label for='login_pw'>Password</label></div>");
+		        	labels.append("<div class='labelDiv'><label for='login_pw'>Password</label></div>");                            
 		        	// labels.append("<div class='labelDiv'><label for='login_ag'>Agency</label></div>");
 
 		        	if(ui.AgentUi.agentURI.isBlank()) {
