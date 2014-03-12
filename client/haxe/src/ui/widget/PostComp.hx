@@ -101,7 +101,7 @@ extern class PostComp extends JQ {
                     audioInput.appendTo(section);
 
                     var labelInput: JQ = new JQ("<div class='postContainer'></div>").appendTo(section);
-                    var labelTA: JQ = new JQ("<textarea class='boxsizingBorder container' style='resize: none;'></textarea>")
+                    var labelTA: JQ = new JQDroppable("<textarea class='boxsizingBorder container' style='resize: none;'></textarea>")
                         .appendTo(labelInput)
                         .attr("id", "labelInput_ta")
                         .attr("disabled", "disabled")
