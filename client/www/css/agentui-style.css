@@ -244,6 +244,12 @@ body {
 			padding-top: 9px;
 		}
 
+        .ui-button .ui-icon.postlabel {
+            background-image: url(media/postlabel-icon.png);
+            width: 12;
+            height: 8; 
+        }
+
 		.file_about_to_be_uploaded {
 			max-height: 90px;
 			max-width: 160px;
