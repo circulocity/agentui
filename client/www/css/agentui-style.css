@@ -77,12 +77,6 @@ body {
 /* Middle
 -----------------------------------------------------------------------------*/
 
-.ui-icon-postlabel {
-    background-image: url(../media/postlabel-icon.png);
-    width: 12;
-    height: 8; 
-}
-
 #middleSection {
 	margin-left: 250px;
 	margin-right: 250px;
