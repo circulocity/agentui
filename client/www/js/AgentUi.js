@@ -9637,7 +9637,7 @@ var defineWidget = function() {
 			audioInput.show();
 			labelInput.hide();
 		});
-		var labelTab = new $("<span class='ui-icon ui-icon-battery-3 ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
+		var labelTab = new $("<span class='ui-icon .ui-icon.postlabel ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
 			$(this).addClass("active");
 			textInput.hide();
