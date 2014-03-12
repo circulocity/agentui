@@ -155,7 +155,7 @@ extern class PostComp extends JQ {
                                                 labelInput.hide();
                                             });
 
-                    var labelTab: JQ = new JQ("<span class='ui-icon ui-icon-blank ui-corner-left'><img src='media/postlabel-icon.png'></span>")
+                    var labelTab: JQ = new JQ("<span class='ui-icon ui-icon-blank ui-corner-left'><img src='media/postlabel-icon.png' style='position:relative;left:-2px;top:-5px;'></span>")
                                         .appendTo(tabs)
                                         .click(function(evt: JQEvent): Void {
                                                 tabs.children(".active").removeClass("active");
