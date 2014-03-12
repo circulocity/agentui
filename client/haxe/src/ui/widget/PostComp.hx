@@ -100,12 +100,19 @@ extern class PostComp extends JQ {
                     var audioInput: UploadComp = new UploadComp("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
                     audioInput.appendTo(section);
 
-                    var labelInput: JQ = new JQ("<div class='postContainer'></div>").appendTo(section);
-                    var labelTA: JQ = new JQDroppable("<textarea class='tags container boxsizingBorder' style='resize: none;'></textarea>")
-                        .appendTo(labelInput)
-                        .attr("id", "labelInput_ta")
-                        .attr("disabled", "disabled")
+                    var labelInput: JQDroppable = new JQDroppable("<aside class='tags container boxsizingBorder' style='resize: none;'></aside>");
+                    labelInput
+                        .appendTo(section)
+                        .attr("id", "labelArea")
                         .attr("title", "Drop a label here to share it and its children.");
+
+                    labelInput.droppable({
+                        accept: function(d) {
+                            return d.is(".filterable");
+                        },
+                        activeClass: "ui-state-hover",
+                        hoverClass: "ui-state-active"
+                    });
 
                     var tabs: JQ = new JQ("<aside class='tabs'></aside>").appendTo(section);
                     var textTab: JQ = new JQ("<span class='ui-icon ui-icon-document active ui-corner-left'></span>")

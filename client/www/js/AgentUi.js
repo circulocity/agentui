@@ -9598,8 +9598,11 @@ var defineWidget = function() {
 		options.contentType = ui.model.ContentType.AUDIO;
 		var audioInput = new $("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
 		audioInput.appendTo(section);
-		var labelInput = new $("<div class='postContainer'></div>").appendTo(section);
-		var labelTA = new $("<textarea class='tags container boxsizingBorder' style='resize: none;'></textarea>").appendTo(labelInput).attr("id","labelInput_ta").attr("disabled","disabled").attr("title","Drop a label here to share it and its children.");
+		var labelInput = new $("<aside class='tags container boxsizingBorder' style='resize: none;'></aside>");
+		labelInput.appendTo(section).attr("id","labelArea").attr("title","Drop a label here to share it and its children.");
+		labelInput.droppable({ accept : function(d) {
+			return d["is"](".filterable");
+		}, activeClass : "ui-state-hover", hoverClass : "ui-state-active"});
 		var tabs = new $("<aside class='tabs'></aside>").appendTo(section);
 		var textTab = new $("<span class='ui-icon ui-icon-document active ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
