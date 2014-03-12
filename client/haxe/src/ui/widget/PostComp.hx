@@ -104,7 +104,8 @@ extern class PostComp extends JQ {
                     var labelTA: JQ = new JQ("<textarea class='boxsizingBorder container' style='resize: none;'></textarea>")
                         .appendTo(labelInput)
                         .attr("id", "labelInput_ta")
-                        .attr("disabled", "disabled");
+                        .attr("disabled", "disabled")
+                        .attr("title", "Drop a label here to share it and its children.");
 
                     var tabs: JQ = new JQ("<aside class='tabs'></aside>").appendTo(section);
                     var textTab: JQ = new JQ("<span class='ui-icon ui-icon-document active ui-corner-left'></span>")
