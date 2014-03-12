@@ -76,6 +76,13 @@ body {
 
 /* Middle
 -----------------------------------------------------------------------------*/
+
+.ui-icon-postlabel {
+    background-image: url(../media/postlabel-icon.png);
+    width: 12;
+    height: 8; 
+}
+
 #middleSection {
 	margin-left: 250px;
 	margin-right: 250px;
@@ -243,12 +250,6 @@ body {
 		.uploadComp {
 			padding-top: 9px;
 		}
-
-        .ui-button .ui-icon.postlabel {
-            background-image: url(media/postlabel-icon.png);
-            width: 12;
-            height: 8; 
-        }
 
 		.file_about_to_be_uploaded {
 			max-height: 90px;
