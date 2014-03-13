@@ -100,19 +100,48 @@ extern class PostComp extends JQ {
                     var audioInput: UploadComp = new UploadComp("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
                     audioInput.appendTo(section);
 
-                    var labelInput: JQDroppable = new JQDroppable("<aside class='tags container boxsizingBorder' style='resize: none;'></aside>");
+                    var labelInput: JQDroppable = new JQDroppable("<aside id='post_comps_tags' class='tags container boxsizingBorder'></aside>");
+                    labelInput.appendTo(section);
+                    labelInput.droppable({
+                            accept: function(d) {
+                                return d.is(".filterable");
+                            },
+                            activeClass: "ui-state-hover",
+                            hoverClass: "ui-state-active",
+                            drop: function( event: JQEvent, _ui: UIDroppable ) {
+                                var dragstop = function(dragstopEvt: JQEvent, dragstopUi: UIDraggable): Void {
+                                    if(!labelInput.intersects(dragstopUi.helper)) {
+                                        dragstopUi.helper.remove();
+                                        JqueryUtil.deleteEffects(dragstopEvt);
+                                    }
+                                };
+
+                                var clone: JQDraggable = _ui.draggable.data("clone")(_ui.draggable, false, false, dragstop);
+                                clone.addClass("small");
+                                var cloneOffset: {top: Int, left: Int} = clone.offset();
+                                
+                                JQ.cur.append(clone);
+                                clone.css({
+                                    "position": "absolute"
+                                });
+
+                                if (cloneOffset.top != 0) {
+                                    clone.offset(cloneOffset);
+                                } else {
+                                    clone.position({
+                                        my: "left top",
+                                        at: "left top",
+                                        of: _ui.helper, //event, // _ui.helper can be smoother, but since we don't always use a helper, sometimes we're trying to position of ourselves
+                                        collision: "flipfit",
+                                        within: ".tags"
+                                    });
+                                }
+                            }
+                        });
+
                     labelInput
-                        .appendTo(section)
                         .attr("id", "labelArea")
                         .attr("title", "Drop a label here to share it and its children.");
-
-                    labelInput.droppable({
-                        accept: function(d) {
-                            return d.is(".filterable");
-                        },
-                        activeClass: "ui-state-hover",
-                        hoverClass: "ui-state-active"
-                    });
 
                     var tabs: JQ = new JQ("<aside class='tabs'></aside>").appendTo(section);
                     var textTab: JQ = new JQ("<span class='ui-icon ui-icon-document active ui-corner-left'></span>")

@@ -9598,11 +9598,25 @@ var defineWidget = function() {
 		options.contentType = ui.model.ContentType.AUDIO;
 		var audioInput = new $("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
 		audioInput.appendTo(section);
-		var labelInput = new $("<aside class='tags container boxsizingBorder' style='resize: none;'></aside>");
-		labelInput.appendTo(section).attr("id","labelArea").attr("title","Drop a label here to share it and its children.");
+		var labelInput = new $("<aside id='post_comps_tags' class='tags container boxsizingBorder'></aside>");
+		labelInput.appendTo(section);
 		labelInput.droppable({ accept : function(d) {
 			return d["is"](".filterable");
-		}, activeClass : "ui-state-hover", hoverClass : "ui-state-active"});
+		}, activeClass : "ui-state-hover", hoverClass : "ui-state-active", drop : function(event,_ui) {
+			var dragstop = function(dragstopEvt,dragstopUi) {
+				if(!labelInput.intersects(dragstopUi.helper)) {
+					dragstopUi.helper.remove();
+					m3.util.JqueryUtil.deleteEffects(dragstopEvt);
+				}
+			};
+			var clone = (_ui.draggable.data("clone"))(_ui.draggable,false,false,dragstop);
+			clone.addClass("small");
+			var cloneOffset = clone.offset();
+			$(this).append(clone);
+			clone.css({ position : "absolute"});
+			if(cloneOffset.top != 0) clone.offset(cloneOffset); else clone.position({ my : "left top", at : "left top", of : _ui.helper, collision : "flipfit", within : ".tags"});
+		}});
+		labelInput.attr("id","labelArea").attr("title","Drop a label here to share it and its children.");
 		var tabs = new $("<aside class='tabs'></aside>").appendTo(section);
 		var textTab = new $("<span class='ui-icon ui-icon-document active ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
