@@ -9599,7 +9599,7 @@ var defineWidget = function() {
 		var audioInput = new $("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
 		audioInput.appendTo(section);
 		var labelInput = new $("<div class='postContainer boxsizingBorder'></div>").appendTo(section);
-		var labelArea = new $("<div class='tags container'></div>");
+		var labelArea = new $("<div class='tags container' style='height:98px;'></div>");
 		labelArea.appendTo(labelInput);
 		labelArea.droppable({ accept : function(d) {
 			return d["is"](".filterable");
