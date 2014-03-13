@@ -100,9 +100,10 @@ extern class PostComp extends JQ {
                     var audioInput: UploadComp = new UploadComp("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
                     audioInput.appendTo(section);
 
-                    var labelInput: JQDroppable = new JQDroppable("<aside id='post_comps_tags' class='tags container boxsizingBorder'></aside>");
-                    labelInput.appendTo(section);
-                    labelInput.droppable({
+                    var labelInput: JQ = new JQ("<div class='postContainer'></div>").appendTo(section);
+                    var labelArea: JQDroppable = new JQDroppable("<div id='post_comps_tags' class='tags container boxsizingBorder'></div>");
+                    labelArea.appendTo(section);
+                    labelArea.droppable({
                             accept: function(d) {
                                 return d.is(".filterable");
                             },
@@ -110,7 +111,7 @@ extern class PostComp extends JQ {
                             hoverClass: "ui-state-active",
                             drop: function( event: JQEvent, _ui: UIDroppable ) {
                                 var dragstop = function(dragstopEvt: JQEvent, dragstopUi: UIDraggable): Void {
-                                    if(!labelInput.intersects(dragstopUi.helper)) {
+                                    if(!labelArea.intersects(dragstopUi.helper)) {
                                         dragstopUi.helper.remove();
                                         JqueryUtil.deleteEffects(dragstopEvt);
                                     }
