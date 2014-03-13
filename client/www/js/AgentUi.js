@@ -9598,9 +9598,9 @@ var defineWidget = function() {
 		options.contentType = ui.model.ContentType.AUDIO;
 		var audioInput = new $("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
 		audioInput.appendTo(section);
-		var labelInput = new $("<div class='postContainer'></div>").appendTo(section);
-		var labelArea = new $("<div id='post_comps_tags' class='tags container boxsizingBorder'></div>");
-		labelArea.appendTo(section);
+		var labelInput = new $("<div class='postContainer boxsizingBorder'></div>").appendTo(section);
+		var labelArea = new $("<div class='tags container'></div>");
+		labelArea.appendTo(labelInput);
 		labelArea.droppable({ accept : function(d) {
 			return d["is"](".filterable");
 		}, activeClass : "ui-state-hover", hoverClass : "ui-state-active", drop : function(event,_ui) {

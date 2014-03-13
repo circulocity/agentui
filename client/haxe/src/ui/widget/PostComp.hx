@@ -100,9 +100,9 @@ extern class PostComp extends JQ {
                     var audioInput: UploadComp = new UploadComp("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
                     audioInput.appendTo(section);
 
-                    var labelInput: JQ = new JQ("<div class='postContainer'></div>").appendTo(section);
-                    var labelArea: JQDroppable = new JQDroppable("<div id='post_comps_tags' class='tags container boxsizingBorder'></div>");
-                    labelArea.appendTo(section);
+                    var labelInput: JQ = new JQ("<div class='postContainer boxsizingBorder'></div>").appendTo(section);
+                    var labelArea: JQDroppable = new JQDroppable("<div class='tags container'></div>");
+                    labelArea.appendTo(labelInput);
                     labelArea.droppable({
                             accept: function(d) {
                                 return d.is(".filterable");
