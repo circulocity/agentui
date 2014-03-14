@@ -55,7 +55,7 @@ extern class PostComp extends JQ {
 
                     var addConnectionsAndLabels: Content->Void = null;
 
-                    var doTextPost: JQEvent->ContentType->String->Void = function(evt: JQEvent, contentType: ContentType, value:String): Void {
+                    var doPost: JQEvent->ContentType->String->Void = function(evt: JQEvent, contentType: ContentType, value:String): Void {
                         AppContext.LOGGER.debug("Post new text content");
                         evt.preventDefault();
                         
@@ -67,8 +67,8 @@ extern class PostComp extends JQ {
                         EM.change(EMEvent.NewContentCreated, msg);
                     };
 
-                    var doTextPostForElement: JQEvent->ContentType->JQ->Void = function(evt: JQEvent, contentType: ContentType, ele:JQ): Void {
-                        doTextPost(evt, contentType, ele.val());
+                    var doPostForElement: JQEvent->ContentType->JQ->Void = function(evt: JQEvent, contentType: ContentType, ele:JQ): Void {
+                        doPost(evt, contentType, ele.val());
                         ele.val("");
                     };
 
@@ -78,7 +78,7 @@ extern class PostComp extends JQ {
                             .attr("id", "textInput_ta")
                             .keypress(function(evt: JQEvent): Void {
                                     if( !(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13 ) {
-                                        doTextPostForElement(evt, ContentType.TEXT, new JQ(evt.target));
+                                        doPostForElement(evt, ContentType.TEXT, new JQ(evt.target));
                                     }
                                 })
                             ;
@@ -88,7 +88,7 @@ extern class PostComp extends JQ {
                         .appendTo(section)
                         .keypress(function(evt: JQEvent): Void {
                             if( !(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13 ) {
-                                doTextPostForElement(evt, ContentType.URL, new JQ(evt.target));
+                                doPostForElement(evt, ContentType.URL, new JQ(evt.target));
                             }
                         });
 
@@ -288,14 +288,14 @@ extern class PostComp extends JQ {
                                             .click(function(evt: JQEvent): Void {
                                                 if (textInput.isVisible()) {
                                                     var ta = new JQ("#textInput_ta");
-                                                    doTextPostForElement(evt, ContentType.TEXT, ta);
+                                                    doPostForElement(evt, ContentType.TEXT, ta);
                                                 } else if (urlComp.isVisible()) {
-                                                    doTextPostForElement(evt, ContentType.URL, urlComp.urlInput());
+                                                    doPostForElement(evt, ContentType.URL, urlComp.urlInput());
                                                 } else if (imageInput.isVisible()){
-                                                    doTextPost(evt, ContentType.IMAGE, imageInput.value());
+                                                    doPost(evt, ContentType.IMAGE, imageInput.value());
                                                     imageInput.clear();
                                                 } else if (audioInput.isVisible()){
-                                                    doTextPost(evt, ContentType.AUDIO, audioInput.value());
+                                                    doPost(evt, ContentType.AUDIO, audioInput.value());
                                                     audioInput.clear();
                                                 } else if (labelInput.isVisible()) {
                                                     untyped __js__("alert('foo')");

@@ -9571,7 +9571,7 @@ var defineWidget = function() {
 		selfElement.addClass("postComp container shadow " + m3.widget.Widgets.getWidgetClasses());
 		var section = new $("<section id='postSection'></section>").appendTo(selfElement);
 		var addConnectionsAndLabels = null;
-		var doTextPost = function(evt,contentType,value) {
+		var doPost = function(evt,contentType,value) {
 			ui.AppContext.LOGGER.debug("Post new text content");
 			evt.preventDefault();
 			var msg = new ui.model.MessageContent();
@@ -9580,17 +9580,17 @@ var defineWidget = function() {
 			addConnectionsAndLabels(msg);
 			ui.model.EM.change(ui.model.EMEvent.NewContentCreated,msg);
 		};
-		var doTextPostForElement = function(evt,contentType,ele) {
-			doTextPost(evt,contentType,ele.val());
+		var doPostForElement = function(evt,contentType,ele) {
+			doPost(evt,contentType,ele.val());
 			ele.val("");
 		};
 		var textInput = new $("<div class='postContainer'></div>").appendTo(section);
 		var ta = new $("<textarea class='boxsizingBorder container' style='resize: none;'></textarea>").appendTo(textInput).attr("id","textInput_ta").keypress(function(evt) {
-			if(!(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13) doTextPostForElement(evt,ui.model.ContentType.TEXT,new $(evt.target));
+			if(!(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13) doPostForElement(evt,ui.model.ContentType.TEXT,new $(evt.target));
 		});
 		var urlComp = new $("<div class='postContainer boxsizingBorder'></div>").urlComp();
 		urlComp.appendTo(section).keypress(function(evt) {
-			if(!(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13) doTextPostForElement(evt,ui.model.ContentType.URL,new $(evt.target));
+			if(!(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13) doPostForElement(evt,ui.model.ContentType.URL,new $(evt.target));
 		});
 		var options = { contentType : ui.model.ContentType.IMAGE};
 		var imageInput = new $("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
@@ -9718,12 +9718,12 @@ var defineWidget = function() {
 		var postButton = new $("<button>Post</button>").appendTo(selfElement).button().click(function(evt) {
 			if(textInput.isVisible()) {
 				var ta1 = new $("#textInput_ta");
-				doTextPostForElement(evt,ui.model.ContentType.TEXT,ta1);
-			} else if(urlComp.isVisible()) doTextPostForElement(evt,ui.model.ContentType.URL,ui.widget.UrlCompHelper.urlInput(urlComp)); else if(imageInput.isVisible()) {
-				doTextPost(evt,ui.model.ContentType.IMAGE,ui.widget.UploadCompHelper.value(imageInput));
+				doPostForElement(evt,ui.model.ContentType.TEXT,ta1);
+			} else if(urlComp.isVisible()) doPostForElement(evt,ui.model.ContentType.URL,ui.widget.UrlCompHelper.urlInput(urlComp)); else if(imageInput.isVisible()) {
+				doPost(evt,ui.model.ContentType.IMAGE,ui.widget.UploadCompHelper.value(imageInput));
 				ui.widget.UploadCompHelper.clear(imageInput);
 			} else if(audioInput.isVisible()) {
-				doTextPost(evt,ui.model.ContentType.AUDIO,ui.widget.UploadCompHelper.value(audioInput));
+				doPost(evt,ui.model.ContentType.AUDIO,ui.widget.UploadCompHelper.value(audioInput));
 				ui.widget.UploadCompHelper.clear(audioInput);
 			} else if(labelInput.isVisible()) {
 				alert('foo');
