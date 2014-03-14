@@ -9599,7 +9599,7 @@ var defineWidget = function() {
 		var audioInput = new $("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
 		audioInput.appendTo(section);
 		var labelInput = new $("<div class='postContainer boxsizingBorder'></div>").appendTo(section);
-		var labelArea = new $("<div class='tags container' style='height:98px;'></div>");
+		var labelArea = new $("<div class='sharetags container' style='height:98px;'></div>");
 		labelArea.appendTo(labelInput);
 		labelArea.droppable({ accept : function(d) {
 			return d["is"](".filterable");
@@ -9615,7 +9615,7 @@ var defineWidget = function() {
 			var cloneOffset = clone.offset();
 			$(this).append(clone);
 			clone.css({ position : "absolute"});
-			if(cloneOffset.top != 0) clone.offset(cloneOffset); else clone.position({ my : "left top", at : "left top", of : _ui.helper, collision : "flipfit", within : ".tags"});
+			if(cloneOffset.top != 0) clone.offset(cloneOffset); else clone.position({ my : "left top", at : "left top", of : _ui.helper, collision : "flipfit", within : ".sharetags"});
 		}});
 		labelInput.attr("id","labelArea").attr("title","Drop a label here to share it and its children.");
 		var tabs = new $("<aside class='tabs'></aside>").appendTo(section);

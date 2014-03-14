@@ -101,7 +101,7 @@ extern class PostComp extends JQ {
                     audioInput.appendTo(section);
 
                     var labelInput: JQ = new JQ("<div class='postContainer boxsizingBorder'></div>").appendTo(section);
-                    var labelArea: JQDroppable = new JQDroppable("<div class='tags container' style='height:98px;'></div>");
+                    var labelArea: JQDroppable = new JQDroppable("<div class='sharetags container' style='height:98px;'></div>");
                     labelArea.appendTo(labelInput);
                     labelArea.droppable({
                             accept: function(d) {
@@ -134,7 +134,7 @@ extern class PostComp extends JQ {
                                         at: "left top",
                                         of: _ui.helper, //event, // _ui.helper can be smoother, but since we don't always use a helper, sometimes we're trying to position of ourselves
                                         collision: "flipfit",
-                                        within: ".tags"
+                                        within: ".sharetags"
                                     });
                                 }
                             }
