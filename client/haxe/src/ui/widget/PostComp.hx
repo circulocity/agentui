@@ -116,7 +116,6 @@ extern class PostComp extends JQ {
                                         JqueryUtil.deleteEffects(dragstopEvt);
                                     }
                                 };
-
                                 var clone: JQDraggable = _ui.draggable.data("clone")(_ui.draggable, false, false, dragstop);
                                 clone.addClass("small");
                                 var cloneOffset: {top: Int, left: Int} = clone.offset();
@@ -275,22 +274,6 @@ extern class PostComp extends JQ {
                     addConnectionsAndLabels = function(content: Content): Void {
                         tags.children(".label").each(function(i: Int, dom: Element): Void {
                                 var labelComp: LabelComp = new LabelComp(dom);
-                                // // Given label.getLabel().uid, iterate through
-                                // // ui.AgentUi.USER.get_currentAlias().labelSet.asArray()
-                                // // to find the tag.   Since label trees are at most two
-                                // // levels deep and can only have one child at the second
-                                // // level, we know how to construct the label tree.
-                                // var uid = label.getLabel().uid;
-                                // var labelArray = ui.AgentUi.USER.currentAlias.labelSet.asArray();
-                                // var labelMap = new Map();
-                                // var i: Int;
-                                // for (i in 0...labelArray.length) {
-                                //  labelMap[labelArray[i].uid] = labelArray[i];
-                                // }
-                                // var labelTree: String = "l" + labelMap[uid].text + "(_)";
-                                // if (untyped __js__("!!labelMap.get(uid).parentUid")) {
-                                //  labelTree = "n" + labelMap[labelMap[uid].parentUid].text + "(" + labelTree + ")";
-                                // }
                                 content.labelSet.add(labelComp.getLabel());
                             });
                         tags.children(".connectionAvatar").each(function(i: Int, dom: Element): Void {
@@ -298,32 +281,6 @@ extern class PostComp extends JQ {
                                 content.connectionSet.add( conn.getConnection() );
                             });
                     }
-//                  addConnectionsAndLabels = function(content: Content): Void {
-//                      tags.children(".label").each(function(i: Int, dom: Element): Void {
-//                              var label: LabelComp = new LabelComp(dom);
-//                              // Given label.getLabel().uid, iterate through
-//                              // ui.AgentUi.USER.get_currentAlias().labelSet.asArray()
-//                              // to find the tag.  Since label trees are at most two
-//                              // levels deep and can only have one child at the second
-//                              // level, we know how to construct the label tree.
-//                              var uid = label.getLabel().uid;
-//                              var labelArray = ui.AgentUi.USER.get_currentAlias().labelSet.asArray();
-//                              var labelMap = {};
-//                              var i: Int;
-//                              for (i in 0...labelArray.length) {
-//                                  labelMap[labelArray[i].uid] = labelArray[i];
-//                              }
-//                              var labelTree: String = "l" + labelMap[uid].text + "(_)";
-//                              if (labelMap[uid].parentUid) {
-//                                  labelTree = "n" + labelMap[labelMap[uid].parentUid].text + "(" + labelTree + ")";
-//                              }
-//                              content.labelSet.add(labelTree);
-//                          });
-//                      tags.children(".connectionAvatar").each(function(i: Int, dom: Element): Void {
-//                              var conn: ConnectionAvatar = new ConnectionAvatar(dom);
-//                              content.connectionSet.add( conn.getConnection().uid );
-//                          });
-//                  }
 
                     var postButton: JQ = new JQ("<button>Post</button>")
                                             .appendTo(selfElement)
@@ -334,6 +291,8 @@ extern class PostComp extends JQ {
                                                     doTextPostForElement(evt, ContentType.TEXT, ta);
                                                 } else if (urlComp.isVisible()) {
                                                     doTextPostForElement(evt, ContentType.URL, urlComp.urlInput());
+                                                } else if (labelInput.isVisible()) {
+                                                    untyped __js__("alert('foo')");
                                                 } else {
                                                     doTextPost(evt, ContentType.IMAGE, imageInput.value());
                                                     imageInput.clear();

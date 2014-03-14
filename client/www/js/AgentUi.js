@@ -9719,7 +9719,9 @@ var defineWidget = function() {
 			if(textInput.isVisible()) {
 				var ta1 = new $("#textInput_ta");
 				doTextPostForElement(evt,ui.model.ContentType.TEXT,ta1);
-			} else if(urlComp.isVisible()) doTextPostForElement(evt,ui.model.ContentType.URL,ui.widget.UrlCompHelper.urlInput(urlComp)); else {
+			} else if(urlComp.isVisible()) doTextPostForElement(evt,ui.model.ContentType.URL,ui.widget.UrlCompHelper.urlInput(urlComp)); else if(labelInput.isVisible()) {
+				alert('foo');
+			} else {
 				doTextPost(evt,ui.model.ContentType.IMAGE,ui.widget.UploadCompHelper.value(imageInput));
 				ui.widget.UploadCompHelper.clear(imageInput);
 			}
