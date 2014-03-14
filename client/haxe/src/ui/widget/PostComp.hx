@@ -291,11 +291,14 @@ extern class PostComp extends JQ {
                                                     doTextPostForElement(evt, ContentType.TEXT, ta);
                                                 } else if (urlComp.isVisible()) {
                                                     doTextPostForElement(evt, ContentType.URL, urlComp.urlInput());
-                                                } else if (labelInput.isVisible()) {
-                                                    untyped __js__("alert('foo')");
-                                                } else {
+                                                } else if (imageInput.isVisible()){
                                                     doTextPost(evt, ContentType.IMAGE, imageInput.value());
                                                     imageInput.clear();
+                                                } else if (audioInput.isVisible()){
+                                                    doTextPost(evt, ContentType.AUDIO, audioInput.value());
+                                                    audioInput.clear();
+                                                } else if (labelInput.isVisible()) {
+                                                    untyped __js__("alert('foo')");
                                                 }
                                             });
                 },

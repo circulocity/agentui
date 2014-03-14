@@ -9719,11 +9719,14 @@ var defineWidget = function() {
 			if(textInput.isVisible()) {
 				var ta1 = new $("#textInput_ta");
 				doTextPostForElement(evt,ui.model.ContentType.TEXT,ta1);
-			} else if(urlComp.isVisible()) doTextPostForElement(evt,ui.model.ContentType.URL,ui.widget.UrlCompHelper.urlInput(urlComp)); else if(labelInput.isVisible()) {
-				alert('foo');
-			} else {
+			} else if(urlComp.isVisible()) doTextPostForElement(evt,ui.model.ContentType.URL,ui.widget.UrlCompHelper.urlInput(urlComp)); else if(imageInput.isVisible()) {
 				doTextPost(evt,ui.model.ContentType.IMAGE,ui.widget.UploadCompHelper.value(imageInput));
 				ui.widget.UploadCompHelper.clear(imageInput);
+			} else if(audioInput.isVisible()) {
+				doTextPost(evt,ui.model.ContentType.AUDIO,ui.widget.UploadCompHelper.value(audioInput));
+				ui.widget.UploadCompHelper.clear(audioInput);
+			} else if(labelInput.isVisible()) {
+				alert('foo');
 			}
 		});
 	}, destroy : function() {
