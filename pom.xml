@@ -15,11 +15,6 @@
         <scalaVersion>2.10.3</scalaVersion>
     </properties>
 
-    <modules>
-        <!--module>sideways</module-->
-        <module>proxy</module>
-    </modules>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -190,12 +185,6 @@
                 <groupId>ahs</groupId>
                 <artifactId>ahs-core</artifactId>
                 <version>${ahsVersion}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.model3</groupId>
-                <artifactId>jetty-runner</artifactId>
-                <version>8.1-SNAPSHOT</version>
-                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>ahs</groupId>

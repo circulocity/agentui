@@ -9603,7 +9603,7 @@ var defineWidget = function() {
 		selfElement.addClass("postComp container shadow " + m3.widget.Widgets.getWidgetClasses());
 		var section = new $("<section id='postSection'></section>").appendTo(selfElement);
 		var addConnectionsAndLabels = null;
-		var doTextPost = function(evt,contentType,value) {
+		var doPost = function(evt,contentType,value) {
 			ui.AppContext.LOGGER.debug("Post new text content");
 			evt.preventDefault();
 			var msg = new ui.model.MessageContent();
@@ -9612,17 +9612,17 @@ var defineWidget = function() {
 			addConnectionsAndLabels(msg);
 			ui.model.EM.change(ui.model.EMEvent.NewContentCreated,msg);
 		};
-		var doTextPostForElement = function(evt,contentType,ele) {
-			doTextPost(evt,contentType,ele.val());
+		var doPostForElement = function(evt,contentType,ele) {
+			doPost(evt,contentType,ele.val());
 			ele.val("");
 		};
 		var textInput = new $("<div class='postContainer'></div>").appendTo(section);
 		var ta = new $("<textarea class='boxsizingBorder container' style='resize: none;'></textarea>").appendTo(textInput).attr("id","textInput_ta").keypress(function(evt) {
-			if(!(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13) doTextPostForElement(evt,ui.model.ContentType.TEXT,new $(evt.target));
+			if(!(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13) doPostForElement(evt,ui.model.ContentType.TEXT,new $(evt.target));
 		});
 		var urlComp = new $("<div class='postContainer boxsizingBorder'></div>").urlComp();
 		urlComp.appendTo(section).keypress(function(evt) {
-			if(!(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13) doTextPostForElement(evt,ui.model.ContentType.URL,new $(evt.target));
+			if(!(evt.altKey || evt.shiftKey || evt.ctrlKey) && evt.charCode == 13) doPostForElement(evt,ui.model.ContentType.URL,new $(evt.target));
 		});
 		var options = { contentType : ui.model.ContentType.IMAGE};
 		var imageInput = new $("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
@@ -9630,6 +9630,26 @@ var defineWidget = function() {
 		options.contentType = ui.model.ContentType.AUDIO;
 		var audioInput = new $("<div class='postContainer boxsizingBorder'></div>").uploadComp(options);
 		audioInput.appendTo(section);
+		var labelInput = new $("<div class='postContainer boxsizingBorder'></div>").appendTo(section);
+		var labelArea = new $("<div class='sharetags container' style='height:98px;'></div>");
+		labelArea.appendTo(labelInput);
+		labelArea.droppable({ accept : function(d) {
+			return d["is"](".filterable");
+		}, activeClass : "ui-state-hover", hoverClass : "ui-state-active", drop : function(event,_ui) {
+			var dragstop = function(dragstopEvt,dragstopUi) {
+				if(!labelArea.intersects(dragstopUi.helper)) {
+					dragstopUi.helper.remove();
+					m3.util.JqueryUtil.deleteEffects(dragstopEvt);
+				}
+			};
+			var clone = (_ui.draggable.data("clone"))(_ui.draggable,false,false,dragstop);
+			clone.addClass("small");
+			var cloneOffset = clone.offset();
+			$(this).append(clone);
+			clone.css({ position : "absolute"});
+			if(cloneOffset.top != 0) clone.offset(cloneOffset); else clone.position({ my : "left top", at : "left top", of : _ui.helper, collision : "flipfit", within : ".sharetags"});
+		}});
+		labelInput.attr("id","labelArea").attr("title","Drop a label here to share it and its children.");
 		var tabs = new $("<aside class='tabs'></aside>").appendTo(section);
 		var textTab = new $("<span class='ui-icon ui-icon-document active ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
@@ -9638,6 +9658,7 @@ var defineWidget = function() {
 			urlComp.hide();
 			imageInput.hide();
 			audioInput.hide();
+			labelInput.hide();
 		});
 		var urlTab = new $("<span class='ui-icon ui-icon-link ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
@@ -9646,6 +9667,7 @@ var defineWidget = function() {
 			urlComp.show();
 			imageInput.hide();
 			audioInput.hide();
+			labelInput.hide();
 		});
 		var imgTab = new $("<span class='ui-icon ui-icon-image ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
@@ -9654,6 +9676,7 @@ var defineWidget = function() {
 			urlComp.hide();
 			imageInput.show();
 			audioInput.hide();
+			labelInput.hide();
 		});
 		var audioTab = new $("<span class='ui-icon ui-icon-volume-on ui-corner-left'></span>").appendTo(tabs).click(function(evt) {
 			tabs.children(".active").removeClass("active");
@@ -9662,10 +9685,21 @@ var defineWidget = function() {
 			urlComp.hide();
 			imageInput.hide();
 			audioInput.show();
+			labelInput.hide();
+		});
+		var labelTab = new $("<span class='ui-icon ui-icon-blank ui-corner-left'><img src='media/postlabel-icon.png' style='position:relative;left:-2px;top:-5px;'></span>").appendTo(tabs).click(function(evt) {
+			tabs.children(".active").removeClass("active");
+			$(this).addClass("active");
+			textInput.hide();
+			urlComp.hide();
+			imageInput.hide();
+			audioInput.hide();
+			labelInput.show();
 		});
 		urlComp.hide();
 		imageInput.hide();
 		audioInput.hide();
+		labelInput.hide();
 		var isDuplicate = function(selector,ele,container,getUid) {
 			var is_duplicate = false;
 			if(ele["is"](selector)) {
@@ -9716,10 +9750,15 @@ var defineWidget = function() {
 		var postButton = new $("<button>Post</button>").appendTo(selfElement).button().click(function(evt) {
 			if(textInput.isVisible()) {
 				var ta1 = new $("#textInput_ta");
-				doTextPostForElement(evt,ui.model.ContentType.TEXT,ta1);
-			} else if(urlComp.isVisible()) doTextPostForElement(evt,ui.model.ContentType.URL,ui.widget.UrlCompHelper.urlInput(urlComp)); else {
-				doTextPost(evt,ui.model.ContentType.IMAGE,ui.widget.UploadCompHelper.value(imageInput));
+				doPostForElement(evt,ui.model.ContentType.TEXT,ta1);
+			} else if(urlComp.isVisible()) doPostForElement(evt,ui.model.ContentType.URL,ui.widget.UrlCompHelper.urlInput(urlComp)); else if(imageInput.isVisible()) {
+				doPost(evt,ui.model.ContentType.IMAGE,ui.widget.UploadCompHelper.value(imageInput));
 				ui.widget.UploadCompHelper.clear(imageInput);
+			} else if(audioInput.isVisible()) {
+				doPost(evt,ui.model.ContentType.AUDIO,ui.widget.UploadCompHelper.value(audioInput));
+				ui.widget.UploadCompHelper.clear(audioInput);
+			} else if(labelInput.isVisible()) {
+				alert('foo');
 			}
 		});
 	}, destroy : function() {
