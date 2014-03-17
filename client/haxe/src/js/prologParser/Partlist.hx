@@ -11,5 +11,5 @@ package js.prologParser;
 @:native("prologParser.Partlist")
 extern class Partlist
 {
-    public var list( default, null ) : List<Dynamic>;
+    public var list( default, null ) : Array<Dynamic>;
 }

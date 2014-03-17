@@ -115,21 +115,22 @@ class PrologHelper {
         public static function termToLabel( term : Term ) : Array<Label> {
             var larray: Array<Label> = new Array<Label>();
             
+            // The term groups a collection of labels
             if ( term.name == "and" ) {
                 term.partlist.list.iter(
                     function( term : Term ) : Void {
                         larray.concat( termToLabel( term ) );
                     }
                 );
-            }
+            } // The term is a label
             else {
                 var l : Label = new Label( term );
                 larray.push( l );
                 
-                if ( term.name == "node" ) {
-                    var termParts : List<Dynamic> = term.partlist.list;
-                    var progenyTerm : Term = termParts.last();
-                    var progenyTermParts : List<Dynamic> = progenyTerm.partlist.list;
+                if ( term.name == "node" ) { // The label has children
+                    var termParts : Array<Dynamic> = term.partlist.list;
+                    var progenyTerm : Term = termParts[termParts.length - 1];
+                    var progenyTermParts : Array<Dynamic> = progenyTerm.partlist.list;
                     
                     progenyTermParts.iter(
                         function( term : Term ) : Void {

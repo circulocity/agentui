@@ -7,6 +7,7 @@ import m3.serialization.Serialization;
 import m3.exception.Exception;
 import js.prologParser.Term;
 import js.prologParser.Atom;
+import js.prologParser.Partlist;
 
 import ui.helper.LabelStringParser;
 import ui.model.EM;
@@ -203,22 +204,20 @@ class Label extends ModelObj implements Filterable {
 		    color = ColorProvider.getNextColor();
                 }
                 else {
-                    var termParts : List<Dynamic> = term.partlist.list;
-                    var termPartsItr : Iterator<Dynamic> = termParts.iterator();
+                    var termParts : Array<Dynamic> = term.partlist.list;
 
-                    var textTerm : Term = termPartsItr.next();
-                    var textTermParts : List<Dynamic> = textTerm.partlist.list;
-                    var textTermAtom : Atom = textTermParts.first().name;
+                    var textTerm : Term = termParts[0];
+                    var textTermParts : Array<Dynamic> = textTerm.partlist.list;
+                    var textTermAtom : Atom = textTermParts[0].name;
 
-                    var displayTerm : Term = termPartsItr.next();
-                    var displayTermParts : List<Dynamic> = displayTerm.partlist.list;
-                    var displayTermPartsItr : Iterator<Dynamic> = displayTermParts.iterator();
-                    var colorTerm : Term = displayTermPartsItr.next();
-                    var colorTermParts : List<Dynamic> = colorTerm.partlist.list;
-                    var colorTermAtom : Atom = colorTermParts.first().name;
-                    var imageTerm : Term = displayTermPartsItr.next();
-                    var imageTermParts : List<Dynamic> = imageTerm.partlist.list;
-                    var imageTermAtom : Atom = imageTermParts.first().name;
+                    var displayTerm : Term = termParts[1];
+                    var displayTermParts : Array<Dynamic> = displayTerm.partlist.list;
+                    var colorTerm : Term = displayTermParts[0];
+                    var colorTermParts : Array<Dynamic> = colorTerm.partlist.list;
+                    var colorTermAtom : Atom = colorTermParts[0].name;
+                    var imageTerm : Term = displayTermParts[1];
+                    var imageTermParts : Array<Dynamic> = imageTerm.partlist.list;
+                    var imageTermAtom : Atom = imageTermParts[0].name;
 
                     this.text = textTermAtom.name;
                     color = colorTermAtom.name;
