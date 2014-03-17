@@ -221,8 +221,8 @@ class Label extends ModelObj implements Filterable {
                     var imageTermAtom : Atom = imageTermParts.first().name;
 
                     this.text = textTermAtom.name;
-                    this.color = colorTermAtom.name;
-                    this.imgSrc = imageTermAtom.name;
+                    color = colorTermAtom.name;
+                    imgSrc = imageTermAtom.name;
                 }
 	}
 
