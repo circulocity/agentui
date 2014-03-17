@@ -6629,7 +6629,7 @@ ui.helper.PrologHelper.tagTreeAsStrings = function(labels) {
 		var children = new m3.observable.FilteredSet(labels,function(f) {
 			return f.parentUid == l1.uid;
 		});
-		if(m3.helper.OSetHelper.hasValues(children)) s += "node" + "(" + "text" + "(" + l1.text + ")" + "," + "display" + "(" + "color" + "(" + l1.color + ")" + "," + "image" + "(" + l1.imgSrc + ")" + ")" + "," + "progeny" + "(" + ui.helper.PrologHelper._processTagChildren(labels,children) + ")" + ")"; else s += "leaf" + "(" + "text" + "(" + l1.text + ")" + "," + "display" + "(" + "color" + "(" + l1.color + ")" + "," + "image" + "(" + l1.imgSrc + ")" + ")" + ")";
+		if(m3.helper.OSetHelper.hasValues(children)) s += "node" + "(" + "text" + "(" + "\"" + l1.text + "\"" + ")" + "," + "display" + "(" + "color" + "(" + "\"" + l1.color + "\"" + ")" + "," + "image" + "(" + "\"" + l1.imgSrc + "\"" + ")" + ")" + "," + "progeny" + "(" + ui.helper.PrologHelper._processTagChildren(labels,children) + ")" + ")"; else s += "leaf" + "(" + "text" + "(" + "\"" + l1.text + "\"" + ")" + "," + "display" + "(" + "color" + "(" + "\"" + l1.color + "\"" + ")" + "," + "image" + "(" + "\"" + l1.imgSrc + "\"" + ")" + ")" + ")";
 		sarray.push(s);
 	});
 	return sarray;
@@ -6640,7 +6640,7 @@ ui.helper.PrologHelper._processTagChildren = function(original,set) {
 		var children = new m3.observable.FilteredSet(original,function(f) {
 			return f.parentUid == l.uid;
 		});
-		if(m3.helper.OSetHelper.hasValues(children)) s += "node" + "(" + "text" + "(" + l.text + ")" + "," + "display" + "(" + "color" + "(" + l.color + ")" + ")" + "," + "progeny" + "(" + ui.helper.PrologHelper._processTagChildren(original,children) + ")" + ")"; else s += "leaf" + "(" + "text" + "(" + l.text + ")" + "," + "display" + "(" + "color" + "(" + l.color + ")" + ")" + ")";
+		if(m3.helper.OSetHelper.hasValues(children)) s += "node" + "(" + "text" + "(" + "\"" + l.text + "\"" + ")" + "," + "display" + "(" + "color" + "(" + "\"" + l.color + "\"" + ")" + "," + "image" + "(" + "\"" + l.imgSrc + "\"" + ")" + ")" + "," + "progeny" + "(" + ui.helper.PrologHelper._processTagChildren(original,children) + ")" + ")"; else s += "leaf" + "(" + "text" + "(" + "\"" + l.text + "\"" + ")" + "," + "display" + "(" + "color" + "(" + "\"" + l.color + "\"" + ")" + "," + "image" + "(" + "\"" + l.imgSrc + "\"" + ")" + ")" + ")";
 		return s;
 	},"");
 	return str;

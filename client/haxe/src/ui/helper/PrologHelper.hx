@@ -28,12 +28,12 @@ class PrologHelper {
                                     s += (
                                         "node" + "("
                                             + "text" + "("
-                                            + l.text
+                                            + "\"" + l.text + "\""
                                             + ")" + ","
                                             + "display" + "("
-                                            + "color" + "(" + l.color + ")"
+                                            + "color" + "(" + "\"" + l.color + "\"" + ")"
                                             + ","
-                                            + "image" + "(" + l.imgSrc + ")"
+                                            + "image" + "(" + "\"" + l.imgSrc + "\"" + ")"
                                             + ")" + ","                                            
                                             + "progeny" + "("
                                             + _processTagChildren(labels, children)
@@ -45,12 +45,12 @@ class PrologHelper {
                                     s += (
                                         "leaf" + "("
                                             + "text" + "("
-                                            + l.text
+                                            + "\"" + l.text + "\""
                                             + ")" + ","
                                             + "display" + "("
-                                            + "color" + "(" + l.color + ")"
+                                            + "color" + "(" + "\"" + l.color + "\"" + ")"
                                             + ","
-                                            + "image" + "(" + l.imgSrc + ")"
+                                            + "image" + "(" + "\"" + l.imgSrc + "\"" + ")"
                                             + ")"
                                             + ")"
                                     );
@@ -74,10 +74,12 @@ class PrologHelper {
                                     s += (
                                         "node" + "("
                                             + "text" + "("
-                                            + l.text
+                                            + "\"" + l.text + "\""
                                             + ")" + ","
                                             + "display" + "("
-                                            + "color" + "(" + l.color + ")"
+                                            + "color" + "(" + "\"" + l.color + "\"" + ")"
+                                            + ","
+                                            + "image" + "(" + "\"" + l.imgSrc + "\"" + ")"
                                             + ")" + ","                                            
                                             + "progeny" + "("
                                             + _processTagChildren(original, children)
@@ -89,10 +91,12 @@ class PrologHelper {
                                     s += (
                                         "leaf" + "("
                                             + "text" + "("
-                                            + l.text
+                                            + "\"" + l.text + "\""
                                             + ")" + ","
                                             + "display" + "("
-                                            + "color" + "(" + l.color + ")"
+                                            + "color" + "(" + "\"" + l.color + "\"" + ")"
+                                            + ","
+                                            + "image" + "(" + "\"" + l.imgSrc + "\"" + ")"
                                             + ")"
                                             + ")"
                                     );
