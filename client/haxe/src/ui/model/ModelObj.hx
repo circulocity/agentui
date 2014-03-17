@@ -5,6 +5,8 @@ import m3.util.UidGenerator;
 import m3.observable.OSet;
 import m3.serialization.Serialization;
 import m3.exception.Exception;
+import js.prologParser.Term;
+import js.prologParser.Atom;
 
 import ui.helper.LabelStringParser;
 import ui.model.EM;
@@ -191,11 +193,37 @@ class Label extends ModelObj implements Filterable {
 
 	@:transient public var color: String;
 
-	public function new(?text: String) {
+        @:transient public var imgSrc: String;
+
+	public function new(?text: String, ?term : Term) {
 		super();
-		uid = UidGenerator.create(32);
-		this.text = text;
-		color = ColorProvider.getNextColor();
+                uid = UidGenerator.create(32);
+                if ( term == null ) {		    
+		    this.text = text;
+		    color = ColorProvider.getNextColor();
+                }
+                else {
+                    var termParts : List<Dynamic> = term.partlist.list;
+                    var termPartsItr : Iterator<Dynamic> = termParts.iterator();
+
+                    var textTerm : Term = termPartsItr.next();
+                    var textTermParts : List<Dynamic> = textTerm.partlist.list;
+                    var textTermAtom : Atom = textTermParts.first().name;
+
+                    var displayTerm : Term = termPartsItr.next();
+                    var displayTermParts : List<Dynamic> = displayTerm.partlist.list;
+                    var displayTermPartsItr : Iterator<Dynamic> = displayTermParts.iterator();
+                    var colorTerm : Term = displayTermPartsItr.next();
+                    var colorTermParts : List<Dynamic> = colorTerm.partlist.list;
+                    var colorTermAtom : Atom = colorTermParts.first().name;
+                    var imageTerm : Term = displayTermPartsItr.next();
+                    var imageTermParts : List<Dynamic> = imageTerm.partlist.list;
+                    var imageTermAtom : Atom = imageTermParts.first().name;
+
+                    this.text = textTermAtom.name;
+                    this.color = colorTermAtom.name;
+                    this.imgSrc = imageTermAtom.name;
+                }
 	}
 
 	public static function identifier(l: Label): String {

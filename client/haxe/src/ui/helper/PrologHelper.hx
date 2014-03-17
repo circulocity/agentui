@@ -2,6 +2,7 @@ package ui.helper;
 
 import m3.observable.OSet;
 import m3.util.UidGenerator;
+import js.prologParser.*;
 
 import ui.model.ModelObj;
 
@@ -14,6 +15,7 @@ using StringTools;
 
 
 class PrologHelper {
+        //public var prologParser = new PrologParser();
 	public static function tagTreeAsStrings(labels: OSet<Label>): Array<String> {
 		var sarray: Array<String> = new Array<String>();
 		var topLevelLabels: FilteredSet<Label> = new FilteredSet(labels, function(l: Label): Bool { return l.parentUid.isBlank(); });
@@ -22,9 +24,36 @@ class PrologHelper {
 				var s: String = "";
 				var children: FilteredSet<Label> = new FilteredSet(labels, function(f: Label): Bool { return f.parentUid == l.uid; });
 				if(children.hasValues()) {
-					s += "n" + l.text + "(" + _processTagChildren(labels, children) + ")";
+				    //s += "n" + l.text + "(" + _processTagChildren(labels, children) + ")";
+                                    s += (
+                                        "node" + "("
+                                            + "text" + "("
+                                            + l.text
+                                            + ")" + ","
+                                            + "display" + "("
+                                            + "color" + "(" + l.color + ")"
+                                            + ","
+                                            + "image" + "(" + l.imgSrc + ")"
+                                            + ")" + ","                                            
+                                            + "progeny" + "("
+                                            + _processTagChildren(labels, children)
+                                            + ")"
+                                            + ")"
+                                    );
 				} else {
-					s += "l" + l.text + "(_)";
+				    //s += "l" + l.text + "(_)";
+                                    s += (
+                                        "leaf" + "("
+                                            + "text" + "("
+                                            + l.text
+                                            + ")" + ","
+                                            + "display" + "("
+                                            + "color" + "(" + l.color + ")"
+                                            + ","
+                                            + "image" + "(" + l.imgSrc + ")"
+                                            + ")"
+                                            + ")"
+                                    );
 				}
 
 				sarray.push(s);
@@ -39,11 +68,34 @@ class PrologHelper {
 				}
 				var children: FilteredSet<Label> = new FilteredSet(original, function(f: Label): Bool { return f.parentUid == l.uid; });
 				if(children.hasValues()) {
-					s += "n" + l.text + "(";
-					s += _processTagChildren(original, children);
-					s += ")";
+					// s += "n" + l.text + "(";
+// 					s += _processTagChildren(original, children);
+// 					s += ")";
+                                    s += (
+                                        "node" + "("
+                                            + "text" + "("
+                                            + l.text
+                                            + ")" + ","
+                                            + "display" + "("
+                                            + "color" + "(" + l.color + ")"
+                                            + ")" + ","                                            
+                                            + "progeny" + "("
+                                            + _processTagChildren(original, children)
+                                            + ")"
+                                            + ")"
+                                    );
 				} else {
-					s += "l" + l.text + "(_)";
+				    //s += "l" + l.text + "(_)";
+                                    s += (
+                                        "leaf" + "("
+                                            + "text" + "("
+                                            + l.text
+                                            + ")" + ","
+                                            + "display" + "("
+                                            + "color" + "(" + l.color + ")"
+                                            + ")"
+                                            + ")"
+                                    );
 				}
 
 				return s;
@@ -52,15 +104,50 @@ class PrologHelper {
 		return str;
 	}
 
+        public static function stringToLabel( str : String ) : Array<Label> {
+            return termToLabel( PrologParser.StringToTerm( str ) );
+        }
+
+        public static function termToLabel( term : Term ) : Array<Label> {
+            var larray: Array<Label> = new Array<Label>();
+            
+            if ( term.name == "and" ) {
+                term.partlist.list.iter(
+                    function( term : Term ) : Void {
+                        larray.concat( termToLabel( term ) );
+                    }
+                );
+            }
+            else {
+                var l : Label = new Label( term );
+                larray.push( l );
+                
+                if ( term.name == "node" ) {
+                    var termParts : List<Dynamic> = term.partlist.list;
+                    var progenyTerm : Term = termParts.last();
+                    var progenyTermParts : List<Dynamic> = progenyTerm.partlist.list;
+                    
+                    progenyTermParts.iter(
+                        function( term : Term ) : Void {
+                            larray.concat( termToLabel( term ) );
+                        }
+                    );
+                }
+            }
+
+            return larray;
+        }
+
 	public static function tagTreeFromString(str: String): Array<Label> {
-		var larray: Array<Label> = new Array<Label>();
-		var parser: LabelStringParser = new LabelStringParser(str);
-		var term: String = parser.nextTerm();
-		if(term != "and") { // there are multiple top level labels
-			parser.restore(term);
-		}
-		larray = _processDataLogChildren(null, parser);
-		return larray;
+		// var larray: Array<Label> = new Array<Label>();
+// 		var parser: LabelStringParser = new LabelStringParser(str);
+// 		var term: String = parser.nextTerm();
+// 		if(term != "and") { // there are multiple top level labels
+// 			parser.restore(term);
+// 		}
+// 		larray = _processDataLogChildren(null, parser);
+// 		return larray;
+            return stringToLabel( str );
 	}
 
 	private static function _processDataLogChildren(parentLabel: Label, parser: LabelStringParser): Array<Label> {
