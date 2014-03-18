@@ -210,7 +210,12 @@ class Label extends ModelObj implements Filterable {
                     else {
                         this.color = color;
                     }
-                    this.imgSrc = imgSrc;
+                    if ( imgSrc == null ) {
+                        this.imgSrc = "";
+                    }
+                    else {
+                        this.imgSrc = imgSrc;
+                    }
                 }
                 else {
                     var termParts : Array<Dynamic> = term.partlist.list;
