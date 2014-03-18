@@ -199,6 +199,7 @@ class Label extends ModelObj implements Filterable {
 	public function new(?text: String, ?term : Term) {
 		super();
                 uid = UidGenerator.create(32);
+                untyped __js__( 'debugger' );
                 if ( term == null ) {		    
 		    this.text = text;
 		    color = ColorProvider.getNextColor();
