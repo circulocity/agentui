@@ -192,17 +192,20 @@ class Label extends ModelObj implements Filterable {
 	public var text: String;
 	@:transient public var parentUid: String;
 
-	@:transient public var color: String;
+	//@:transient public var color: String;
+        public var color: String;
 
-        @:transient public var imgSrc: String;
+        //@:transient public var imgSrc: String;
+        public var imgSrc: String;
 
-	public function new(?text: String, ?term : Term) {
+	public function new(?text: String, ?color : String, ?imgSrc : String, ?term : Term) {
 		super();
                 uid = UidGenerator.create(32);
                 untyped __js__( 'debugger' );
                 if ( term == null ) {		    
 		    this.text = text;
-		    color = ColorProvider.getNextColor();
+		    this.color = color;
+                    this.imgSrc = imgSrc;
                 }
                 else {
                     var termParts : Array<Dynamic> = term.partlist.list;
@@ -223,9 +226,9 @@ class Label extends ModelObj implements Filterable {
                     var textTermLiteral = textTermAtom.name;
                     this.text = textTermLiteral.substring( 1, textTermLiteral.length - 1 );
                     var colorTermLiteral = colorTermAtom.name;
-                    color = colorTermLiteral.substring( 1, colorTermLiteral.length - 1 );
+                    this.color = colorTermLiteral.substring( 1, colorTermLiteral.length - 1 );
                     var imageTermLiteral = imageTermAtom.name;
-                    imgSrc = imageTermLiteral.substring( 1, imageTermLiteral.length - 1 );
+                    this.imgSrc = imageTermLiteral.substring( 1, imageTermLiteral.length - 1 );
                 }
 	}
 
