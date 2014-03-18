@@ -109,7 +109,7 @@ class PrologHelper {
 	}
 
         public static function stringToLabel( str : String ) : Array<Label> {
-            AppContext.LOGGER.info("labelifying str" + str);
+            //AppContext.LOGGER.info("labelifying str: " + str);
             return termToLabel( PrologParser.StringToTerm( str ) );
         }
 
@@ -118,7 +118,7 @@ class PrologHelper {
             
             // The term groups a collection of labels
             if ( term.name == "and" ) {
-                AppContext.LOGGER.info("term is an and" + term);
+                //AppContext.LOGGER.info("term is an and" + term);
                 term.partlist.list.iter(
                     function( term : Term ) : Void {
                         larray = larray.concat( termToLabel( term ) );
@@ -126,9 +126,9 @@ class PrologHelper {
                 );
             } // The term is a label
             else {
-                AppContext.LOGGER.info("calculating label from term " + term);
+                //AppContext.LOGGER.info("calculating label from term " + term);
                 var l : Label = new Label( term );
-                AppContext.LOGGER.info("label " + l);
+                //AppContext.LOGGER.info("label " + l);
                 larray.push( l );
                 
                 if ( term.name == "node" ) { // The label has children
@@ -144,7 +144,7 @@ class PrologHelper {
                 }
             }
 
-            AppContext.LOGGER.info("labels: " + larray);
+            //AppContext.LOGGER.info("labels: " + larray);
 
             return larray;
         }

@@ -6646,20 +6646,14 @@ ui.helper.PrologHelper._processTagChildren = function(original,set) {
 	return str;
 }
 ui.helper.PrologHelper.stringToLabel = function(str) {
-	ui.AppContext.LOGGER.info("labelifying str" + str);
 	return ui.helper.PrologHelper.termToLabel(prologParser.StringToTerm(str));
 }
 ui.helper.PrologHelper.termToLabel = function(term) {
 	var larray = new Array();
-	if(term.name == "and") {
-		ui.AppContext.LOGGER.info("term is an and" + Std.string(term));
-		Lambda.iter(term.partlist.list,function(term1) {
-			larray = larray.concat(ui.helper.PrologHelper.termToLabel(term1));
-		});
-	} else {
-		ui.AppContext.LOGGER.info("calculating label from term " + Std.string(term));
+	if(term.name == "and") Lambda.iter(term.partlist.list,function(term1) {
+		larray = larray.concat(ui.helper.PrologHelper.termToLabel(term1));
+	}); else {
 		var l = new ui.model.Label(null,term);
-		ui.AppContext.LOGGER.info("label " + Std.string(l));
 		larray.push(l);
 		if(term.name == "node") {
 			var termParts = term.partlist.list;
@@ -6670,7 +6664,6 @@ ui.helper.PrologHelper.termToLabel = function(term) {
 			});
 		}
 	}
-	ui.AppContext.LOGGER.info("labels: " + Std.string(larray));
 	return larray;
 }
 ui.helper.PrologHelper.tagTreeFromString = function(str) {
