@@ -7094,11 +7094,11 @@ ui.model.Label = function(text,term) {
 		var imageTermParts = imageTerm.partlist.list;
 		var imageTermAtom = imageTermParts[0];
 		var textTermLiteral = textTermAtom.name;
-		this.text = textTermLiteral.substring(1,textTermLiteral.length - 2);
+		this.text = textTermLiteral.substring(1,textTermLiteral.length - 1);
 		var colorTermLiteral = colorTermAtom.name;
-		this.color = colorTermLiteral.substring(1,colorTermLiteral.length - 2);
+		this.color = colorTermLiteral.substring(1,colorTermLiteral.length - 1);
 		var imageTermLiteral = imageTermAtom.name;
-		this.imgSrc = imageTermLiteral.substring(1,imageTermLiteral.length - 2);
+		this.imgSrc = imageTermLiteral.substring(1,imageTermLiteral.length - 1);
 	}
 };
 $hxClasses["ui.model.Label"] = ui.model.Label;
