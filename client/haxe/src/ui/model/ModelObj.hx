@@ -219,9 +219,12 @@ class Label extends ModelObj implements Filterable {
                     var imageTermParts : Array<Dynamic> = imageTerm.partlist.list;
                     var imageTermAtom : Atom = imageTermParts[0];
 
-                    this.text = textTermAtom.name;
-                    color = colorTermAtom.name;
-                    imgSrc = imageTermAtom.name;
+                    var textTermLiteral = textTermAtom.name;
+                    this.text = textTermLiteral.substring( 1, textTermLiteral.length - 2 );
+                    var colorTermLiteral = colorTermAtom.name;
+                    color = colorTermLiteral.substring( 1, colorTermLiteral.length - 2 );
+                    var imageTermLiteral = imageTermAtom.name;
+                    imgSrc = imageTermLiteral.substring( 1, imageTermLiteral.length - 2 );
                 }
 	}
 
