@@ -204,7 +204,12 @@ class Label extends ModelObj implements Filterable {
                 untyped __js__( 'debugger' );
                 if ( term == null ) {		    
 		    this.text = text;
-		    this.color = color;
+		    if ( color == null ) {
+                        this.color = ColorProvider.getNextColor();
+                    }
+                    else {
+                        this.color = color;
+                    }
                     this.imgSrc = imgSrc;
                 }
                 else {
