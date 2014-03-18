@@ -119,7 +119,7 @@ class PrologHelper {
             if ( term.name == "and" ) {
                 term.partlist.list.iter(
                     function( term : Term ) : Void {
-                        larray.concat( termToLabel( term ) );
+                        larray = larray.concat( termToLabel( term ) );
                     }
                 );
             } // The term is a label
@@ -134,7 +134,7 @@ class PrologHelper {
                     
                     progenyTermParts.iter(
                         function( term : Term ) : Void {
-                            larray.concat( termToLabel( term ) );
+                            larray = larray.concat( termToLabel( term ) );
                         }
                     );
                 }

@@ -111,7 +111,8 @@ var prologParser = ( function() {
 					print (".\n");
 				}
 			};
-	}
+	}        
+        
 // The Tiny-Prolog parser goes here.
 	function Tokeniser(string) {
 		this.remainder = string;
@@ -332,6 +333,82 @@ var prologParser = ( function() {
         function StringToTerm( s ) {
             return ParseTerm( new Tokeniser( s ) );
         }
+
+//         function generateUID() {
+//             return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).substr(-4);
+//         }
+
+//         function LabelData( text, color, imgSrc, uid, parent ) {
+//             this.text = text;
+//             this.color = color;
+//             this.imgSrc = imgSrc;
+//             this.uid = uid;
+//             this.parent = parent;            
+//         }
+
+//         function TermToLabelList( term, parent ) {
+//             var rslt = [];
+
+//             var labelElems = term.partlist.list;
+//             var labelTextTerm = labelElems[0];
+//             var labelDisplayTerm = labelElems[1];
+
+//             var labelTextTermElems = labelTextTerm.partlist.list;
+//             var labelTextAtom = labelTextTermElems[0];
+//             var labelText = labelTextAtom.name;
+
+//             var labelDisplayTermElems = labelDisplayTerm.partlist.list;
+//             var labelDisplayColorTerm = labelDisplayTermElems[0];
+//             var labelDisplayColorAtom = labelDisplayColorTerm.partlist.list[0];
+//             var labelDisplayColor = labelDisplayColorAtom.name;
+//             var labelDisplayImgSrcTerm = labelDisplayTermElems[0];
+//             var labelDisplayImgSrcAtom = labelDisplayImgSrcTerm.partlist.list[0];
+//             var labelDisplayImgSrc = labelDisplayImgSrcAtom.name;
+
+//             var labelUID = generateUID();
+
+//             var labelParent = null;
+//             if ( parent != null ) {
+//                 labelParent = parent.uid;
+//             };
+
+//             var termLabelData =
+//                 new LabelData(
+//                     labelText,
+//                     labelDisplayColor,
+//                     labelDisplayImgSrc,
+//                     labelUID,
+//                     labelParent
+//                 );
+
+//             rslt[0] = termLabelData;
+
+//             if ( term.name === "node" ) {
+//                 var labelProgeny = labelElems[2];
+//                 var labelProgenyTermList = labelProgeny.partlist.list;
+//                 for ( var i = 0; i < labelProgenyTermList.length ; i++ ) {
+//                     rslt = rslt.concat( TermToLabelList( labelProgenyTermList[i], termLabelData ) );
+//                 }
+//             }
+
+//             return rslt;
+//         }
+
+//         function StringToLabelList( s ) {
+//             var term = ParseTerm( new Tokeniser( s ) );
+//             var acc = [];
+
+//             if ( term.name === "and" ) {
+//                 var subterms = term.partlist.list
+//                 for( var i = 0; i < subterms.length ; i++ ) {
+//                     acc = acc.concat( TermToLabelList( subterms[i], null ) );
+//                 }
+//             }
+//             else {
+//                 acc = acc.concat( TermToLabelList( term, null ) );
+//             }
+//             return acc;
+//         }
     
     return {
         StringToTerm : StringToTerm,
@@ -342,7 +419,9 @@ var prologParser = ( function() {
         Term : Term,
         Partlist : Partlist,
         Body : Body,
-        Rule : Rule
+        Rule : Rule,
+        //LabelData : LabelData,
+        //StringToLabelList : StringToLabelList
     }
 } )();
 

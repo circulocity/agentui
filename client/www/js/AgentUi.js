@@ -6651,7 +6651,7 @@ ui.helper.PrologHelper.stringToLabel = function(str) {
 ui.helper.PrologHelper.termToLabel = function(term) {
 	var larray = new Array();
 	if(term.name == "and") Lambda.iter(term.partlist.list,function(term1) {
-		larray.concat(ui.helper.PrologHelper.termToLabel(term1));
+		larray = larray.concat(ui.helper.PrologHelper.termToLabel(term1));
 	}); else {
 		var l = new ui.model.Label(null,term);
 		larray.push(l);
@@ -6660,7 +6660,7 @@ ui.helper.PrologHelper.termToLabel = function(term) {
 			var progenyTerm = termParts[termParts.length - 1];
 			var progenyTermParts = progenyTerm.partlist.list;
 			Lambda.iter(progenyTermParts,function(term1) {
-				larray.concat(ui.helper.PrologHelper.termToLabel(term1));
+				larray = larray.concat(ui.helper.PrologHelper.termToLabel(term1));
 			});
 		}
 	}
