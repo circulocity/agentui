@@ -6660,7 +6660,11 @@ ui.helper.PrologHelper.termToLabel = function(term) {
 			var progenyTerm = termParts[termParts.length - 1];
 			var progenyTermParts = progenyTerm.partlist.list;
 			Lambda.iter(progenyTermParts,function(term1) {
-				larray = larray.concat(ui.helper.PrologHelper.termToLabel(term1));
+				var progeny = ui.helper.PrologHelper.termToLabel(term1);
+				Lambda.iter(progeny,function(child) {
+					child.parentUid = l.uid;
+				});
+				larray = larray.concat(progeny);
 			});
 		}
 	}
