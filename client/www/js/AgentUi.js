@@ -9201,14 +9201,14 @@ var defineWidget = function() {
 		}, positionalElement : reference});
 	}, _create : function() {
 		var self1 = this;
-		var selfElement = this.element;
-		if(!selfElement["is"]("div")) throw new m3.exception.Exception("Root of LabelsList must be a div element");
-		selfElement.addClass("icontainer labelsList " + m3.widget.Widgets.getWidgetClasses());
+		var selfElement1 = this.element;
+		if(!selfElement1["is"]("div")) throw new m3.exception.Exception("Root of LabelsList must be a div element");
+		selfElement1.addClass("icontainer labelsList " + m3.widget.Widgets.getWidgetClasses());
 		ui.model.EM.addListener(ui.model.EMEvent.AliasLoaded,new ui.model.EMListener(function(alias) {
 			self1._setLabels(alias.get_labelSet());
 		},"LabelsList-Alias"));
 		var newLabelButton = new $("<button class='newLabelButton'>New Label</button>");
-		selfElement.append(newLabelButton).append("<div class='clear'></div>");
+		selfElement1.append(newLabelButton).append("<div class='clear'></div>");
 		newLabelButton.button().click(function(evt) {
 			evt.stopPropagation();
 			self1.selectedLabelComp = null;
@@ -9227,7 +9227,7 @@ var defineWidget = function() {
 			}
 		};
 		var menu = new $("<ul id='label-action-menu'></ul>");
-		menu.appendTo(selfElement);
+		menu.appendTo(selfElement1);
 		menu.m3menu({ classes : "container shadow", menuOptions : [{ label : "New Child Label", icon : "ui-icon-circle-plus", action : function(evt,m) {
 			evt.stopPropagation();
 			var reference = self1.selectedLabelComp;
@@ -9235,6 +9235,20 @@ var defineWidget = function() {
 			self1._showNewLabelPopup(reference);
 			menu.hide();
 			return false;
+		}},{ label : "Set Label Image", icon : "ui-icon-image", action : function(evt,m) {
+			ui.AppContext.LOGGER.info("set label image behavior goes here");
+			var dlg = new $("<div id='profilePictureUploader'></div>");
+			dlg.appendTo(selfElement1);
+			var uploadComp = new $("<div class='boxsizingBorder' style='height: 150px;'></div>");
+			uploadComp.appendTo(dlg);
+			uploadComp.uploadComp();
+			dlg.m3dialog({ width : 800, height : 305, title : "Label Image Uploader", buttons : { Cancel : function() {
+				$(this).m3dialog("close");
+			}, 'Set Label Image' : function() {
+				var l = ui.widget.LabelCompHelper.getLabel(self1.selectedLabelComp);
+				l.imgSrc = ui.widget.UploadCompHelper.value(uploadComp);
+				$(this).m3dialog("close");
+			}}});
 		}},{ label : "Delete Label", icon : "ui-icon-circle-minus", action : function(evt,m) {
 			if(self1.selectedLabelComp != null) m3.util.JqueryUtil.confirm("Delete Label","Are you sure you want to delete this label?",function() {
 				var labelsToDelete = [];
@@ -9248,7 +9262,7 @@ var defineWidget = function() {
 			}); else {
 			}
 		}}], width : 225}).hide();
-		selfElement.bind("contextmenu",function(evt) {
+		selfElement1.bind("contextmenu",function(evt) {
 			menu.show();
 			menu.position({ my : "left top", of : evt});
 			var target = new $(evt.target);
