@@ -8459,14 +8459,20 @@ var defineWidget = function() {
 		var selfElement = this.element;
 		if(!selfElement["is"]("div")) throw new m3.exception.Exception("Root of LabelComp must be a div element");
 		selfElement.addClass("label labelComp ").attr("id",StringTools.htmlEscape(self.options.label.text) + "_" + m3.util.UidGenerator.create(8));
-		var labelTail = new $("<div class='labelTail'></div>");
-		labelTail.css("border-right-color",self.options.label.color);
-		selfElement.append(labelTail);
 		var labelBox = new $("<div class='labelBox shadowRight'></div>");
-		labelBox.css("background",self.options.label.color);
 		var labelBody = new $("<div class='labelBody'></div>");
 		var labelText = new $("<div>" + self.options.label.text + "</div>");
-		labelBody.append(labelText);
+		if(self.options.label.imgSrc == null) {
+			var labelTail = new $("<div class='labelTail'></div>");
+			labelTail.css("border-right-color",self.options.label.color);
+			selfElement.append(labelTail);
+			labelBox.css("background",self.options.label.color);
+			labelBody.append(labelText);
+		} else {
+			var imgElem = new $("<img alt='label' src='" + self.options.label.imgSrc + "' class='label'/>");
+			labelBody.append(imgElem);
+			labelBody.append(labelText);
+		}
 		labelBox.append(labelBody);
 		selfElement.append(labelBox).append("<div class='clear'></div>");
 		selfElement.addClass("filterable");
@@ -9247,6 +9253,7 @@ var defineWidget = function() {
 			}, 'Set Label Image' : function() {
 				var l = ui.widget.LabelCompHelper.getLabel(self1.selectedLabelComp);
 				l.imgSrc = ui.widget.UploadCompHelper.value(uploadComp);
+				ui.model.EM.change(ui.model.EMEvent.UPDATE_LABELS);
 				$(this).m3dialog("close");
 			}}});
 		}},{ label : "Delete Label", icon : "ui-icon-circle-minus", action : function(evt,m) {

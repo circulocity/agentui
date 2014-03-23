@@ -83,14 +83,21 @@ extern class LabelComp extends FilterableComponent {
 
                     selfElement.addClass("label labelComp ").attr("id", self.options.label.text.htmlEscape() + "_" + UidGenerator.create(8));
                     
-                    var labelTail: JQ = new JQ("<div class='labelTail'></div>");
-                    labelTail.css("border-right-color", self.options.label.color);
-                    selfElement.append(labelTail);
                     var labelBox: JQ = new JQ("<div class='labelBox shadowRight'></div>");
-                    labelBox.css("background", self.options.label.color);
                     var labelBody: JQ = new JQ("<div class='labelBody'></div>");
                     var labelText: JQ = new JQ("<div>" + self.options.label.text + "</div>");
-                    labelBody.append(labelText);
+                    if (self.options.label.imgSrc == null ) {
+                        var labelTail: JQ = new JQ("<div class='labelTail'></div>");
+                        labelTail.css("border-right-color", self.options.label.color);
+                        selfElement.append(labelTail);                        
+                        labelBox.css("background", self.options.label.color);                        
+                        labelBody.append(labelText);                        
+                    }
+                    else {
+                        var imgElem = new JQ("<img alt='label' src='" + self.options.label.imgSrc + "' class='label'/>");                        
+                        labelBody.append(imgElem);
+                        labelBody.append(labelText);
+                    }
                     labelBox.append(labelBody);
                     selfElement.append(labelBox).append("<div class='clear'></div>");
 

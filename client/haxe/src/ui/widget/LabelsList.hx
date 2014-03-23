@@ -180,7 +180,8 @@ extern class LabelsList extends JQ {
 													},
 													"Set Label Image": function() {
                                                                                                                 var l : Label = self.selectedLabelComp.getLabel();
-													        l.imgSrc = uploadComp.value();
+													        l.imgSrc = uploadComp.value();                          
+                                                                                                                EM.change(EMEvent.UPDATE_LABELS);
 														M3Dialog.cur.m3dialog("close");
 													}
         										}
