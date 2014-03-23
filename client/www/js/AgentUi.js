@@ -8462,7 +8462,7 @@ var defineWidget = function() {
 		var labelBox = new $("<div class='labelBox shadowRight'></div>");
 		var labelBody = new $("<div class='labelBody'></div>");
 		var labelText = new $("<div>" + self.options.label.text + "</div>");
-		if(self.options.label.imgSrc == null) {
+		if(self.options.label.imgSrc == "") {
 			var labelTail = new $("<div class='labelTail'></div>");
 			labelTail.css("border-right-color",self.options.label.color);
 			selfElement.append(labelTail);
