@@ -9814,7 +9814,9 @@ var defineWidget = function() {
 				doPost(evt,ui.model.ContentType.AUDIO,ui.widget.UploadCompHelper.value(audioInput));
 				ui.widget.UploadCompHelper.clear(audioInput);
 			} else if(labelInput.isVisible()) {
-				var temp = labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",");alert(temp);debugger;;
+				var value = "";
+				value = "all("+labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",")+")";;
+				doPost(evt,ui.model.ContentType.LABEL,value);
 			}
 		});
 	}, destroy : function() {
