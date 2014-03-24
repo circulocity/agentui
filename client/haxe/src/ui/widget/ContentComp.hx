@@ -87,8 +87,8 @@ extern class ContentComp extends JQ {
             			case ContentType.LABEL:
             				var labelContent: LabelContent = cast(content, LabelContent);
             				// Decode tag, append to content area
-            				var labelArray = PrologHelper.stringToLabel(labelContent.text);
-            				untyped __js__("debugger");
+//            				untyped __js__("debugger");
+//            				var labelArray = PrologHelper.stringToLabel(labelContent.text);
             				postContent.append("<div class='content-text'>" + labelContent.text + "</div>");
 		        	}
 
