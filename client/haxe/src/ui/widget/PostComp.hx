@@ -301,7 +301,7 @@ extern class PostComp extends JQ {
                                 audioInput.clear();
                             } else if (labelInput.isVisible()) {
                                 var value: String = "";
-                                untyped __js__('value = labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",");');
+                                untyped __js__('value = "all("+labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",")+")";');
                                 doPost(evt, ContentType.LABEL, value);
                             }
                         });
