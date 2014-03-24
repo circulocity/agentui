@@ -153,7 +153,7 @@ class PrologHelper {
             var larray: Array<Label> = new Array<Label>();
             
             // The term groups a collection of labels
-            if ( term.name == "and" ) {
+            if ( ( term.name == "and" ) || ( term.name == "all" ) ) {
                 //AppContext.LOGGER.info("term is an and" + term);
                 term.partlist.list.iter(
                     function( term : Term ) : Void {

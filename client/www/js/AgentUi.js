@@ -6655,7 +6655,7 @@ ui.helper.PrologHelper.stringToLabel = function(str) {
 }
 ui.helper.PrologHelper.termToLabel = function(term) {
 	var larray = new Array();
-	if(term.name == "and") Lambda.iter(term.partlist.list,function(term1) {
+	if(term.name == "and" || term.name == "all") Lambda.iter(term.partlist.list,function(term1) {
 		larray = larray.concat(ui.helper.PrologHelper.termToLabel(term1));
 	}); else {
 		var l = new ui.model.Label(null,null,null,term);
