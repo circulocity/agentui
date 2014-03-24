@@ -108,6 +108,42 @@ class PrologHelper {
         return str;
     }
 
+        public static function labelToString( label : Label ) : String {
+            var s = "";
+            if(label.progeny != null) {
+                s += (
+                    "node" + "("
+                        + "text" + "("
+                        + "\"" + label.text + "\""
+                        + ")" + ","
+                        + "display" + "("
+                        + "color" + "(" + "\"" + label.color + "\"" + ")"
+                        + ","
+                        + "image" + "(" + "\"" + label.imgSrc + "\"" + ")"
+                        + ")" + ","                                            
+                        + "progeny" + "("
+                        + label.progeny.map( labelToString ).join( "," )
+                        + ")"
+                        + ")"
+                );
+            } else {
+                s += (
+                    "leaf" + "("
+                        + "text" + "("
+                        + "\"" + label.text + "\""
+                        + ")" + ","
+                        + "display" + "("
+                        + "color" + "(" + "\"" + label.color + "\"" + ")"
+                        + ","
+                        + "image" + "(" + "\"" + label.imgSrc + "\"" + ")"
+                        + ")"
+                        + ")"
+                );
+            }
+            
+            return s;
+        }
+
         public static function stringToLabel( str : String ) : Array<Label> {
             //AppContext.LOGGER.info("labelifying str: " + str);
             return termToLabel( PrologParser.StringToTerm( str ) );
@@ -132,6 +168,7 @@ class PrologHelper {
                 larray.push( l );
                 
                 if ( term.name == "node" ) { // The label has children
+                    l.progeny = new Array<Label>();
                     var termParts : Array<Dynamic> = term.partlist.list;
                     var progenyTerm : Term = termParts[termParts.length - 1];
                     var progenyTermParts : Array<Dynamic> = progenyTerm.partlist.list;
@@ -140,6 +177,7 @@ class PrologHelper {
                         function( term : Term ) : Void {
                             var progeny : Array<Label> = termToLabel( term );
                             var child : Label = progeny[0];
+                            l.progeny.push( child );
                             child.parentUid = l.uid;
                             larray = larray.concat( progeny );
                         }

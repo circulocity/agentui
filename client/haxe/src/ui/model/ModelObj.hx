@@ -191,6 +191,7 @@ class Label extends ModelObj implements Filterable {
     @:transient public var uid: String;
     public var text: String;
     @:transient public var parentUid: String;
+    @:transient public var progeny: Array<Label>;
 
     //@:transient public var color: String;
     public var color: String;
