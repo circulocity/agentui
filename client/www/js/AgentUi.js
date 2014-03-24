@@ -8850,6 +8850,11 @@ var defineWidget = function() {
 			break;
 		case 4:
 			var labelContent = js.Boot.__cast(content , ui.model.LabelContent);
+			debugger;
+			try {
+				var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
+			} catch( _ ) {
+			}
 			postContent.append("<div class='content-text'>" + labelContent.text + "</div>");
 			break;
 		}
@@ -9815,7 +9820,7 @@ var defineWidget = function() {
 				ui.widget.UploadCompHelper.clear(audioInput);
 			} else if(labelInput.isVisible()) {
 				var value = "";
-				value = "all("+labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",")+")";;
+				value = labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",");;
 				doPost(evt,ui.model.ContentType.LABEL,value);
 			}
 		});
