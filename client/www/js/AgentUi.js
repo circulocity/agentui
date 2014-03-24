@@ -8850,6 +8850,8 @@ var defineWidget = function() {
 			break;
 		case 4:
 			var labelContent = js.Boot.__cast(content , ui.model.LabelContent);
+			var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
+			debugger;
 			postContent.append("<div class='content-text'>" + labelContent.text + "</div>");
 			break;
 		}
