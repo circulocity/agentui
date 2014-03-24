@@ -81,7 +81,11 @@ extern class ContentComp extends JQ {
 
 	        			case ContentType.TEXT:
 	        				var textContent: MessageContent = cast(content, MessageContent);
-	        				postContent.append("<div class='content-text'>" + textContent.text + "</div>"); 
+	        				postContent.append("<div class='content-text'>" + textContent.text + "</div>");
+	        				
+            			case ContentType.LABEL:
+            				var labelContent: LabelContent = cast(content, LabelContent);
+            				postContent.append("<div class='content-text'>" + labelContent.prolog + "</div>");
 		        	}
 
 					self.buttonBlock = new JQ("<div class='button-block' ></div>").css("text-align", "left").hide().appendTo(postContent);

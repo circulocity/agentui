@@ -13,12 +13,14 @@ import m3.observable.OSet;
 import m3.util.UidGenerator;
 import m3.util.JqueryUtil;
 import m3.exception.Exception;
+import ui.helper.PrologHelper;
 
 using m3.helper.OSetHelper;
 using ui.widget.UploadComp;
 using ui.widget.UrlComp;
 using ui.widget.LabelComp;
 using ui.widget.ConnectionAvatar;
+
 
 typedef PostCompOptions = {
 }
@@ -298,7 +300,14 @@ extern class PostComp extends JQ {
                                                     doPost(evt, ContentType.AUDIO, audioInput.value());
                                                     audioInput.clear();
                                                 } else if (labelInput.isVisible()) {
-                                                    untyped __js__("alert('foo')");
+                                                    var temp = new MessageContent();
+                                                    labelArea.children(".label").each(function(i: Int, dom: Element): Void {
+                                                            var labelComp: LabelComp = new LabelComp(dom);
+                                                            temp.labelSet.add(labelComp.getLabel());
+                                                        });
+                                                    var value = PrologHelper.tagTreeAsStrings(temp.labelSet);
+                                                    untyped __js__("alert(value);");
+                                                    // doPost(evt, ContentType.LABEL, )
                                                 }
                                             });
                 },

@@ -21,166 +21,166 @@ using Lambda;
 
 @:rtti
 class ModelObj {
-	public function new() {
-	}
+    public function new() {
+    }
 }
 
 class ModelObjWithUid<T> extends ModelObj{
-	@:isVar public var uid(get,set): String;
+    @:isVar public var uid(get,set): String;
 
-	public function new() {
-		super();
-		this.uid = UidGenerator.create(32);
-	}
+    public function new() {
+        super();
+        this.uid = UidGenerator.create(32);
+    }
 
-	public static function identifier<T>(t: ModelObjWithUid<T>): String {
-		return t.uid;
-	}
+    public static function identifier<T>(t: ModelObjWithUid<T>): String {
+        return t.uid;
+    }
 
-	private function get_uid(): String {
-		if(this.uid.isBlank()) {
-			this.uid = UidGenerator.create(32);
-		}
-		return this.uid;
-	}
+    private function get_uid(): String {
+        if(this.uid.isBlank()) {
+            this.uid = UidGenerator.create(32);
+        }
+        return this.uid;
+    }
 
-	private function set_uid(id: String): String {
-		this.uid = id;
-		return this.uid;
-	}
+    private function set_uid(id: String): String {
+        this.uid = id;
+        return this.uid;
+    }
 }
 
 class User extends ModelObj {
-	public var sessionURI: String;
-	public var userData: UserData; 
-	
-	@:transient public var aliasSet: ObservableSet<Alias>;
-	private var aliases: Array<Alias>;
-	public var defaultAlias: Alias;
-	
-	@:isVar public var currentAlias (get,set): Alias;
+    public var sessionURI: String;
+    public var userData: UserData; 
+    
+    @:transient public var aliasSet: ObservableSet<Alias>;
+    private var aliases: Array<Alias>;
+    public var defaultAlias: Alias;
+    
+    @:isVar public var currentAlias (get,set): Alias;
 
 
-	public function new () {
-		super();
-		registerModelListeners();
-	}
+    public function new () {
+        super();
+        registerModelListeners();
+    }
 
-	private function registerModelListeners(): Void {
-		EM.addListener(EMEvent.CreateLabel, new EMListener(function(label: Label): Void {
-        		this.currentAlias.labelSet.add(label);
-        		EM.change(EMEvent.UPDATE_LABELS);
-				EM.change(EMEvent.FitWindow);
-    		}, "User-CreateLabel")
+    private function registerModelListeners(): Void {
+        EM.addListener(EMEvent.CreateLabel, new EMListener(function(label: Label): Void {
+                this.currentAlias.labelSet.add(label);
+                EM.change(EMEvent.UPDATE_LABELS);
+                EM.change(EMEvent.FitWindow);
+            }, "User-CreateLabel")
         );
         EM.addListener(EMEvent.DeleteLabels, new EMListener(function(labels: Array<Label>): Void {
-        		for (i in 1...labels.length) {
-					this.currentAlias.labelSet.delete(labels[i]);
-				}
-        		EM.change(EMEvent.UPDATE_LABELS);
-				EM.change(EMEvent.FitWindow);
-    		}, "User-DeleteLabel")
+                for (i in 1...labels.length) {
+                    this.currentAlias.labelSet.delete(labels[i]);
+                }
+                EM.change(EMEvent.UPDATE_LABELS);
+                EM.change(EMEvent.FitWindow);
+            }, "User-DeleteLabel")
         );
         EM.addListener(EMEvent.ConnectionUpdate, new EMListener(function(conn: Connection): Void {
                 this.currentAlias.connectionSet.update(conn);
-				EM.change(EMEvent.FitWindow);
+                EM.change(EMEvent.FitWindow);
             }, "User-ConnUpdate")
         );
         EM.addListener(EMEvent.NewConnection, new EMListener(function(conn: Connection): Void {
                 this.currentAlias.connectionSet.update(conn);
-				EM.change(EMEvent.FitWindow);
+                EM.change(EMEvent.FitWindow);
             }, "User-ConnUpdate")
         );
-	}
+    }
 
-	private function get_currentAlias(): Alias {
-		if(currentAlias == null && aliasSet != null) {
-			currentAlias = aliasSet.iterator().next();
-		} else if (currentAlias == null) {
-			currentAlias = new Alias();
-			AppContext.LOGGER.warn("No aliases found for user.");
-		}
-		return currentAlias;
-	}
+    private function get_currentAlias(): Alias {
+        if(currentAlias == null && aliasSet != null) {
+            currentAlias = aliasSet.iterator().next();
+        } else if (currentAlias == null) {
+            currentAlias = new Alias();
+            AppContext.LOGGER.warn("No aliases found for user.");
+        }
+        return currentAlias;
+    }
 
-	private function set_currentAlias(alias: Alias): Alias {
-		currentAlias = alias;
-		return currentAlias;
-	}
+    private function set_currentAlias(alias: Alias): Alias {
+        currentAlias = alias;
+        return currentAlias;
+    }
 
-	public function hasValidSession(): Bool {
-		//TODO //IMPLEMENT ME
-		AppContext.LOGGER.warn("implement User.hasValidSession");
-		return true;
-	}
+    public function hasValidSession(): Bool {
+        //TODO //IMPLEMENT ME
+        AppContext.LOGGER.warn("implement User.hasValidSession");
+        return true;
+    }
 
-	private function readResolve(): Void {
-		aliasSet = new ObservableSet<Alias>(Alias.identifier, aliases);
-	}
+    private function readResolve(): Void {
+        aliasSet = new ObservableSet<Alias>(Alias.identifier, aliases);
+    }
 
-	private function writeResolve(): Void {
-		aliases = aliasSet.asArray();
-	}
+    private function writeResolve(): Void {
+        aliases = aliasSet.asArray();
+    }
 
-	public function getSelfConnection(): Connection {
-		var conn: Connection = new Connection();
-		conn.source = sessionURI;
-		conn.target = sessionURI;
-		conn.label = currentAlias.label;
-		return conn;
-	}
+    public function getSelfConnection(): Connection {
+        var conn: Connection = new Connection();
+        conn.source = sessionURI;
+        conn.target = sessionURI;
+        conn.label = currentAlias.label;
+        return conn;
+    }
 }
 
 class UserData extends ModelObj {
-	public var name: String;
-	@:optional public var imgSrc: String;
+    public var name: String;
+    @:optional public var imgSrc: String;
 
-	public function new(?name: String, ?imgSrc: String) {
-		super();
-		this.name = name;
-		this.imgSrc = imgSrc;
-	}
+    public function new(?name: String, ?imgSrc: String) {
+        super();
+        this.name = name;
+        this.imgSrc = imgSrc;
+    }
 }
 
 class Alias extends ModelObj {
-	public var profile: UserData;
-	public var label: String;
-	
-	@:isVar public var labelSet(get, null): ObservableSet<Label>;
-	@:isVar public var connectionSet(get, null): ObservableSet<Connection>;
-	// private var labels: Array<Label>;
-	// private var connections: Array<Connection>;
+    public var profile: UserData;
+    public var label: String;
+    
+    @:isVar public var labelSet(get, null): ObservableSet<Label>;
+    @:isVar public var connectionSet(get, null): ObservableSet<Connection>;
+    // private var labels: Array<Label>;
+    // private var connections: Array<Connection>;
 
-	// @:transient var loadedFromDb: Bool = false;
+    // @:transient var loadedFromDb: Bool = false;
 
 
-	public function new () {
-		super();
-	}
+    public function new () {
+        super();
+    }
 
-	// private function readResolve(): Void {
-	// 	labelSet = new ObservableSet<Label>(Label.identifier, labels);
-	// 	connectionSet = new ObservableSet<Connection>(Connection.identifier, connections);
-	// }
+    // private function readResolve(): Void {
+    //  labelSet = new ObservableSet<Label>(Label.identifier, labels);
+    //  connectionSet = new ObservableSet<Connection>(Connection.identifier, connections);
+    // }
 
-	// private function writeResolve(): Void {
-	// 	labels = labelSet.asArray();
-	// 	connections = connectionSet.asArray();
-	// }
+    // private function writeResolve(): Void {
+    //  labels = labelSet.asArray();
+    //  connections = connectionSet.asArray();
+    // }
 
-	public static function identifier(alias: Alias): String {
-		return alias.label;
-	}
+    public static function identifier(alias: Alias): String {
+        return alias.label;
+    }
 
-	private function get_labelSet(): ObservableSet<Label> {
-		if(labelSet == null) labelSet = new ObservableSet<Label>(Label.identifier);
-		return labelSet;
-	}
+    private function get_labelSet(): ObservableSet<Label> {
+        if(labelSet == null) labelSet = new ObservableSet<Label>(Label.identifier);
+        return labelSet;
+    }
 
-	private function get_connectionSet(): ObservableSet<Connection> {
-		if(connectionSet == null) connectionSet = new ObservableSet<Connection>(Connection.identifier);
-		return connectionSet;
-	}
+    private function get_connectionSet(): ObservableSet<Connection> {
+        if(connectionSet == null) connectionSet = new ObservableSet<Connection>(Connection.identifier);
+        return connectionSet;
+    }
 }
 
 interface Filterable {
@@ -188,110 +188,109 @@ interface Filterable {
 }
 
 class Label extends ModelObj implements Filterable {
-	@:transient public var uid: String;
-	public var text: String;
-	@:transient public var parentUid: String;
+    @:transient public var uid: String;
+    public var text: String;
+    @:transient public var parentUid: String;
 
-	//@:transient public var color: String;
-        public var color: String;
+    //@:transient public var color: String;
+    public var color: String;
 
-        //@:transient public var imgSrc: String;
-        public var imgSrc: String;
+    //@:transient public var imgSrc: String;
+    public var imgSrc: String;
 
-	public function new(?text: String, ?color : String, ?imgSrc : String, ?term : Term) {
-		super();
-                uid = UidGenerator.create(32);
-                untyped __js__( 'debugger' );
-                if ( term == null ) {		    
-		    this.text = text;
-		    if ( color == null ) {
-                        this.color = ColorProvider.getNextColor();
-                    }
-                    else {
-                        this.color = color;
-                    }
-                    if ( imgSrc == null ) {
-                        this.imgSrc = "";
-                    }
-                    else {
-                        this.imgSrc = imgSrc;
-                    }
-                }
-                else {
-                    var termParts : Array<Dynamic> = term.partlist.list;
+    public function new(?text: String, ?color : String, ?imgSrc : String, ?term : Term) {
+        super();
+        uid = UidGenerator.create(32);
+        if ( term == null ) {           
+            this.text = text;
+            if ( color == null ) {
+                this.color = ColorProvider.getNextColor();
+            }
+            else {
+                this.color = color;
+            }
+            if ( imgSrc == null ) {
+                this.imgSrc = "";
+            }
+            else {
+                this.imgSrc = imgSrc;
+            }
+        }
+        else {
+            var termParts : Array<Dynamic> = term.partlist.list;
 
-                    var textTerm : Term = termParts[0];
-                    var textTermParts : Array<Dynamic> = textTerm.partlist.list;
-                    var textTermAtom : Atom = textTermParts[0];
+            var textTerm : Term = termParts[0];
+            var textTermParts : Array<Dynamic> = textTerm.partlist.list;
+            var textTermAtom : Atom = textTermParts[0];
 
-                    var displayTerm : Term = termParts[1];
-                    var displayTermParts : Array<Dynamic> = displayTerm.partlist.list;
-                    var colorTerm : Term = displayTermParts[0];
-                    var colorTermParts : Array<Dynamic> = colorTerm.partlist.list;
-                    var colorTermAtom : Atom = colorTermParts[0];
-                    var imageTerm : Term = displayTermParts[1];
-                    var imageTermParts : Array<Dynamic> = imageTerm.partlist.list;
-                    var imageTermAtom : Atom = imageTermParts[0];
+            var displayTerm : Term = termParts[1];
+            var displayTermParts : Array<Dynamic> = displayTerm.partlist.list;
+            var colorTerm : Term = displayTermParts[0];
+            var colorTermParts : Array<Dynamic> = colorTerm.partlist.list;
+            var colorTermAtom : Atom = colorTermParts[0];
+            var imageTerm : Term = displayTermParts[1];
+            var imageTermParts : Array<Dynamic> = imageTerm.partlist.list;
+            var imageTermAtom : Atom = imageTermParts[0];
 
-                    var textTermLiteral = textTermAtom.name;
-                    this.text = textTermLiteral.substring( 1, textTermLiteral.length - 1 );
-                    var colorTermLiteral = colorTermAtom.name;
-                    this.color = colorTermLiteral.substring( 1, colorTermLiteral.length - 1 );
-                    var imageTermLiteral = imageTermAtom.name;
-                    this.imgSrc = imageTermLiteral.substring( 1, imageTermLiteral.length - 1 );
-                }
-	}
+            var textTermLiteral = textTermAtom.name;
+            this.text = textTermLiteral.substring( 1, textTermLiteral.length - 1 );
+            var colorTermLiteral = colorTermAtom.name;
+            this.color = colorTermLiteral.substring( 1, colorTermLiteral.length - 1 );
+            var imageTermLiteral = imageTermAtom.name;
+            this.imgSrc = imageTermLiteral.substring( 1, imageTermLiteral.length - 1 );
+        }
+    }
 
-	public static function identifier(l: Label): String {
-		return l.parentUid + "_" + l.text;
-	}
+    public static function identifier(l: Label): String {
+        return l.parentUid + "_" + l.text;
+    }
 }
 
 class Connection extends ModelObj implements Filterable {
-	// @:transient public var fname: String;
-	// @:transient public var lname: String;
-	// @:transient public var imgSrc: String;
+    // @:transient public var fname: String;
+    // @:transient public var lname: String;
+    // @:transient public var imgSrc: String;
 
-	@:transient public var uid(get, null): String;
+    @:transient public var uid(get, null): String;
 
-	public var source: String;
-	public var target: String;
-	public var label: String;
+    public var source: String;
+    public var target: String;
+    public var label: String;
 
-	@:transient public var profile: UserData;
+    @:transient public var profile: UserData;
 
-	@:transient public var connectionSet: ObservableSet<Connection>;
-	@:transient public var connectionLabelSet: ObservableSet<Label>;
-	@:transient public var userSharedLabelSet: ObservableSet<Label>;
+    @:transient public var connectionSet: ObservableSet<Connection>;
+    @:transient public var connectionLabelSet: ObservableSet<Label>;
+    @:transient public var userSharedLabelSet: ObservableSet<Label>;
 
-	function get_uid(): String {
-		return Connection.identifier(this);
-	}
+    function get_uid(): String {
+        return Connection.identifier(this);
+    }
 
-	public static function identifier(c: Connection): String {
-		return c.label + "_" + c.target;
-	}
+    public static function identifier(c: Connection): String {
+        return c.label + "_" + c.target;
+    }
 
 
-	public function new(?profile: UserData) {
-		super();
-		this.profile = profile;
-	}
+    public function new(?profile: UserData) {
+        super();
+        this.profile = profile;
+    }
 
-	public function name() : String {
-		return this.profile != null ? this.profile.name : "";
-	}
+    public function name() : String {
+        return this.profile != null ? this.profile.name : "";
+    }
 
-	public function equals(c: Connection): Bool {
-		return 
-			this.source == c.source &&
-			this.target == c.target &&
-			this.label == c.label;
-	}
+    public function equals(c: Connection): Bool {
+        return 
+            this.source == c.source &&
+            this.target == c.target &&
+            this.label == c.label;
+    }
 }
 
 class ContentHandler implements TypeHandler {
-	
+    
     public function new() {
     }
 
@@ -299,14 +298,16 @@ class ContentHandler implements TypeHandler {
         var obj: Content = null;
 
         switch ( ContentType.createByName(fromJson.type) ) {
-        	case ContentType.AUDIO:
-        		obj = AppContext.SERIALIZER.fromJsonX(fromJson, AudioContent);
-        	case ContentType.IMAGE:
-        		obj = AppContext.SERIALIZER.fromJsonX(fromJson, ImageContent);
-        	case ContentType.TEXT:
-        		obj = AppContext.SERIALIZER.fromJsonX(fromJson, MessageContent);
-        	case ContentType.URL:
-        		obj = AppContext.SERIALIZER.fromJsonX(fromJson, UrlContent);
+            case ContentType.AUDIO:
+                obj = AppContext.SERIALIZER.fromJsonX(fromJson, AudioContent);
+            case ContentType.IMAGE:
+                obj = AppContext.SERIALIZER.fromJsonX(fromJson, ImageContent);
+            case ContentType.TEXT:
+                obj = AppContext.SERIALIZER.fromJsonX(fromJson, MessageContent);
+            case ContentType.URL:
+                obj = AppContext.SERIALIZER.fromJsonX(fromJson, UrlContent);
+            case ContentType.LABEL:
+                obj = AppContext.SERIALIZER.fromJsonX(fromJson, LabelContent);
         }
 
         return obj;
@@ -318,146 +319,155 @@ class ContentHandler implements TypeHandler {
 }
 
 class Content extends ModelObjWithUid<Content> {
-	public var type: ContentType;
-	public var created: Date;
-	public var modified: Date;
-	
-	@:transient public var labelSet: ObservableSet<Label>;
-	@:transient public var connectionSet: ObservableSet<Connection>;
+    public var type: ContentType;
+    public var created: Date;
+    public var modified: Date;
+    
+    @:transient public var labelSet: ObservableSet<Label>;
+    @:transient public var connectionSet: ObservableSet<Connection>;
 
-	@:optional var labels: Array<Label>;
-	@:optional var connections: Array<Connection>;
-		
-	/**
-		UID of connection that created the content
-	*/
-	@:optional public var creator: String;
+    @:optional var labels: Array<Label>;
+    @:optional var connections: Array<Connection>;
+        
+    /**
+        UID of connection that created the content
+    */
+    @:optional public var creator: String;
 
-	public function new (contentType:ContentType) {
-		super();
-		this.type     = contentType;
-		this.created  = Date.now();
-		this.modified = Date.now();
+    public function new (contentType:ContentType) {
+        super();
+        this.type     = contentType;
+        this.created  = Date.now();
+        this.modified = Date.now();
 
         this.connectionSet = new ObservableSet<Connection>(Connection.identifier, []);
         this.labelSet = new ObservableSet<Label>(Label.identifier, []);
-	}
+    }
 
-	public function getTimestamp(): String {
-		return DateTools.format(this.created, "%Y-%m-%d %T");
-	}
+    public function getTimestamp(): String {
+        return DateTools.format(this.created, "%Y-%m-%d %T");
+    }
 
-	private function readResolve(): Void {
-		labelSet = new ObservableSet<Label>(Label.identifier, labels);
-		connectionSet = new ObservableSet<Connection>(Connection.identifier, connections);
-	}
+    private function readResolve(): Void {
+        labelSet = new ObservableSet<Label>(Label.identifier, labels);
+        connectionSet = new ObservableSet<Connection>(Connection.identifier, connections);
+    }
 
-	private function writeResolve(): Void {
-		labels = labelSet.asArray();
-		connections = connectionSet.asArray();
-	}
+    private function writeResolve(): Void {
+        labels = labelSet.asArray();
+        connections = connectionSet.asArray();
+    }
 }
 
 class ImageContent extends Content {
-	public var imgSrc: String;
-	public var caption: String;
+    public var imgSrc: String;
+    public var caption: String;
 
-	public function new () {
-		super(ContentType.IMAGE);
-	}
+    public function new () {
+        super(ContentType.IMAGE);
+    }
 }
 
 class AudioContent extends Content {
-	public var audioSrc: String;
-	public var audioType: String;
-	public var title: String;
+    public var audioSrc: String;
+    public var audioType: String;
+    public var title: String;
 
-	public function new () {
-		super(ContentType.AUDIO);
-	}
+    public function new () {
+        super(ContentType.AUDIO);
+    }
+}
+
+class LabelContent extends Content {
+    public var prolog: String;
+
+    public function new () {
+        super(ContentType.LABEL);
+    }
 }
 
 class MessageContent extends Content {
-	public var text: String;
+    public var text: String;
 
-	public function new () {
-		super(ContentType.TEXT);
-	}
+    public function new () {
+        super(ContentType.TEXT);
+    }
 }
 
 class UrlContent extends Content {
-	public var url: String;
-	public var text: String;
+    public var url: String;
+    public var text: String;
 
-	public function new () {
-		super(ContentType.URL);
-	}	
+    public function new () {
+        super(ContentType.URL);
+    }   
 }
 
 enum ContentType {
-	AUDIO;
-	IMAGE;
-	URL;
-	TEXT;
+    AUDIO;
+    IMAGE;
+    URL;
+    TEXT;
+    LABEL;
 }
 
 class Login extends ModelObj {
-	public function new () {
-		super();
-	}
-	public var password: String;
+    public function new () {
+        super();
+    }
+    public var password: String;
 
-	public function getUri(): String {
-		return throw new Exception("don't call me!");
-	}
+    public function getUri(): String {
+        return throw new Exception("don't call me!");
+    }
 }
 
 class LoginByUn extends Login {
-	public var email: String;
-	// public var agency: String;
+    public var email: String;
+    // public var agency: String;
 
-	override public function getUri(): String {
-		// return "agent://" + username + ":" + password + "@server:9876/" + agency + "?email=george@costanza.com&fullname=George+Costanza";
-		return "agent://email/" + email + "?password=" + password;
-	}
+    override public function getUri(): String {
+        // return "agent://" + username + ":" + password + "@server:9876/" + agency + "?email=george@costanza.com&fullname=George+Costanza";
+        return "agent://email/" + email + "?password=" + password;
+    }
 }
 
 class LoginById extends Login {
-	public var uuid: String;
+    public var uuid: String;
 
-	override public function getUri(): String {
-		return uuid + "?password=" + password;
-	}
+    override public function getUri(): String {
+        return uuid + "?password=" + password;
+    }
 }
 
 class NewUser extends ModelObj {
-	public var name: String;
-	public var userName: String;
-	public var email: String;
-	public var pwd: String;
+    public var name: String;
+    public var userName: String;
+    public var email: String;
+    public var pwd: String;
 
-	public function new () {
-		super();
-	}
+    public function new () {
+        super();
+    }
 }
 
 class Introduction extends ModelObj {
-	public var aConn: Connection;
-	public var bConn: Connection;
+    public var aConn: Connection;
+    public var bConn: Connection;
 
-	public var aMsg: String;
-	public var bMsg: String;
+    public var aMsg: String;
+    public var bMsg: String;
 }
 
 class IntroductionConfirmation extends ModelObj {
-	public var accepted: Bool;
-	public var introSessionId: String;
-	public var correlationId: String;
+    public var accepted: Bool;
+    public var introSessionId: String;
+    public var correlationId: String;
 
-	public function new(accepted:Bool, introSessionId:String, correlationId:String) {
-		super();
-		this.accepted       = accepted;
-		this.introSessionId = introSessionId;
-		this.correlationId  = correlationId;
-	}
+    public function new(accepted:Bool, introSessionId:String, correlationId:String) {
+        super();
+        this.accepted       = accepted;
+        this.introSessionId = introSessionId;
+        this.correlationId  = correlationId;
+    }
 }

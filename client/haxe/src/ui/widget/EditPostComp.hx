@@ -209,6 +209,9 @@ extern class EditPostComp extends JQ {
 							cast(self.options.content, ImageContent).imgSrc = self.uploadComp.value();
 						case ContentType.AUDIO:
 							cast(self.options.content, AudioContent).audioSrc = self.uploadComp.value();
+						case ContentType.LABEL:
+						    untyped __js__("debugger;");
+							cast(self.options.content, LabelContent).prolog = null;
 					}
 
 					self.options.content.labelSet.clear();
