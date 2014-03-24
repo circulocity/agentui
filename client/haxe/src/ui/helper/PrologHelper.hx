@@ -139,11 +139,8 @@ class PrologHelper {
                     progenyTermParts.iter(
                         function( term : Term ) : Void {
                             var progeny : Array<Label> = termToLabel( term );
-                            progeny.iter(
-                                function( child : Label ) {
-                                        child.parentUid = l.uid;
-                                    }
-                            );
+                            var child : Label = progeny[0];
+                            child.parentUid = l.uid;
                             larray = larray.concat( progeny );
                         }
                     );
