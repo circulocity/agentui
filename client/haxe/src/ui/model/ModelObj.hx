@@ -380,7 +380,7 @@ class AudioContent extends Content {
 }
 
 class LabelContent extends Content {
-    public var prolog: String;
+    public var text: String;
 
     public function new () {
         super(ContentType.LABEL);

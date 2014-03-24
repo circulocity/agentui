@@ -9,6 +9,7 @@ import ui.widget.LabelComp;
 import m3.exception.Exception;
 import m3.util.JqueryUtil;
 import ui.model.EM;
+import ui.helper.PrologHelper;
 
 using m3.helper.OSetHelper;
 using ui.helper.ModelHelper;
@@ -85,7 +86,12 @@ extern class ContentComp extends JQ {
 	        				
             			case ContentType.LABEL:
             				var labelContent: LabelContent = cast(content, LabelContent);
-            				postContent.append("<div class='content-text'>" + labelContent.prolog + "</div>");
+            				// Decode tag, append to content area
+            				untyped __js__("debugger");
+            				try { 
+            				    var labelArray = PrologHelper.stringToLabel(labelContent.text);
+        				    } catch (_: Dynamic) { }
+            				postContent.append("<div class='content-text'>" + labelContent.text + "</div>");
 		        	}
 
 					self.buttonBlock = new JQ("<div class='button-block' ></div>").css("text-align", "left").hide().appendTo(postContent);

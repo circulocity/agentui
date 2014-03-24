@@ -285,31 +285,26 @@ extern class PostComp extends JQ {
                     }
 
                     var postButton: JQ = new JQ("<button>Post</button>")
-                                            .appendTo(selfElement)
-                                            .button()
-                                            .click(function(evt: JQEvent): Void {
-                                                if (textInput.isVisible()) {
-                                                    var ta = new JQ("#textInput_ta");
-                                                    doPostForElement(evt, ContentType.TEXT, ta);
-                                                } else if (urlComp.isVisible()) {
-                                                    doPostForElement(evt, ContentType.URL, urlComp.urlInput());
-                                                } else if (imageInput.isVisible()){
-                                                    doPost(evt, ContentType.IMAGE, imageInput.value());
-                                                    imageInput.clear();
-                                                } else if (audioInput.isVisible()){
-                                                    doPost(evt, ContentType.AUDIO, audioInput.value());
-                                                    audioInput.clear();
-                                                } else if (labelInput.isVisible()) {
-                                                    var temp = new MessageContent();
-                                                    labelArea.children(".label").each(function(i: Int, dom: Element): Void {
-                                                            var labelComp: LabelComp = new LabelComp(dom);
-                                                            temp.labelSet.add(labelComp.getLabel());
-                                                        });
-                                                    var value = PrologHelper.tagTreeAsStrings(temp.labelSet);
-                                                    untyped __js__("alert(value);");
-                                                    // doPost(evt, ContentType.LABEL, )
-                                                }
-                                            });
+                        .appendTo(selfElement)
+                        .button()
+                        .click(function(evt: JQEvent): Void {
+                            if (textInput.isVisible()) {
+                                var ta = new JQ("#textInput_ta");
+                                doPostForElement(evt, ContentType.TEXT, ta);
+                            } else if (urlComp.isVisible()) {
+                                doPostForElement(evt, ContentType.URL, urlComp.urlInput());
+                            } else if (imageInput.isVisible()){
+                                doPost(evt, ContentType.IMAGE, imageInput.value());
+                                imageInput.clear();
+                            } else if (audioInput.isVisible()){
+                                doPost(evt, ContentType.AUDIO, audioInput.value());
+                                audioInput.clear();
+                            } else if (labelInput.isVisible()) {
+                                var value: String = "";
+                                untyped __js__('value = labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",");');
+                                doPost(evt, ContentType.LABEL, value);
+                            }
+                        });
                 },
 
                 destroy: function() {
