@@ -193,53 +193,52 @@ class Label extends ModelObj implements Filterable {
     @:transient public var parentUid: String;
 
     //@:transient public var color: String;
-        public var color: String;
+    public var color: String;
 
-        //@:transient public var imgSrc: String;
-        public var imgSrc: String;
+    //@:transient public var imgSrc: String;
+    public var imgSrc: String;
 
     public function new(?text: String, ?color : String, ?imgSrc : String, ?term : Term) {
         super();
-                uid = UidGenerator.create(32);
-                untyped __js__( 'debugger' );
-                if ( term == null ) {           
+        uid = UidGenerator.create(32);
+        if ( term == null ) {           
             this.text = text;
             if ( color == null ) {
-                        this.color = ColorProvider.getNextColor();
-                    }
-                    else {
-                        this.color = color;
-                    }
-                    if ( imgSrc == null ) {
-                        this.imgSrc = "";
-                    }
-                    else {
-                        this.imgSrc = imgSrc;
-                    }
-                }
-                else {
-                    var termParts : Array<Dynamic> = term.partlist.list;
+                this.color = ColorProvider.getNextColor();
+            }
+            else {
+                this.color = color;
+            }
+            if ( imgSrc == null ) {
+                this.imgSrc = "";
+            }
+            else {
+                this.imgSrc = imgSrc;
+            }
+        }
+        else {
+            var termParts : Array<Dynamic> = term.partlist.list;
 
-                    var textTerm : Term = termParts[0];
-                    var textTermParts : Array<Dynamic> = textTerm.partlist.list;
-                    var textTermAtom : Atom = textTermParts[0];
+            var textTerm : Term = termParts[0];
+            var textTermParts : Array<Dynamic> = textTerm.partlist.list;
+            var textTermAtom : Atom = textTermParts[0];
 
-                    var displayTerm : Term = termParts[1];
-                    var displayTermParts : Array<Dynamic> = displayTerm.partlist.list;
-                    var colorTerm : Term = displayTermParts[0];
-                    var colorTermParts : Array<Dynamic> = colorTerm.partlist.list;
-                    var colorTermAtom : Atom = colorTermParts[0];
-                    var imageTerm : Term = displayTermParts[1];
-                    var imageTermParts : Array<Dynamic> = imageTerm.partlist.list;
-                    var imageTermAtom : Atom = imageTermParts[0];
+            var displayTerm : Term = termParts[1];
+            var displayTermParts : Array<Dynamic> = displayTerm.partlist.list;
+            var colorTerm : Term = displayTermParts[0];
+            var colorTermParts : Array<Dynamic> = colorTerm.partlist.list;
+            var colorTermAtom : Atom = colorTermParts[0];
+            var imageTerm : Term = displayTermParts[1];
+            var imageTermParts : Array<Dynamic> = imageTerm.partlist.list;
+            var imageTermAtom : Atom = imageTermParts[0];
 
-                    var textTermLiteral = textTermAtom.name;
-                    this.text = textTermLiteral.substring( 1, textTermLiteral.length - 1 );
-                    var colorTermLiteral = colorTermAtom.name;
-                    this.color = colorTermLiteral.substring( 1, colorTermLiteral.length - 1 );
-                    var imageTermLiteral = imageTermAtom.name;
-                    this.imgSrc = imageTermLiteral.substring( 1, imageTermLiteral.length - 1 );
-                }
+            var textTermLiteral = textTermAtom.name;
+            this.text = textTermLiteral.substring( 1, textTermLiteral.length - 1 );
+            var colorTermLiteral = colorTermAtom.name;
+            this.color = colorTermLiteral.substring( 1, colorTermLiteral.length - 1 );
+            var imageTermLiteral = imageTermAtom.name;
+            this.imgSrc = imageTermLiteral.substring( 1, imageTermLiteral.length - 1 );
+        }
     }
 
     public static function identifier(l: Label): String {
