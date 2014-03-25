@@ -101,7 +101,9 @@ extern class ContentComp extends JQ {
                                         // EM.change(EMEvent.CreateLabel, label);
                                         function importLabel(l: Label): Void {
                                             EM.change(EMEvent.CreateLabel, l);
-                                            l.progeny.map(importLabel);
+                                            if (l.progeny != null) {
+                                                l.progeny.map(importLabel);
+                                            }
                                         }
                                         importLabel(label);
                                     }

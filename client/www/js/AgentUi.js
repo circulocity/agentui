@@ -8861,7 +8861,7 @@ var defineWidget = function() {
 							var importLabel1 = null;
 							importLabel1 = function(l) {
 								ui.model.EM.change(ui.model.EMEvent.CreateLabel,l);
-								l.progeny.map(importLabel1);
+								if(l.progeny != null) l.progeny.map(importLabel1);
 							};
 							$r = importLabel1;
 							return $r;
