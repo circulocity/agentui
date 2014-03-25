@@ -8852,8 +8852,10 @@ var defineWidget = function() {
 			var labelContent = js.Boot.__cast(content , ui.model.LabelContent);
 			debugger;
 			var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
+			var labelArea = new $("<div style='margins:0 auto;width:500px;height:98px;'></div>");
+			labelArea.appendTo(postContent);
 			labelArray.map(function(label) {
-				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(postContent);
+				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(labelArea);
 			});
 			break;
 		}

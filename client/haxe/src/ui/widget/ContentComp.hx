@@ -89,11 +89,13 @@ extern class ContentComp extends JQ {
                             // Decode tag, append to content area
                             untyped __js__("debugger");
                             var labelArray = PrologHelper.stringToLabel(labelContent.text);
+                            var labelArea = new JQ("<div style='margins:0 auto;width:500px;height:98px;'></div>");
+                            labelArea.appendTo(postContent);
                             labelArray.map(function (label) {
                                 new LabelComp("<div class='small'></div>").labelComp({
                                     dndEnabled: false,
                                     label: label
-                                }).appendTo(postContent);
+                                }).appendTo(labelArea);
                             });
                     }
 
