@@ -8851,11 +8851,10 @@ var defineWidget = function() {
 		case 4:
 			var labelContent = js.Boot.__cast(content , ui.model.LabelContent);
 			debugger;
-			try {
-				var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
-			} catch( _ ) {
-			}
-			postContent.append("<div class='content-text'>" + labelContent.text + "</div>");
+			var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
+			labelArray.map(function(label) {
+				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(postContent);
+			});
 			break;
 		}
 		self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(postContent);
@@ -9820,7 +9819,7 @@ var defineWidget = function() {
 				ui.widget.UploadCompHelper.clear(audioInput);
 			} else if(labelInput.isVisible()) {
 				var value = "";
-				value = labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",");;
+				value = "all("+labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",")+")";;
 				doPost(evt,ui.model.ContentType.LABEL,value);
 			}
 		});
