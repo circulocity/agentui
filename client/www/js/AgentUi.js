@@ -8856,8 +8856,7 @@ var defineWidget = function() {
 			labelArea.appendTo(postContent);
 			labelArray.map(function(label) {
 				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(labelArea).click(function() {
-					if(confirm("Do you want to import this label?")) {
-					}
+					if(confirm("Do you want to import this label?")) ui.model.EM.change(ui.model.EMEvent.CreateLabel,label);
 					return false;
 				});
 			});

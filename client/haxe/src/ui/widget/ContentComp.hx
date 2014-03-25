@@ -86,8 +86,6 @@ extern class ContentComp extends JQ {
                             
                         case ContentType.LABEL:
                             var labelContent: LabelContent = cast(content, LabelContent);
-                            // Decode tag, append to content area
-                            untyped __js__("debugger");
                             var labelArray = PrologHelper.stringToLabel(labelContent.text);
                             var labelArea = new JQ("<div style='margins:0 auto;width:500px;height:98px;'></div>");
                             labelArea.appendTo(postContent);
@@ -99,13 +97,9 @@ extern class ContentComp extends JQ {
                                 .appendTo(labelArea)
                                 .click(function(){
                                     if(untyped __js__('confirm("Do you want to import this label?")')) {
-                                        /*
-                                        var label: Label = new Label();
-                                        label.parentUid = parent.val();
-                                        label.text = input.val();
-                                        AppContext.LOGGER.debug("add to " + self.labels.visualId);
-                                        EM.change(EMEvent.CreateLabel, label);
-                                        //*/
+                                        // traverse label and children, importing each
+                                        // EM.change(EMEvent.CreateLabel, label);
+                                        untyped __js__('alert(JSON.stringify(label))');
                                     }
                                     return false;
                                 });

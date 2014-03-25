@@ -160,7 +160,7 @@ extern class LabelsList extends JQ {
     								return false;
     							}
     						},
-                                                { 
+                            {
     							label: "Set Label Image",
     							icon: "ui-icon-image",
     							action: function(evt: JQEvent, m: M3Menu): Void {
