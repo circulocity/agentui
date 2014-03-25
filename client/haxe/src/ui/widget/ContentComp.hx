@@ -95,7 +95,20 @@ extern class ContentComp extends JQ {
                                 new LabelComp("<div class='small'></div>").labelComp({
                                     dndEnabled: false,
                                     label: label
-                                }).appendTo(labelArea);
+                                })
+                                .appendTo(labelArea)
+                                .click(function(){
+                                    if(untyped __js__('confirm("Do you want to import this label?")')) {
+                                        /*
+                                        var label: Label = new Label();
+                                        label.parentUid = parent.val();
+                                        label.text = input.val();
+                                        AppContext.LOGGER.debug("add to " + self.labels.visualId);
+                                        EM.change(EMEvent.CreateLabel, label);
+                                        //*/
+                                    }
+                                    return false;
+                                });
                             });
                     }
 
