@@ -8856,7 +8856,17 @@ var defineWidget = function() {
 			labelArray.map(function(label) {
 				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(labelArea).click(function() {
 					if(confirm("Do you want to import this label?")) {
-						alert(JSON.stringify(label));
+						var importLabel = (function($this) {
+							var $r;
+							var importLabel1 = null;
+							importLabel1 = function(l) {
+								ui.model.EM.change(ui.model.EMEvent.CreateLabel,l);
+								l.progeny.map(importLabel1);
+							};
+							$r = importLabel1;
+							return $r;
+						}(this));
+						importLabel(label);
 					}
 					return false;
 				});

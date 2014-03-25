@@ -99,7 +99,11 @@ extern class ContentComp extends JQ {
                                     if(untyped __js__('confirm("Do you want to import this label?")')) {
                                         // traverse label and children, importing each
                                         // EM.change(EMEvent.CreateLabel, label);
-                                        untyped __js__('alert(JSON.stringify(label))');
+                                        function importLabel(l: Label): Void {
+                                            EM.change(EMEvent.CreateLabel, l);
+                                            l.progeny.map(importLabel);
+                                        }
+                                        importLabel(label);
                                     }
                                     return false;
                                 });
