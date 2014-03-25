@@ -9823,6 +9823,7 @@ var defineWidget = function() {
 				var value = "";
 				value = "all("+labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",")+")";;
 				doPost(evt,ui.model.ContentType.LABEL,value);
+				labelArea.empty();
 			}
 		});
 	}, destroy : function() {
