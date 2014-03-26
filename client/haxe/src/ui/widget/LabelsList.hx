@@ -182,6 +182,7 @@ extern class LabelsList extends JQ {
                                                                                                                 var l : Label = self.selectedLabelComp.getLabel();
 													        l.imgSrc = uploadComp.value();                          
                                                                                                                 EM.change(EMEvent.UPDATE_LABELS);
+                                                                                                                EM.change(EMEvent.FitWindow);
 														M3Dialog.cur.m3dialog("close");
 													}
         										}
