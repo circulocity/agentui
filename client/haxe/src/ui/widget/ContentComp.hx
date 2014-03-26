@@ -97,14 +97,13 @@ extern class ContentComp extends JQ {
                                 .appendTo(labelArea)
                                 .click(function(){
                                     if(untyped __js__('confirm("Do you want to import this label?")')) {
-                                        // traverse label and children, importing each
-                                        // EM.change(EMEvent.CreateLabel, label);
                                         function importLabel(l: Label): Void {
                                             EM.change(EMEvent.CreateLabel, l);
                                             if (l.progeny != null) {
                                                 l.progeny.map(importLabel);
                                             }
                                         }
+                                        // How does progeny disappear between the labelArray.map and here?
                                         importLabel(label);
                                     }
                                     return false;

@@ -9138,7 +9138,6 @@ var defineWidget = function() {
 		selfElement.hover(function() {
 			if(m3.helper.OSetHelper.hasValues(self.options.children)) expander.css("visibility","visible");
 		},function() {
-			expander.css("visibility","hidden");
 		});
 		if(self.options.children != null) {
 			var labelChildren = new $("<div class='labelChildren' style='display: none;'></div>");
@@ -9248,6 +9247,19 @@ var defineWidget = function() {
 					label.parentUid = parent.val();
 					label.text = input.val();
 					ui.AppContext.LOGGER.debug("add to " + self.labels.visualId);
+					if(label.parentUid != "") {
+						var lArray = self.labels.asArray();
+						var i;
+						var _g1 = 0, _g = lArray.length;
+						while(_g1 < _g) {
+							var i1 = _g1++;
+							var l = lArray[i1];
+							if(l.uid == label.parentUid) {
+								if(l.progeny != null) l.progeny.push(label); else l.progeny = [label];
+								break;
+							}
+						}
+					}
 					ui.model.EM.change(ui.model.EMEvent.CreateLabel,label);
 					new $("body").click();
 				}

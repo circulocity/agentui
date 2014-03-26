@@ -65,7 +65,7 @@ extern class LabelTreeBranch extends JQ {
 		            			expander.css("visibility", "visible");
 		            		}
 		            	}, function(): Void {
-		            		expander.css("visibility", "hidden");
+		            		// expander.css("visibility", "hidden");
 		            	}
 	            	);
 
