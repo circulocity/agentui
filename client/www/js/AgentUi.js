@@ -8850,12 +8850,27 @@ var defineWidget = function() {
 			break;
 		case 4:
 			var labelContent = js.Boot.__cast(content , ui.model.LabelContent);
-			debugger;
-			try {
-				var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
-			} catch( _ ) {
-			}
-			postContent.append("<div class='content-text'>" + labelContent.text + "</div>");
+			var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
+			var labelArea = new $("<div style='margins:0 auto;width:500px;height:98px;'></div>");
+			labelArea.appendTo(postContent);
+			labelArray.map(function(label) {
+				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(labelArea).click(function() {
+					if(confirm("Do you want to import this label?")) {
+						var importLabel = (function($this) {
+							var $r;
+							var importLabel1 = null;
+							importLabel1 = function(l) {
+								ui.model.EM.change(ui.model.EMEvent.CreateLabel,l);
+								if(l.progeny != null) l.progeny.map(importLabel1);
+							};
+							$r = importLabel1;
+							return $r;
+						}(this));
+						importLabel(label);
+					}
+					return false;
+				});
+			});
 			break;
 		}
 		self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(postContent);
@@ -9843,8 +9858,9 @@ var defineWidget = function() {
 				ui.widget.UploadCompHelper.clear(audioInput);
 			} else if(labelInput.isVisible()) {
 				var value = "";
-				value = labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",");;
+				value = "all("+labelArea.children(".label").map(function(index, dom){return ui.helper.PrologHelper.labelToString(ui.widget.LabelCompHelper.getLabel(new $(dom)));}).toArray().join(",")+")";;
 				doPost(evt,ui.model.ContentType.LABEL,value);
+				labelArea.empty();
 			}
 		});
 	}, destroy : function() {
