@@ -8853,8 +8853,10 @@ var defineWidget = function() {
 			var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
 			var labelArea = new $("<div style='margins:0 auto;width:500px;height:98px;'></div>");
 			labelArea.appendTo(postContent);
-			labelArray.map(function(label) {
-				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(labelArea).click(function() {
+			labelArray.filter(function(label) {
+				return label.parentUid == "";
+			}).map(function(label1) {
+				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label1}).appendTo(labelArea).click(function() {
 					if(confirm("Do you want to import this label?")) {
 						var importLabel = (function($this) {
 							var $r;
@@ -8866,7 +8868,7 @@ var defineWidget = function() {
 							$r = importLabel1;
 							return $r;
 						}(this));
-						importLabel(label);
+						importLabel(label1);
 					}
 					return false;
 				});

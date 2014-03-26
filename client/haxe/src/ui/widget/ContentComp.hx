@@ -89,13 +89,17 @@ extern class ContentComp extends JQ {
                             var labelArray = PrologHelper.stringToLabel(labelContent.text);
                             var labelArea = new JQ("<div style='margins:0 auto;width:500px;height:98px;'></div>");
                             labelArea.appendTo(postContent);
-                            labelArray.map(function (label) {
+                            labelArray.filter(function (label) {
+                                return label.parentUid == "";
+                            })
+                            .map(function (label) {
                                 new LabelComp("<div class='small'></div>").labelComp({
                                     dndEnabled: false,
                                     label: label
                                 })
                                 .appendTo(labelArea)
                                 .click(function(){
+                                    // Switch to jquery-ui dialog
                                     if(untyped __js__('confirm("Do you want to import this label?")')) {
                                         function importLabel(l: Label): Void {
                                             EM.change(EMEvent.CreateLabel, l);
@@ -103,7 +107,6 @@ extern class ContentComp extends JQ {
                                                 l.progeny.map(importLabel);
                                             }
                                         }
-                                        // How does progeny disappear between the labelArray.map and here?
                                         importLabel(label);
                                     }
                                     return false;
