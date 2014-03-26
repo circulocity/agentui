@@ -90,7 +90,7 @@ extern class ContentComp extends JQ {
                             var labelArea = new JQ("<div style='margins:0 auto;width:500px;height:98px;'></div>");
                             labelArea.appendTo(postContent);
                             labelArray.filter(function (label) {
-                                return label.parentUid == "";
+                                return label.parentUid == "" || label.parentUid == null;
                             })
                             .map(function (label) {
                                 new LabelComp("<div class='small'></div>").labelComp({

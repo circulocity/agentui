@@ -8854,7 +8854,7 @@ var defineWidget = function() {
 			var labelArea = new $("<div style='margins:0 auto;width:500px;height:98px;'></div>");
 			labelArea.appendTo(postContent);
 			labelArray.filter(function(label) {
-				return label.parentUid == "";
+				return label.parentUid == "" || label.parentUid == null;
 			}).map(function(label1) {
 				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label1}).appendTo(labelArea).click(function() {
 					if(confirm("Do you want to import this label?")) {
