@@ -8883,6 +8883,28 @@ var defineWidget = function() {
 			selfElement.hide();
 			var editPostComp = new $(comp).editPostComp({ content : self.options.content});
 		});
+		var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click(function(evt) {
+			switch( (content.type)[1] ) {
+			case 3:
+				m3.util.JqueryUtil.alert("share text");
+				break;
+			case 2:
+				m3.util.JqueryUtil.alert("share link");
+				break;
+			case 1:
+				m3.util.JqueryUtil.alert("share image");
+				break;
+			case 0:
+				m3.util.JqueryUtil.alert("share sound");
+				break;
+			case 4:
+				m3.util.JqueryUtil.alert("share label");
+				break;
+			}
+		});
+		var loveButton = new $("<button title='love'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click(function(evt) {
+			m3.util.JqueryUtil.alert("provide support for content");
+		});
 		var postCreator = new $("<aside class='postCreator'></aside>").appendTo(postWr);
 		var connection = m3.helper.OSetHelper.getElementComplex(ui.AppContext.USER.get_currentAlias().get_connectionSet(),content.creator);
 		if(connection == null) connection = ui.helper.ModelHelper.asConnection(ui.AppContext.USER.get_currentAlias());
@@ -9314,6 +9336,7 @@ var defineWidget = function() {
 				var l = ui.widget.LabelCompHelper.getLabel(self1.selectedLabelComp);
 				l.imgSrc = ui.widget.UploadCompHelper.value(uploadComp);
 				ui.model.EM.change(ui.model.EMEvent.UPDATE_LABELS);
+				ui.model.EM.change(ui.model.EMEvent.FitWindow);
 				$(this).m3dialog("close");
 			}}});
 		}},{ label : "Delete Label", icon : "ui-icon-circle-minus", action : function(evt,m) {

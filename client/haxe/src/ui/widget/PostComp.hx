@@ -282,7 +282,7 @@ extern class PostComp extends JQ {
                                 var conn: ConnectionAvatar = new ConnectionAvatar(dom);
                                 content.connectionSet.add( conn.getConnection() );
                             });
-                    }
+                    }                                        
 
                     var postButton: JQ = new JQ("<button>Post</button>")
                         .appendTo(selfElement)

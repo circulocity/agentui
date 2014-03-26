@@ -128,6 +128,35 @@ extern class ContentComp extends JQ {
                             selfElement.hide();
                             var editPostComp = new EditPostComp(comp).editPostComp({content: self.options.content});
                         });
+
+                    var shareButton: JQ = new JQ("<button title='share'></button>")
+                        .appendTo(self.buttonBlock)
+                        .button({text: false,  icons: { primary: "ui-icon-arrowreturnthick-1-e"}})
+                        .css("height", "15px")
+                        .css("width", "23px")
+                        .click(function(evt: JQEvent): Void {
+                            switch(content.type) {
+                            case ContentType.TEXT:
+                                JqueryUtil.alert( "share text" );
+                            case ContentType.URL:
+                                JqueryUtil.alert( "share link" );
+                            case ContentType.IMAGE: 
+                                JqueryUtil.alert( "share image" );
+                            case ContentType.AUDIO:
+                                JqueryUtil.alert( "share sound" );                                
+                            case ContentType.LABEL:
+                                JqueryUtil.alert( "share label" );                                
+                            }
+                        });
+                    
+                    var loveButton: JQ = new JQ("<button title='love'></button>")
+                        .appendTo(self.buttonBlock)
+                        .button({text: false,  icons: { primary: "ui-icon-heart"}})
+                        .css("height", "15px")
+                        .css("width", "23px")
+                        .click(function(evt: JQEvent): Void {
+                            JqueryUtil.alert( "provide support for content" );
+                        });
                     
                     var postCreator: JQ = new JQ("<aside class='postCreator'></aside>").appendTo(postWr);
                     var connection: Connection = AppContext.USER.currentAlias.connectionSet.getElementComplex(content.creator);

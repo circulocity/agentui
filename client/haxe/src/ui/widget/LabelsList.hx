@@ -179,29 +179,30 @@ extern class LabelsList extends JQ {
                                 label: "Set Label Image",
                                 icon: "ui-icon-image",
                                 action: function(evt: JQEvent, m: M3Menu): Void {
-                                        AppContext.LOGGER.info( "set label image behavior goes here" );
-                                                                        var dlg: M3Dialog = new M3Dialog("<div id='profilePictureUploader'></div>");
-                                        dlg.appendTo(selfElement);
-                                        var uploadComp: UploadComp = new UploadComp("<div class='boxsizingBorder' style='height: 150px;'></div>");
-                                        uploadComp.appendTo(dlg);
-                                        uploadComp.uploadComp();
-                                        dlg.m3dialog({
-                                                width: 800,
-                                                height: 305,
-                                                title: "Label Image Uploader",
-                                                buttons: {
-                                                    "Cancel" : function() {
-                                                        M3Dialog.cur.m3dialog("close");
-                                                    },
-                                                    "Set Label Image": function() {
-                                                                                                                var l : Label = self.selectedLabelComp.getLabel();
-                                                            l.imgSrc = uploadComp.value();                          
-                                                                                                                EM.change(EMEvent.UPDATE_LABELS);
-                                                        M3Dialog.cur.m3dialog("close");
-                                                    }
-                                                }
-                                            });
-                                    }
+                                    AppContext.LOGGER.info( "set label image behavior goes here" );
+                                    var dlg: M3Dialog = new M3Dialog("<div id='profilePictureUploader'></div>");
+                                    dlg.appendTo(selfElement);
+                                    var uploadComp: UploadComp = new UploadComp("<div class='boxsizingBorder' style='height: 150px;'></div>");
+                                    uploadComp.appendTo(dlg);
+                                    uploadComp.uploadComp();
+                                    dlg.m3dialog({
+                                        width: 800,
+                                        height: 305,
+                                        title: "Label Image Uploader",
+                                        buttons: {
+                                            "Cancel" : function() {
+                                                M3Dialog.cur.m3dialog("close");
+                                            },
+                                            "Set Label Image": function() {
+                                                var l : Label = self.selectedLabelComp.getLabel();
+                                                l.imgSrc = uploadComp.value();                          
+                                                EM.change(EMEvent.UPDATE_LABELS);
+                                                EM.change(EMEvent.FitWindow);
+                                                M3Dialog.cur.m3dialog("close");
+                                            }
+                                        }
+                                    });
+                                }
                             },
                             { 
                                 label: "Delete Label",
