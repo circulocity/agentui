@@ -8888,7 +8888,12 @@ var defineWidget = function() {
 		var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click(function(evt) {
 			switch( (content.type)[1] ) {
 			case 3:
-				m3.util.JqueryUtil.alert("share text");
+				var postTabs = new $("#postSection .tabs").children();
+				var textInput = new $("#textInput_ta");
+				var textTab = postTabs[0];
+				var textContent = js.Boot.__cast(content , ui.model.MessageContent);
+				textInput.val( textContent.text );
+				textTab.click();
 				break;
 			case 2:
 				m3.util.JqueryUtil.alert("share link");

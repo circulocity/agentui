@@ -145,7 +145,12 @@ extern class ContentComp extends JQ {
                         .click(function(evt: JQEvent): Void {
                             switch(content.type) {
                             case ContentType.TEXT:
-                                JqueryUtil.alert( "share text" );
+                                var postTabs = new JQ("#postSection .tabs").children(); 
+                                var textInput = new JQ("#textInput_ta");
+                                var textTab = postTabs[0];
+                                var textContent: MessageContent = cast(content, MessageContent);
+                                untyped __js__( 'textInput.val( textContent.text )' );
+                                textTab.click();
                             case ContentType.URL:
                                 JqueryUtil.alert( "share link" );
                             case ContentType.IMAGE: 
