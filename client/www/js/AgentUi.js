@@ -8857,7 +8857,7 @@ var defineWidget = function() {
 				return label.parentUid == "" || label.parentUid == null;
 			}).map(function(label1) {
 				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label1}).appendTo(labelArea).click(function() {
-					if(confirm("Do you want to import this label?")) {
+					m3.util.JqueryUtil.confirm("Import Label","Do you want to import this label?",function() {
 						var importLabel = (function($this) {
 							var $r;
 							var importLabel1 = null;
@@ -8869,7 +8869,7 @@ var defineWidget = function() {
 							return $r;
 						}(this));
 						importLabel(label1);
-					}
+					});
 					return false;
 				});
 			});
