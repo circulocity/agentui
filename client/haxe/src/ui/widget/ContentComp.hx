@@ -157,7 +157,7 @@ extern class ContentComp extends JQ {
                             }
                         });
                     
-                    var loveButton: JQ = new JQ("<button title='love'></button>")
+                    var honeyButton: JQ = new JQ("<button title='honey'></button>")
                         .appendTo(self.buttonBlock)
                         .button({text: false,  icons: { primary: "ui-icon-heart"}})
                         .css("height", "15px")
