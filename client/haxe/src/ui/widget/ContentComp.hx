@@ -99,16 +99,21 @@ extern class ContentComp extends JQ {
                                 })
                                 .appendTo(labelArea)
                                 .click(function(){
-                                    // Switch to jquery-ui dialog
-                                    if(untyped __js__('confirm("Do you want to import this label?")')) {
-                                        function importLabel(l: Label): Void {
-                                            EM.change(EMEvent.CreateLabel, l);
-                                            if (l.progeny != null) {
-                                                l.progeny.map(importLabel);
+                                    // Switch to jquery-ui dialog                                    
+                                    JqueryUtil.confirm(
+                                        "Import Label",
+                                        "Do you want to import this label?", 
+                                        function (): Void {
+                                            function importLabel(l: Label): Void {
+                                                EM.change(EMEvent.CreateLabel, l);
+                                                if (l.progeny != null) {
+                                                    l.progeny.map(importLabel);
+                                                }
                                             }
+                                            importLabel(label);
                                         }
-                                        importLabel(label);
-                                    }
+                                    );
+                                        
                                     return false;
                                 });
                             });
