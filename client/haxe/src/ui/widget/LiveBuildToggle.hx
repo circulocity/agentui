@@ -44,7 +44,9 @@ extern class LiveBuildToggle extends JQ {
 
 		        	selfElement.addClass("liveBuildToggle");
 		        	var build: JQ = new JQ("<div class='ui-widget-content ui-state-active ui-corner-left build'>Build</div>");
+                                //var build: JQ = new JQ("<div class='ui-state-active ui-corner-left ui-icon-pause build'></div>");
 		        	var live: JQ = new JQ("<div class='ui-widget-content ui-corner-right live'>Live</div>");
+                                //var live: JQ = new JQ("<div class='ui-corner-right ui-icon ui-icon-play live'></div>");
 		        	selfElement.append(build).append(live);
 		        	var children: JQ = selfElement.children();
 		        	children
