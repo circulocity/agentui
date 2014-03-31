@@ -4776,7 +4776,8 @@ ui.api.ProtocolHandler = function() {
 	this.processHash.set(ui.api.MsgType.evalSubscribeResponse,function(data) {
 		ui.AppContext.LOGGER.debug("evalResponse was received from the server");
 		var evalResponse = ui.AppContext.SERIALIZER.fromJsonX(data,ui.api.EvalResponse);
-		ui.model.EM.change(ui.model.EMEvent.MoreContent,evalResponse.contentImpl.content);
+		var liveToggle = new $(".liveBuildToggle");
+		if(ui.widget.LiveBuildToggleHelper.isLive(liveToggle)) ui.model.EM.change(ui.model.EMEvent.MoreContent,evalResponse.contentImpl.content);
 	});
 	this.processHash.set(ui.api.MsgType.evalComplete,function(data) {
 		ui.AppContext.LOGGER.debug("evalComplete was received from the server");
@@ -8857,7 +8858,7 @@ var defineWidget = function() {
 				return label.parentUid == "" || label.parentUid == null;
 			}).map(function(label1) {
 				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label1}).appendTo(labelArea).click(function() {
-					m3.util.JqueryUtil.confirm("Import Label","Do you want to import this label?", function() {
+					m3.util.JqueryUtil.confirm("Import Label","Do you want to import this label?",function() {
 						var importLabel = (function($this) {
 							var $r;
 							var importLabel1 = null;
@@ -8909,7 +8910,7 @@ var defineWidget = function() {
 				break;
 			}
 		});
-		var loveButton = new $("<button title='love'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click(function(evt) {
+		var honeyButton = new $("<button title='honey'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click(function(evt) {
 			m3.util.JqueryUtil.alert("provide support for content");
 		});
 		var postCreator = new $("<aside class='postCreator'></aside>").appendTo(postWr);
@@ -9006,8 +9007,8 @@ var defineWidget = function() {
 		var selfElement = this.element;
 		if(!selfElement["is"]("div")) throw new m3.exception.Exception("Root of LiveBuildToggle must be a div element");
 		selfElement.addClass("liveBuildToggle");
-		var build = new $("<div class='ui-widget-content ui-state-active ui-corner-left build'>Build</div>");
-		var live = new $("<div class='ui-widget-content ui-corner-right live'>Live</div>");
+		var build = new $("<div class='ui-widget-content ui-state-active ui-corner-left ui-icon ui-icon-pause build' style='min-width:0px;width:16px'></div>");
+		var live = new $("<div class='ui-widget-content ui-corner-right ui-icon ui-icon-play live' style='min-width:0px;width:16px'></div>");
 		selfElement.append(build).append(live);
 		var children = selfElement.children();
 		children.hover(function(evt) {

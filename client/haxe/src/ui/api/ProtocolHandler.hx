@@ -14,6 +14,7 @@ import ui.model.Node;
 import ui.model.Filter;
 import ui.model.EM;
 import ui.widget.DialogManager;
+import ui.widget.LiveBuildToggle;
 import m3.observable.OSet;
 
 import ui.api.Requester;
@@ -23,6 +24,7 @@ import ui.helper.PrologHelper;
 using m3.helper.ArrayHelper;
 using m3.helper.OSetHelper;
 using m3.helper.StringHelper;
+using ui.widget.LiveBuildToggle;
 using Lambda;
 
 class ProtocolHandler {
@@ -164,7 +166,10 @@ class ProtocolHandler {
         		AppContext.LOGGER.debug("evalResponse was received from the server");
         		// AppContext.LOGGER.debug(data);
         		var evalResponse: EvalResponse = AppContext.SERIALIZER.fromJsonX(data, EvalResponse);
-        		EM.change(EMEvent.MoreContent, evalResponse.contentImpl.content); 
+                        var liveToggle : LiveBuildToggle = new LiveBuildToggle('.liveBuildToggle');
+                        if ( liveToggle.isLive() ) {
+        		    EM.change(EMEvent.MoreContent, evalResponse.contentImpl.content); 
+                        }
         	});
         processHash.set(MsgType.evalComplete, function(data: Dynamic){
         		AppContext.LOGGER.debug("evalComplete was received from the server");

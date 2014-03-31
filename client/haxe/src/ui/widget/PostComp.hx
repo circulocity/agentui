@@ -9,6 +9,8 @@ import m3.widget.Widgets;
 import ui.widget.UploadComp;
 import ui.model.EM;
 import ui.model.ModelObj;
+import ui.model.Node;
+import ui.model.Filter;
 import m3.observable.OSet;
 import m3.util.UidGenerator;
 import m3.util.JqueryUtil;
@@ -20,6 +22,8 @@ using ui.widget.UploadComp;
 using ui.widget.UrlComp;
 using ui.widget.LabelComp;
 using ui.widget.ConnectionAvatar;
+using ui.widget.LiveBuildToggle;
+using ui.widget.FilterComp;
 
 
 typedef PostCompOptions = {
@@ -67,6 +71,22 @@ extern class PostComp extends JQ {
 
                         addConnectionsAndLabels(msg);
                         EM.change(EMEvent.NewContentCreated, msg);
+
+//                        var root: Node = new JQ(".rootToggle").data("getNode")();
+//		        root.type = "ROOT";
+
+//                        var liveToggle : LiveBuildToggle = new LiveBuildToggle('.liveBuildToggle');
+                        
+//                        var filter: FilterComp = cast(new JQ("#filter"), FilterComp);
+//                        filter.fireFilter();
+
+//                         if(!liveToggle.isLive()) {
+//                             AppContext.LOGGER.debug( "not live; running FILTER_CHANGE" );
+// 			    EM.change(EMEvent.FILTER_CHANGE, new Filter(root));
+// 			} else {
+//                             AppContext.LOGGER.debug( "live; running FILTER_RUN" );
+// 		            EM.change(EMEvent.FILTER_RUN, new Filter(root));
+// 		        }
                     };
 
                     var doPostForElement: JQEvent->ContentType->JQ->Void = function(evt: JQEvent, contentType: ContentType, ele:JQ): Void {
