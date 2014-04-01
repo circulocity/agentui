@@ -130,10 +130,10 @@ class User extends ModelObj {
         return conn;
     }
     
-    private function agentFromSession(uristr: String): String {
-        var parser = untyped __js__("document.createElement('a')");
-        parser.href = uristr;
-        return "agent://" + parser.hostname;
+    private function agentFromSession(uriStr: String): String {
+        var r = ~/\/\/(\w*)/;
+        r.match(uriStr);
+        return "agent://" + r.matched(1);
     }
 }
 
