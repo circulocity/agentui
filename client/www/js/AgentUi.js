@@ -10017,7 +10017,7 @@ var defineWidget = function() {
 		if(!selfElement["is"]("div")) throw new m3.exception.Exception("Root of SignupConfirmationDialog must be a div element");
 		self._cancelled = false;
 		selfElement.addClass("signupConfirmationDialog").hide();
-		selfElement.append("<p> Your request for a User Agent has been submitted. Upon receiving your confirmation email, you may click the " + "link it contains or paste the token below to validate your email address.");
+		selfElement.append("<p> Your request for a Splicious Agent has been submitted. Upon receiving your confirmation email, you may click the " + "link it contains or paste the token below to validate your email address.");
 		self.inputLabel = new $("<div class='labelDiv'><label id='confirmTokenLabel' for='confirmToken'>Your Token</label></div>").appendTo(selfElement);
 		self.input = new $("<input id='confirmToken' />").appendTo(selfElement);
 		self.input.keypress(function(evt) {

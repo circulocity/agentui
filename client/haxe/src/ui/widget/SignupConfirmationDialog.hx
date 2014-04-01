@@ -52,7 +52,7 @@ extern class SignupConfirmationDialog extends JQ {
 
 		        	selfElement.addClass("signupConfirmationDialog").hide();
 
-		        	selfElement.append("<p> Your request for a User Agent has been submitted. Upon receiving your confirmation email, you may click the " + 
+		        	selfElement.append("<p> Your request for a Splicious Agent has been submitted. Upon receiving your confirmation email, you may click the " + 
 		        							"link it contains or paste the token below to validate your email address.");
 
 		        	self.inputLabel = new JQ("<div class='labelDiv'><label id='confirmTokenLabel' for='confirmToken'>Your Token</label></div>").appendTo(selfElement);
