@@ -9008,7 +9008,7 @@ var defineWidget = function() {
 		if(!selfElement["is"]("div")) throw new m3.exception.Exception("Root of LiveBuildToggle must be a div element");
 		selfElement.addClass("liveBuildToggle");
 		var build = new $("<div class='ui-widget-content ui-state-active ui-corner-left ui-icon ui-icon-pause build' style='min-width:0px;width:16px'></div>");
-		var live = new $("<div class='ui-widget-content ui-corner-right ui-icon ui-icon-play live' style='min-width:0px;width:16px'></div>");
+		var live = new $("<div class='ui-widget-content ui-corner-right ui-icon ui-icon-search live' style='min-width:0px;width:16px'></div>");
 		selfElement.append(build).append(live);
 		var children = selfElement.children();
 		children.hover(function(evt) {
