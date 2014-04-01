@@ -6992,12 +6992,12 @@ ui.model.User.prototype = $extend(ui.model.ModelObj.prototype,{
 	agentFromSession: function(uristr) {
 		var parser = document.createElement('a');
 		parser.href = uristr;
-		return parser.protocol + "//" + parser.hostname;
+		return "agent://" + parser.hostname;
 	}
 	,getSelfConnection: function() {
 		var conn = new ui.model.Connection();
-		conn.source = this.sessionURI;
-		conn.target = this.sessionURI;
+		conn.source = this.agentFromSession(this.sessionURI);
+		conn.target = conn.source;
 		conn.label = this.get_currentAlias().label;
 		return conn;
 	}
