@@ -26,6 +26,7 @@ typedef NewUserDialogWidgetDef = {
 	@:optional var placeholder_un: JQ;
 	@:optional var placeholder_pw: JQ;
 	@:optional var placeholder_em: JQ;
+        @:optional var btcWalletChk: JQ;
 	
 	var initialized: Bool;
 
@@ -59,34 +60,52 @@ extern class NewUserDialog extends JQ {
 
 		        	selfElement.addClass("newUserDialog").hide();
 
-		        	var labels: JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);
-		        	var inputs: JQ = new JQ("<div class='fleft'></div>").appendTo(selfElement);
+                                var newUserTable: JQ = new JQ("<div style='display: table'/>").appendTo( selfElement );
+//                                var newUserTable: JQ = new JQ("<table/>").appendTo( selfElement );
+                                var nameRow : JQ = new JQ("<div style='display: table-row'/>").appendTo( newUserTable );
+//                                var nameRow : JQ = new JQ("<tr/>").appendTo( newUserTable );
+                                var emailRow : JQ = new JQ("<div style='display: table-row'/>").appendTo( newUserTable );
+//                                var emailRow : JQ = new JQ("<tr/>").appendTo( newUserTable );
+                                var pwRow : JQ = new JQ("<div style='display: table-row'/>").appendTo( newUserTable );
+//                                var pwRow : JQ = new JQ("<tr/>").appendTo( newUserTable );
+		        	var btcCheckBoxRow: JQ = new JQ("<div style='display: table-row'/>").appendTo( newUserTable );
+//		        	var btcCheckBoxRow: JQ = new JQ("<tr/>").appendTo( newUserTable );
 
-		        	labels.append("<div class='labelDiv'><label id='n_label' for='newu_n'>Name</label></div>");
-		        	labels.append("<div class='labelDiv'><label id='em_label' for='newu_em'>Email</label></div>");
-		        	// labels.append("<div class='labelDiv'><label id='un_label' for='newu_un'>Username</label></div>");
-		        	labels.append("<div class='labelDiv'><label id='pw_label' for='newu_pw'>Password</label></div>");
+                                nameRow.append("<div class='labelDiv' style='display: table-cell'><label id='n_label' for='newu_n'>Name</label></div>");
+//                                nameRow.append("<td width='10%'><label id='n_label' for='newu_n'>Name</label></td>");
+                                var nameInputCell : JQ = new JQ("<div style='display: table-cell'/>").appendTo( nameRow );                          
+//                                var nameInputCell : JQ = new JQ("<td/>").appendTo( nameRow );
+                                self.input_n = new JQ("<input id='newu_n' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'>").appendTo( nameInputCell );
+                                self.placeholder_n = new JQ("<input id='login_un_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Name'>").appendTo( nameInputCell );		        	
 
-		        	self.input_n = new JQ("<input id='newu_n' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'>").appendTo(inputs);
-		        	self.placeholder_n = new JQ("<input id='login_un_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Name'>").appendTo(inputs);
-		        	inputs.append("<br/>");
-		        	self.input_em = new JQ("<input id='newu_em' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'>").appendTo(inputs);
-		        	self.placeholder_em = new JQ("<input id='login_un_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Email'>").appendTo(inputs);
-		        	inputs.append("<br/>");
-		        	// self.input_un = new JQ("<input id='newu_un' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'>").appendTo(inputs);
-		        	// self.placeholder_un = new JQ("<input id='login_un_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Username'>").appendTo(inputs);
-		        	// inputs.append("<br/>");
-		        	self.input_pw = new JQ("<input type='password' id='newu_pw' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'/>").appendTo(inputs);
-		        	self.placeholder_pw = new JQ("<input id='login_pw_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Password'/>").appendTo(inputs);
-		        	inputs.append("<br/>");
-		        	// self.input_em = new JQ("<input id='login_em' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'/>").appendTo(inputs);
-		        	// self.placeholder_em = new JQ("<input id='login_em_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Password'/>").appendTo(inputs);
+                                emailRow.append("<div class='labelDiv' style='display: table-cell'><label id='em_label' for='newu_em'>Email</label></div>");
+//                                emailRow.append("<td><label id='em_label' for='newu_em'>Email</label></td>");
+                                var emailInputCell : JQ = new JQ("<div style='display: table-cell'/>").appendTo( emailRow );
+//                                var emailInputCell : JQ = new JQ("<td/>").appendTo( emailRow );
+                                self.input_em = new JQ("<input id='newu_em' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'>").appendTo( emailInputCell );
+		        	self.placeholder_em = new JQ("<input id='login_un_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Email'>").appendTo( emailInputCell );
 
-		        	inputs.children("input").keypress(function(evt: JQEvent): Void {
+                                pwRow.append("<div class='labelDiv' style='display: table-cell'><label id='pw_label' for='newu_pw'>Password</label></div>");
+//                                pwRow.append("<td><label id='pw_label' for='newu_pw'>Password</label></td>");
+                                var pwInputCell : JQ = new JQ("<div style='display: table-cell'/>").appendTo( pwRow );        
+//                                var pwInputCell : JQ = new JQ("<td/>").appendTo( pwRow );        
+                                self.input_pw = new JQ("<input type='password' id='newu_pw' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'/>").appendTo( pwInputCell );
+		        	self.placeholder_pw = new JQ("<input id='login_pw_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Password'/>").appendTo( pwInputCell );
+
+                                
+                                var btcEmptyCheckBoxCell: JQ = new JQ("<div style='display: table-cell'/>").appendTo( btcCheckBoxRow );
+                                var btcCheckBoxCell: JQ = new JQ("<div style='display: table-cell'/>").appendTo( btcCheckBoxRow );
+//                                var btcCheckBoxCell: JQ = new JQ("<td/>").appendTo( btcCheckBoxRow );
+                                var btcLabeledInput = new JQ("<label><input type='checkbox' id='btcCheck'>Create BTC Wallet?</label>").appendTo( btcCheckBoxCell );
+                                self.btcWalletChk = new JQ("#btcCheck");
+//                                btcCheckBoxCell.append( "<span>Create BTC Wallet?</span>" );
+//                                btcCheckBoxRow.append( "<td><label for='btcCheck'>Create BTC Wallet?</label></td>" );
+		        	
+		        	newUserTable.children("input").keypress(function(evt: JQEvent): Void {
 		        			if(evt.keyCode == 13) {
 		        				self._createNewUser();
 		        			}
-		        		});
+		        		});                                
 
 		        	self.placeholder_n.focus(function(evt: JQEvent): Void {
 		        			self.placeholder_n.hide();
@@ -170,6 +189,7 @@ extern class NewUserDialog extends JQ {
     					self.placeholder_n.addClass("ui-state-error");
     					valid = false;
     				}
+                                newUser.createBTCWallet = self.btcWalletChk.is( ':checked' );
     				if(!valid) return;
     				selfElement.find(".ui-state-error").removeClass("ui-state-error");
     				EM.change(EMEvent.USER_CREATE, newUser);

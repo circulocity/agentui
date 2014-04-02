@@ -464,6 +464,7 @@ class ProtocolHandler {
 		request.contentImpl.password = newUser.pwd;
 		request.contentImpl.jsonBlob = {};
 		request.contentImpl.jsonBlob.name = newUser.name;
+                request.contentImpl.createBTCWallet = newUser.createBTCWallet;
 		try {
 			new StandardRequest(request, function(data: Dynamic, textStatus: String, jqXHR: JQXHR){
 					if(data.msgType == MsgType.createUserResponse) {

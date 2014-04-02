@@ -58,7 +58,7 @@ class User extends ModelObj {
     private var aliases: Array<Alias>;
     public var defaultAlias: Alias;
     
-    @:isVar public var currentAlias (get,set): Alias;
+    @:isVar public var currentAlias (get,set): Alias;    
 
 
     public function new () {
@@ -446,6 +446,7 @@ class NewUser extends ModelObj {
     public var userName: String;
     public var email: String;
     public var pwd: String;
+    public var createBTCWallet : Bool;
 
     public function new () {
         super();
