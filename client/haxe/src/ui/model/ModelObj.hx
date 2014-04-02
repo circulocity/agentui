@@ -124,10 +124,16 @@ class User extends ModelObj {
 
     public function getSelfConnection(): Connection {
         var conn: Connection = new Connection();
-        conn.source = sessionURI;
-        conn.target = sessionURI;
+        conn.source = agentFromSession(sessionURI);
+        conn.target = conn.source;
         conn.label = currentAlias.label;
         return conn;
+    }
+    
+    private function agentFromSession(uriStr: String): String {
+        var r = ~/\/\/(\w*)/;
+        r.match(uriStr);
+        return "agent://" + r.matched(1);
     }
 }
 
@@ -329,12 +335,13 @@ class Content extends ModelObjWithUid<Content> {
 
     @:optional var labels: Array<Label>;
     @:optional var connections: Array<Connection>;
-        
+    @:optional public var parent: Content;
+
     /**
         UID of connection that created the content
     */
     @:optional public var creator: String;
-
+    
     public function new (contentType:ContentType) {
         super();
         this.type     = contentType;
