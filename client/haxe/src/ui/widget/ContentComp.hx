@@ -56,11 +56,10 @@ extern class ContentComp extends JQ {
 
                     var content:Content = self.options.content;
 
-                    var postWr: JQ = new JQ("<section class='postWr'></section>");
-                    selfElement.append(postWr);
-                    
                     var i: Int = 0;
                     do {
+                        var postWr: JQ = new JQ("<section class='postWr'></section>");
+                        selfElement.append(postWr);
                         var postContentWr: JQ = new JQ("<div class='postContentWr'></div>");
                         postWr.append(postContentWr);
                         var postContent: JQ = new JQ("<div class='postContent'></div>");

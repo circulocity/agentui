@@ -8835,10 +8835,10 @@ var defineWidget = function() {
 	return { _createWidgets : function(selfElement,self) {
 		selfElement.empty();
 		var content = self.options.content;
-		var postWr = new $("<section class='postWr'></section>");
-		selfElement.append(postWr);
 		var i = 0;
 		do {
+			var postWr = new $("<section class='postWr'></section>");
+			selfElement.append(postWr);
 			var postContentWr = new $("<div class='postContentWr'></div>");
 			postWr.append(postContentWr);
 			var postContent = new $("<div class='postContent'></div>");
