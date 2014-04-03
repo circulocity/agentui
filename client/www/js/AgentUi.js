@@ -8923,7 +8923,8 @@ var defineWidget = function() {
 			++i;
 			content = content.parent;
 		} while(content != null);
-		self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(selfElement);
+		content = self.options.content;
+		self.buttonBlock = new $("<div class='button-block'></div>").css("text-align","left").hide().appendTo(selfElement);
 		new $("<button title='Edit Post'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-pencil"}}).css("width","23px").click(function(evt) {
 			evt.stopPropagation();
 			var comp = new $("<div id='edit-post-comp'></div>");

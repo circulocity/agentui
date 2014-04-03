@@ -54,7 +54,7 @@ extern class ContentComp extends JQ {
 
                     selfElement.empty();
 
-                    var content:Content = self.options.content;
+                    var content: Content = self.options.content;
                     var i: Int = 0;
                     
                     do {
@@ -157,7 +157,9 @@ extern class ContentComp extends JQ {
                         ++i;
                         content = content.parent;
                     } while (content != null);
-                    self.buttonBlock = new JQ("<div class='button-block' ></div>")
+
+                    content = self.options.content;
+                    self.buttonBlock = new JQ("<div class='button-block'></div>")
                         .css("text-align", "left")
                         .hide()
                         .appendTo(selfElement);
