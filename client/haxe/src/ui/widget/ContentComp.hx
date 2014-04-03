@@ -213,7 +213,6 @@ extern class ContentComp extends JQ {
                         });
 
                     selfElement.height(i * 100 + 40);
-                    selfElement.append("<hr>");
                 },
                 
                 _create: function(): Void {

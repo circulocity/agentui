@@ -8961,7 +8961,6 @@ var defineWidget = function() {
 			m3.util.JqueryUtil.alert("provide support for content");
 		});
 		selfElement.height(i * 100 + 40);
-		selfElement.append("<hr>");
 	}, _create : function() {
 		var self1 = this;
 		var selfElement1 = this.element;
