@@ -154,12 +154,13 @@ extern class ContentComp extends JQ {
                                     connection: connection
                                 }).appendTo(postConnections);
                         }
-                        if (i == 0) {
-                            self.buttonBlock = new JQ("<div class='button-block' ></div>").css("text-align", "left").hide().appendTo(postContent);
-                        }
                         ++i;
                         content = content.parent;
                     } while (content != null);
+                    self.buttonBlock = new JQ("<div class='button-block' ></div>")
+                        .css("text-align", "left")
+                        .hide()
+                        .appendTo(selfElement);
 
                     new JQ("<button title='Edit Post'></button>")
                         .appendTo(self.buttonBlock)

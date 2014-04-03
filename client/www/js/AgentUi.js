@@ -8920,10 +8920,10 @@ var defineWidget = function() {
 				if(connWithProfile != null) connection1 = connWithProfile;
 				new $("<div></div>").connectionAvatar({ dndEnabled : false, connection : connection1}).appendTo(postConnections);
 			}
-			if(i == 0) self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(postContent);
 			++i;
 			content = content.parent;
 		} while(content != null);
+		self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(selfElement);
 		new $("<button title='Edit Post'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-pencil"}}).css("width","23px").click(function(evt) {
 			evt.stopPropagation();
 			var comp = new $("<div id='edit-post-comp'></div>");
