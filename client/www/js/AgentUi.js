@@ -8836,114 +8836,137 @@ var defineWidget = function() {
 		var content = self.options.content;
 		var postWr = new $("<section class='postWr'></section>");
 		selfElement.append(postWr);
-		var postContentWr = new $("<div class='postContentWr'></div>");
-		postWr.append(postContentWr);
-		var postContent = new $("<div class='postContent'></div>");
-		postContentWr.append(postContent);
-		postContent.append("<div class='content-timestamp'>" + Std.string(content.created) + "</div>");
-		switch( (content.type)[1] ) {
-		case 0:
-			var audio = js.Boot.__cast(content , ui.model.AudioContent);
-			postContent.append(audio.title + "<br/>");
-			var audioControls = new $("<audio controls></audio>");
-			postContent.append(audioControls);
-			audioControls.append("<source src='" + audio.audioSrc + "' type='" + audio.audioType + "'>Your browser does not support the audio element.");
-			break;
-		case 1:
-			var img = js.Boot.__cast(content , ui.model.ImageContent);
-			postContent.append("<img alt='" + img.caption + "' src='" + img.imgSrc + "'/>");
-			break;
-		case 2:
-			var urlContent = js.Boot.__cast(content , ui.model.UrlContent);
-			postContent.append("<img src='http://picoshot.com/t.php?picurl=" + urlContent.url + "'>");
-			break;
-		case 3:
-			var textContent = js.Boot.__cast(content , ui.model.MessageContent);
-			postContent.append("<div class='content-text'>" + textContent.text + "</div>");
-			break;
-		case 4:
-			var labelContent = js.Boot.__cast(content , ui.model.LabelContent);
-			var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
-			var labelArea = new $("<div style='margins:0 auto;width:500px;height:98px;'></div>");
-			labelArea.appendTo(postContent);
-			labelArray.filter(function(label) {
-				return label.parentUid == "" || label.parentUid == null;
-			}).map(function(label1) {
-				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label1}).appendTo(labelArea).click(function() {
-					m3.util.JqueryUtil.confirm("Import Label","Do you want to import this label?",function() {
-						var importLabel = (function($this) {
-							var $r;
-							var importLabel1 = null;
-							importLabel1 = function(l) {
-								ui.model.EM.change(ui.model.EMEvent.CreateLabel,l);
-								if(l.progeny != null) l.progeny.map(importLabel1);
-							};
-							$r = importLabel1;
-							return $r;
-						}(this));
-						importLabel(label1);
-					});
-					return false;
-				});
-			});
-			break;
-		}
-		self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(postContent);
-		new $("<button title='Edit Post'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-pencil"}}).css("width","23px").click(function(evt) {
-			evt.stopPropagation();
-			var comp = new $("<div id='edit-post-comp'></div>");
-			comp.insertBefore(selfElement);
-			comp.width(selfElement.width());
-			comp.height(selfElement.height());
-			selfElement.hide();
-			var editPostComp = new $(comp).editPostComp({ content : self.options.content});
-		});
-		var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click(function(evt) {
+		var i = 0;
+		do {
+			var postContentWr = new $("<div class='postContentWr'></div>");
+			postWr.append(postContentWr);
+			var postContent = new $("<div class='postContent'></div>");
+			postContentWr.append(postContent);
+			postContent.append("<div class='content-timestamp'>" + Std.string(content.created) + "</div>");
 			switch( (content.type)[1] ) {
-			case 3:
-				var postTabs = new $("#postSection .tabs").children();
-				var textInput = new $("#textInput_ta");
-				var textTab = postTabs[0];
-				var textContent = js.Boot.__cast(content , ui.model.MessageContent);
-				textInput.val( textContent.text );
-				textTab.click();
-				break;
-			case 2:
-				m3.util.JqueryUtil.alert("share link");
+			case 0:
+				var audio = js.Boot.__cast(content , ui.model.AudioContent);
+				postContent.append(audio.title + "<br/>");
+				var audioControls = new $("<audio controls></audio>");
+				postContent.append(audioControls);
+				audioControls.append("<source src='" + audio.audioSrc + "' type='" + audio.audioType + "'>Your browser does not support the audio element.");
 				break;
 			case 1:
-				m3.util.JqueryUtil.alert("share image");
+				var img = js.Boot.__cast(content , ui.model.ImageContent);
+				postContent.append("<img alt='" + img.caption + "' src='" + img.imgSrc + "'/>");
 				break;
-			case 0:
-				m3.util.JqueryUtil.alert("share sound");
+			case 2:
+				var urlContent = js.Boot.__cast(content , ui.model.UrlContent);
+				postContent.append("<img src='http://picoshot.com/t.php?picurl=" + urlContent.url + "'>");
+				break;
+			case 3:
+				var textContent = js.Boot.__cast(content , ui.model.MessageContent);
+				postContent.append("<div class='content-text'>" + textContent.text + "</div>");
 				break;
 			case 4:
-				m3.util.JqueryUtil.alert("share label");
+				var labelContent = js.Boot.__cast(content , ui.model.LabelContent);
+				var labelArray = ui.helper.PrologHelper.stringToLabel(labelContent.text);
+				var labelArea = [new $("<div style='margins:0 auto;width:500px;height:98px;'></div>")];
+				labelArea[0].appendTo(postContent);
+				labelArray.filter((function() {
+					return function(label) {
+						return label.parentUid == "" || label.parentUid == null;
+					};
+				})()).map((function(labelArea) {
+					return function(label1) {
+						new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label1}).appendTo(labelArea[0]).click((function() {
+							return function() {
+								m3.util.JqueryUtil.confirm("Import Label","Do you want to import this label?",(function() {
+									return function() {
+										var importLabel = (function($this) {
+											var $r;
+											var importLabel1 = null;
+											importLabel1 = (function() {
+												return function(l) {
+													ui.model.EM.change(ui.model.EMEvent.CreateLabel,l);
+													if(l.progeny != null) l.progeny.map(importLabel1);
+												};
+											})();
+											$r = importLabel1;
+											return $r;
+										}(this));
+										importLabel(label1);
+									};
+								})());
+								return false;
+							};
+						})());
+					};
+				})(labelArea));
 				break;
 			}
-		});
-		var honeyButton = new $("<button title='honey'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click(function(evt) {
-			m3.util.JqueryUtil.alert("provide support for content");
-		});
-		var postCreator = new $("<aside class='postCreator'></aside>").appendTo(postWr);
-		var connection = m3.helper.OSetHelper.getElementComplex(ui.AppContext.USER.get_currentAlias().get_connectionSet(),content.creator);
-		if(connection == null) connection = ui.helper.ModelHelper.asConnection(ui.AppContext.USER.get_currentAlias());
-		new $("<div></div>").connectionAvatar({ dndEnabled : false, connection : connection}).appendTo(postCreator);
-		var postLabels = new $("<aside class='postLabels'></div>");
-		postWr.append(postLabels);
-		var labelIter = content.labelSet.iterator();
-		while(labelIter.hasNext()) {
-			var label = labelIter.next();
-			new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(postLabels);
-		}
-		var postConnections = new $("<aside class='postConnections'></aside>").appendTo(postWr);
-		var connIter = content.connectionSet.iterator();
-		while(connIter.hasNext()) {
-			var connection1 = connIter.next();
-			var connWithProfile = m3.helper.OSetHelper.getElement(ui.AppContext.USER.get_currentAlias().get_connectionSet(),ui.model.Connection.identifier(connection1));
-			if(connWithProfile != null) connection1 = connWithProfile;
-			new $("<div></div>").connectionAvatar({ dndEnabled : false, connection : connection1}).appendTo(postConnections);
-		}
+			var postCreator = new $("<aside class='postCreator'></aside>").appendTo(postWr);
+			var connection = m3.helper.OSetHelper.getElementComplex(ui.AppContext.USER.get_currentAlias().get_connectionSet(),content.creator);
+			if(connection == null) connection = ui.helper.ModelHelper.asConnection(ui.AppContext.USER.get_currentAlias());
+			new $("<div></div>").connectionAvatar({ dndEnabled : false, connection : connection}).appendTo(postCreator);
+			var postLabels = new $("<aside class='postLabels'></div>");
+			postWr.append(postLabels);
+			var labelIter = content.labelSet.iterator();
+			while(labelIter.hasNext()) {
+				var label = labelIter.next();
+				new $("<div class='small'></div>").labelComp({ dndEnabled : false, label : label}).appendTo(postLabels);
+			}
+			var postConnections = new $("<aside class='postConnections'></aside>").appendTo(postWr);
+			var connIter = content.connectionSet.iterator();
+			while(connIter.hasNext()) {
+				var connection1 = connIter.next();
+				var connWithProfile = m3.helper.OSetHelper.getElement(ui.AppContext.USER.get_currentAlias().get_connectionSet(),ui.model.Connection.identifier(connection1));
+				if(connWithProfile != null) connection1 = connWithProfile;
+				new $("<div></div>").connectionAvatar({ dndEnabled : false, connection : connection1}).appendTo(postConnections);
+			}
+			if(i == 0) {
+				self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(postContent);
+				new $("<button title='Edit Post'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-pencil"}}).css("width","23px").click((function() {
+					return function(evt) {
+						evt.stopPropagation();
+						var comp = new $("<div id='edit-post-comp'></div>");
+						comp.insertBefore(selfElement);
+						comp.width(selfElement.width());
+						comp.height(selfElement.height());
+						selfElement.hide();
+						var editPostComp = new $(comp).editPostComp({ content : self.options.content});
+					};
+				})());
+				var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click((function() {
+					return function(evt) {
+						switch( (content.type)[1] ) {
+						case 3:
+							var postTabs = new $("#postSection .tabs").children();
+							var textInput = new $("#textInput_ta");
+							var textTab = postTabs[0];
+							var textContent = js.Boot.__cast(content , ui.model.MessageContent);
+							textInput.val( textContent.text );
+							textTab.click();
+							break;
+						case 2:
+							m3.util.JqueryUtil.alert("share link");
+							break;
+						case 1:
+							m3.util.JqueryUtil.alert("share image");
+							break;
+						case 0:
+							m3.util.JqueryUtil.alert("share sound");
+							break;
+						case 4:
+							m3.util.JqueryUtil.alert("share label");
+							break;
+						}
+					};
+				})());
+				var honeyButton = new $("<button title='honey'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click((function() {
+					return function(evt) {
+						m3.util.JqueryUtil.alert("provide support for content");
+					};
+				})());
+			}
+			++i;
+			content = content.parent;
+		} while(content != null);
 	}, _create : function() {
 		var self1 = this;
 		var selfElement1 = this.element;

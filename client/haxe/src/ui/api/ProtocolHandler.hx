@@ -166,10 +166,10 @@ class ProtocolHandler {
         		AppContext.LOGGER.debug("evalResponse was received from the server");
         		// AppContext.LOGGER.debug(data);
         		var evalResponse: EvalResponse = AppContext.SERIALIZER.fromJsonX(data, EvalResponse);
-                        var liveToggle : LiveBuildToggle = new LiveBuildToggle('.liveBuildToggle');
-                        if ( liveToggle.isLive() ) {
+                var liveToggle : LiveBuildToggle = new LiveBuildToggle('.liveBuildToggle');
+                if ( liveToggle.isLive() ) {
         		    EM.change(EMEvent.MoreContent, evalResponse.contentImpl.content); 
-                        }
+                }
         	});
         processHash.set(MsgType.evalComplete, function(data: Dynamic){
         		AppContext.LOGGER.debug("evalComplete was received from the server");
