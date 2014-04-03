@@ -197,11 +197,11 @@ extern class ContentComp extends JQ {
                                         .click(function(evt: JQEvent): Void {})
                                         .appendTo(parentContent);
                                     var removeBtn = new JQ("<button title='Remove'></button>")
-                                        .appendTo(self.buttonBlock)
-                                        .click(function (evt: JQEvent): Void {
-                                            parentContent.empty().hide();
-                                            removeBtn.remove();
-                                        });
+                                        .appendTo(self.buttonBlock);
+                                    removeBtn.click(function (evt: JQEvent): Void {
+                                        parentContent.empty().hide();
+                                        removeBtn.remove();
+                                    });
                                     parentContent.show();
                                 case ContentType.URL:
                                     JqueryUtil.alert( "share link" );

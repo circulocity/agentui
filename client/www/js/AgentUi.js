@@ -8943,8 +8943,10 @@ var defineWidget = function() {
 				var parentContent = new $("#parentContent");
 				new $("<div></div>").contentComp({ content : content}).click(function(evt1) {
 				}).appendTo(parentContent);
-				new $("<button title='Remove'></button>").appendTo(self.buttonBlock).click(function(evt1) {
+				var removeBtn = new $("<button title='Remove'></button>").appendTo(self.buttonBlock);
+				removeBtn.click(function(evt1) {
 					parentContent.empty().hide();
+					removeBtn.remove();
 				});
 				parentContent.show();
 				break;
