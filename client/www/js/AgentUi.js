@@ -8941,7 +8941,11 @@ var defineWidget = function() {
 				var textTab = postTabs[0];
 				textTab.click();
 				var parentContent = new $("#parentContent");
-				new $("<div></div>").contentComp({ content : content}).appendTo(parentContent);
+				new $("<div></div>").contentComp({ content : content}).click(function(evt1) {
+				}).appendTo(parentContent);
+				new $("<button title='Remove'></button>").appendTo(self.buttonBlock).click(function(evt1) {
+					parentContent.empty().hide();
+				});
 				parentContent.show();
 				break;
 			case 2:

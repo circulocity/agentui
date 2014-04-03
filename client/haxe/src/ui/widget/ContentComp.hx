@@ -186,22 +186,22 @@ extern class ContentComp extends JQ {
                         .css("height", "15px")
                         .css("width", "23px")
                         .click(function(evt: JQEvent): Void {
-                            // RIGHT HERE
-                            // Set parent to content
-                            // Rerender parent between the new post area and the post button;
-                            // disable the click handler
                             switch(content.type) {
                                 case ContentType.TEXT:
                                     var postTabs = new JQ("#postSection .tabs").children(); 
-                                    // var textInput = new JQ("#textInput_ta");
                                     var textTab = postTabs[0];
-                                    // var textContent: MessageContent = cast(content, MessageContent);
-                                    // untyped __js__( 'textInput.val( textContent.text )' ); 
                                     textTab.click();
                                     var parentContent = new JQ("#parentContent");
                                     new ContentComp("<div></div>")
                                         .contentComp({content: content})
+                                        .click(function(evt: JQEvent): Void {})
                                         .appendTo(parentContent);
+                                    var removeBtn = new JQ("<button title='Remove'></button>")
+                                        .appendTo(self.buttonBlock)
+                                        .click(function (evt: JQEvent): Void {
+                                            parentContent.empty().hide();
+                                            removeBtn.remove();
+                                        });
                                     parentContent.show();
                                 case ContentType.URL:
                                     JqueryUtil.alert( "share link" );
