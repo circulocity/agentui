@@ -8938,11 +8938,9 @@ var defineWidget = function() {
 			switch( (content.type)[1] ) {
 			case 3:
 				var postTabs = new $("#postSection .tabs").children();
-				var textInput = new $("#textInput_ta");
 				var textTab = postTabs[0];
-				var textContent = js.Boot.__cast(content , ui.model.MessageContent);
 				textTab.click();
-				new $("#parentContent").text(textContent.text).show();
+				new $("#parentContent").contentComp({ content : content}).show();
 				break;
 			case 2:
 				m3.util.JqueryUtil.alert("share link");
