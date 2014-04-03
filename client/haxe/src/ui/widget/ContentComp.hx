@@ -194,16 +194,17 @@ extern class ContentComp extends JQ {
                                     var textInput = new JQ("#textInput_ta");
                                     var textTab = postTabs[0];
                                     var textContent: MessageContent = cast(content, MessageContent);
-                                    untyped __js__( 'textInput.val( textContent.text )' );
+                                    // untyped __js__( 'textInput.val( textContent.text )' ); 
                                     textTab.click();
+                                    new JQ("#parentContent").text(textContent.text).show();
                                 case ContentType.URL:
                                     JqueryUtil.alert( "share link" );
                                 case ContentType.IMAGE: 
                                     JqueryUtil.alert( "share image" );
                                 case ContentType.AUDIO:
-                                    JqueryUtil.alert( "share sound" );                                
+                                    JqueryUtil.alert( "share sound" );
                                 case ContentType.LABEL:
-                                    JqueryUtil.alert( "share label" );                                
+                                    JqueryUtil.alert( "share label" );
                             }
                         });
 

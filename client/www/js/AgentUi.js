@@ -8940,8 +8940,8 @@ var defineWidget = function() {
 				var textInput = new $("#textInput_ta");
 				var textTab = postTabs[0];
 				var textContent = js.Boot.__cast(content , ui.model.MessageContent);
-				textInput.val( textContent.text );
 				textTab.click();
+				new $("#parentContent").text(textContent.text).show();
 				break;
 			case 2:
 				m3.util.JqueryUtil.alert("share link");
@@ -9903,7 +9903,7 @@ var defineWidget = function() {
 				content.connectionSet.add(ui.widget.ConnectionAvatarHelper.getConnection(conn));
 			});
 		};
-		var parent = new $("<div style='display:none'></div>").appendTo(selfElement);
+		var parentContent = new $("<div style='display:none' id='parentContent'></div>").appendTo(selfElement);
 		var postButton = new $("<button>Post</button>").appendTo(selfElement).button().click(function(evt) {
 			if(textInput.isVisible()) {
 				var ta1 = new $("#textInput_ta");
@@ -9920,6 +9920,7 @@ var defineWidget = function() {
 				doPost(evt,ui.model.ContentType.LABEL,value);
 				labelArea.empty();
 			}
+			parentContent.empty().hide();
 		});
 	}, destroy : function() {
 		$.Widget.prototype.destroy.call(this);

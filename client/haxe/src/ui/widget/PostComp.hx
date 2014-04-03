@@ -304,7 +304,7 @@ extern class PostComp extends JQ {
                             });
                     }                                        
 
-                    var parent: JQ = new ContentComp("<div style='display:none'></div>")
+                    var parentContent = new ContentComp("<div style='display:none' id='parentContent'></div>")
                         .appendTo(selfElement);
 
                     var postButton: JQ = new JQ("<button>Post</button>")
@@ -328,6 +328,7 @@ extern class PostComp extends JQ {
                                 doPost(evt, ContentType.LABEL, value);
                                 labelArea.empty();
                             }
+                            parentContent.empty().hide();
                         });
                 },
 
