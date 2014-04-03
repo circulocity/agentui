@@ -9903,6 +9903,7 @@ var defineWidget = function() {
 				content.connectionSet.add(ui.widget.ConnectionAvatarHelper.getConnection(conn));
 			});
 		};
+		var parent = new $("<div style='display:none'></div>").appendTo(selfElement);
 		var postButton = new $("<button>Post</button>").appendTo(selfElement).button().click(function(evt) {
 			if(textInput.isVisible()) {
 				var ta1 = new $("#textInput_ta");

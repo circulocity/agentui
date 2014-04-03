@@ -184,22 +184,26 @@ extern class ContentComp extends JQ {
                         .css("height", "15px")
                         .css("width", "23px")
                         .click(function(evt: JQEvent): Void {
+                            // RIGHT HERE
+                            // Set parent to content
+                            // Rerender parent between the new post area and the post button;
+                            // disable the click handler
                             switch(content.type) {
-                            case ContentType.TEXT:
-                                var postTabs = new JQ("#postSection .tabs").children(); 
-                                var textInput = new JQ("#textInput_ta");
-                                var textTab = postTabs[0];
-                                var textContent: MessageContent = cast(content, MessageContent);
-                                untyped __js__( 'textInput.val( textContent.text )' );
-                                textTab.click();
-                            case ContentType.URL:
-                                JqueryUtil.alert( "share link" );
-                            case ContentType.IMAGE: 
-                                JqueryUtil.alert( "share image" );
-                            case ContentType.AUDIO:
-                                JqueryUtil.alert( "share sound" );                                
-                            case ContentType.LABEL:
-                                JqueryUtil.alert( "share label" );                                
+                                case ContentType.TEXT:
+                                    var postTabs = new JQ("#postSection .tabs").children(); 
+                                    var textInput = new JQ("#textInput_ta");
+                                    var textTab = postTabs[0];
+                                    var textContent: MessageContent = cast(content, MessageContent);
+                                    untyped __js__( 'textInput.val( textContent.text )' );
+                                    textTab.click();
+                                case ContentType.URL:
+                                    JqueryUtil.alert( "share link" );
+                                case ContentType.IMAGE: 
+                                    JqueryUtil.alert( "share image" );
+                                case ContentType.AUDIO:
+                                    JqueryUtil.alert( "share sound" );                                
+                                case ContentType.LABEL:
+                                    JqueryUtil.alert( "share label" );                                
                             }
                         });
 
