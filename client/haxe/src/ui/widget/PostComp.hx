@@ -304,7 +304,7 @@ extern class PostComp extends JQ {
                             });
                     }                                        
 
-                    var parentContent = new ContentComp("<div style='display:none' id='parentContent'></div>")
+                    var parentContent = new JQ("<div style='display:none' id='parentContent'></div>")
                         .appendTo(selfElement);
 
                     var postButton: JQ = new JQ("<button>Post</button>")

@@ -198,9 +198,11 @@ extern class ContentComp extends JQ {
                                     // var textContent: MessageContent = cast(content, MessageContent);
                                     // untyped __js__( 'textInput.val( textContent.text )' ); 
                                     textTab.click();
-                                    new ContentComp("#parentContent").contentComp({
-                                        content: content
-                                    }).show();
+                                    var parentContent = new JQ("#parentContent");
+                                    new ContentComp("<div></div>")
+                                        .contentComp({content: content})
+                                        .appendTo(parentContent);
+                                    parentContent.show();
                                 case ContentType.URL:
                                     JqueryUtil.alert( "share link" );
                                 case ContentType.IMAGE: 

@@ -8940,7 +8940,9 @@ var defineWidget = function() {
 				var postTabs = new $("#postSection .tabs").children();
 				var textTab = postTabs[0];
 				textTab.click();
-				new $("#parentContent").contentComp({ content : content}).show();
+				var parentContent = new $("#parentContent");
+				new $("<div></div>").contentComp({ content : content}).appendTo(parentContent);
+				parentContent.show();
 				break;
 			case 2:
 				m3.util.JqueryUtil.alert("share link");
