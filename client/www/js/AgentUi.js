@@ -8920,54 +8920,46 @@ var defineWidget = function() {
 				if(connWithProfile != null) connection1 = connWithProfile;
 				new $("<div></div>").connectionAvatar({ dndEnabled : false, connection : connection1}).appendTo(postConnections);
 			}
-			if(i == 0) {
-				self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(postContent);
-				new $("<button title='Edit Post'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-pencil"}}).css("width","23px").click((function() {
-					return function(evt) {
-						evt.stopPropagation();
-						var comp = new $("<div id='edit-post-comp'></div>");
-						comp.insertBefore(selfElement);
-						comp.width(selfElement.width());
-						comp.height(selfElement.height());
-						selfElement.hide();
-						var editPostComp = new $(comp).editPostComp({ content : self.options.content});
-					};
-				})());
-				var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click((function() {
-					return function(evt) {
-						switch( (content.type)[1] ) {
-						case 3:
-							var postTabs = new $("#postSection .tabs").children();
-							var textInput = new $("#textInput_ta");
-							var textTab = postTabs[0];
-							var textContent = js.Boot.__cast(content , ui.model.MessageContent);
-							textInput.val( textContent.text );
-							textTab.click();
-							break;
-						case 2:
-							m3.util.JqueryUtil.alert("share link");
-							break;
-						case 1:
-							m3.util.JqueryUtil.alert("share image");
-							break;
-						case 0:
-							m3.util.JqueryUtil.alert("share sound");
-							break;
-						case 4:
-							m3.util.JqueryUtil.alert("share label");
-							break;
-						}
-					};
-				})());
-				var honeyButton = new $("<button title='honey'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click((function() {
-					return function(evt) {
-						m3.util.JqueryUtil.alert("provide support for content");
-					};
-				})());
-			}
+			if(i == 0) self.buttonBlock = new $("<div class='button-block' ></div>").css("text-align","left").hide().appendTo(postContent);
 			++i;
 			content = content.parent;
 		} while(content != null);
+		new $("<button title='Edit Post'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-pencil"}}).css("width","23px").click(function(evt) {
+			evt.stopPropagation();
+			var comp = new $("<div id='edit-post-comp'></div>");
+			comp.insertBefore(selfElement);
+			comp.width(selfElement.width());
+			comp.height(selfElement.height());
+			selfElement.hide();
+			var editPostComp = new $(comp).editPostComp({ content : self.options.content});
+		});
+		var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click(function(evt) {
+			switch( (content.type)[1] ) {
+			case 3:
+				var postTabs = new $("#postSection .tabs").children();
+				var textInput = new $("#textInput_ta");
+				var textTab = postTabs[0];
+				var textContent = js.Boot.__cast(content , ui.model.MessageContent);
+				textInput.val( textContent.text );
+				textTab.click();
+				break;
+			case 2:
+				m3.util.JqueryUtil.alert("share link");
+				break;
+			case 1:
+				m3.util.JqueryUtil.alert("share image");
+				break;
+			case 0:
+				m3.util.JqueryUtil.alert("share sound");
+				break;
+			case 4:
+				m3.util.JqueryUtil.alert("share label");
+				break;
+			}
+		});
+		var honeyButton = new $("<button title='honey'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click(function(evt) {
+			m3.util.JqueryUtil.alert("provide support for content");
+		});
 		selfElement.height(i * 100);
 		selfElement.append("<hr>");
 	}, _create : function() {

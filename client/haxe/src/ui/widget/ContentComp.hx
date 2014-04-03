@@ -156,60 +156,61 @@ extern class ContentComp extends JQ {
                         }
                         if (i == 0) {
                             self.buttonBlock = new JQ("<div class='button-block' ></div>").css("text-align", "left").hide().appendTo(postContent);
-
-                            new JQ("<button title='Edit Post'></button>")
-                                .appendTo(self.buttonBlock)
-                                .button({text: false,  icons: { primary: "ui-icon-pencil"}})
-                                .css("width", "23px")
-                                .click(function(evt: JQEvent): Void {
-                                    evt.stopPropagation();
-
-                                    var comp = new JQ("<div id='edit-post-comp'></div>");
-                                    comp.insertBefore(selfElement);
-                                    comp.width(selfElement.width());
-                                    comp.height(selfElement.height());
-
-                                    selfElement.hide();
-                                    var editPostComp = new EditPostComp(comp).editPostComp({content: self.options.content});
-                                });
-
-                            var shareButton: JQ = new JQ("<button title='share'></button>")
-                                .appendTo(self.buttonBlock)
-                                .button({text: false,  icons: { primary: "ui-icon-arrowreturnthick-1-e"}})
-                                .css("height", "15px")
-                                .css("width", "23px")
-                                .click(function(evt: JQEvent): Void {
-                                    switch(content.type) {
-                                    case ContentType.TEXT:
-                                        var postTabs = new JQ("#postSection .tabs").children(); 
-                                        var textInput = new JQ("#textInput_ta");
-                                        var textTab = postTabs[0];
-                                        var textContent: MessageContent = cast(content, MessageContent);
-                                        untyped __js__( 'textInput.val( textContent.text )' );
-                                        textTab.click();
-                                    case ContentType.URL:
-                                        JqueryUtil.alert( "share link" );
-                                    case ContentType.IMAGE: 
-                                        JqueryUtil.alert( "share image" );
-                                    case ContentType.AUDIO:
-                                        JqueryUtil.alert( "share sound" );                                
-                                    case ContentType.LABEL:
-                                        JqueryUtil.alert( "share label" );                                
-                                    }
-                                });
-
-                            var honeyButton: JQ = new JQ("<button title='honey'></button>")
-                                .appendTo(self.buttonBlock)
-                                .button({text: false,  icons: { primary: "ui-icon-heart"}})
-                                .css("height", "15px")
-                                .css("width", "23px")
-                                .click(function(evt: JQEvent): Void {
-                                    JqueryUtil.alert( "provide support for content" );
-                                });
                         }
                         ++i;
                         content = content.parent;
                     } while (content != null);
+
+                    new JQ("<button title='Edit Post'></button>")
+                        .appendTo(self.buttonBlock)
+                        .button({text: false,  icons: { primary: "ui-icon-pencil"}})
+                        .css("width", "23px")
+                        .click(function(evt: JQEvent): Void {
+                            evt.stopPropagation();
+
+                            var comp = new JQ("<div id='edit-post-comp'></div>");
+                            comp.insertBefore(selfElement);
+                            comp.width(selfElement.width());
+                            comp.height(selfElement.height());
+
+                            selfElement.hide();
+                            var editPostComp = new EditPostComp(comp).editPostComp({content: self.options.content});
+                        });
+
+                    var shareButton: JQ = new JQ("<button title='share'></button>")
+                        .appendTo(self.buttonBlock)
+                        .button({text: false,  icons: { primary: "ui-icon-arrowreturnthick-1-e"}})
+                        .css("height", "15px")
+                        .css("width", "23px")
+                        .click(function(evt: JQEvent): Void {
+                            switch(content.type) {
+                            case ContentType.TEXT:
+                                var postTabs = new JQ("#postSection .tabs").children(); 
+                                var textInput = new JQ("#textInput_ta");
+                                var textTab = postTabs[0];
+                                var textContent: MessageContent = cast(content, MessageContent);
+                                untyped __js__( 'textInput.val( textContent.text )' );
+                                textTab.click();
+                            case ContentType.URL:
+                                JqueryUtil.alert( "share link" );
+                            case ContentType.IMAGE: 
+                                JqueryUtil.alert( "share image" );
+                            case ContentType.AUDIO:
+                                JqueryUtil.alert( "share sound" );                                
+                            case ContentType.LABEL:
+                                JqueryUtil.alert( "share label" );                                
+                            }
+                        });
+
+                    var honeyButton: JQ = new JQ("<button title='honey'></button>")
+                        .appendTo(self.buttonBlock)
+                        .button({text: false,  icons: { primary: "ui-icon-heart"}})
+                        .css("height", "15px")
+                        .css("width", "23px")
+                        .click(function(evt: JQEvent): Void {
+                            JqueryUtil.alert( "provide support for content" );
+                        });
+
                     selfElement.height(i*100);
                     selfElement.append("<hr>");
                 },
