@@ -186,33 +186,25 @@ extern class ContentComp extends JQ {
                         .css("height", "15px")
                         .css("width", "23px")
                         .click(function(evt: JQEvent): Void {
-                            switch(content.type) {
-                                case ContentType.TEXT:
-                                    var postTabs = new JQ("#postSection .tabs").children(); 
-                                    var textTab = postTabs[0];
-                                    textTab.click();
-                                    var parentContent = new JQ("#parentContent");
-                                    new ContentComp("<div></div>")
-                                        .contentComp({content: content})
-                                        .click(function(evt: JQEvent): Void {})
-                                        .appendTo(parentContent);
-                                    var postInput = new JQ("#postInput");
-                                    var removeBtn = new JQ("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>")
-                                        .appendTo(postInput);
-                                    removeBtn.click(function (evt: JQEvent): Void {
-                                        parentContent.empty().hide();
-                                        removeBtn.remove();
-                                    });
-                                    parentContent.show();
-                                case ContentType.URL:
-                                    JqueryUtil.alert( "share link" );
-                                case ContentType.IMAGE: 
-                                    JqueryUtil.alert( "share image" );
-                                case ContentType.AUDIO:
-                                    JqueryUtil.alert( "share sound" );
-                                case ContentType.LABEL:
-                                    JqueryUtil.alert( "share label" );
+                            var parentContent = new JQ("#parentContent");
+                            if (parentContent.children().length == 0) {
+                                new ContentComp("<div></div>")
+                                    .contentComp({content: content})
+                                    .click(function(evt: JQEvent): Void {})
+                                    .appendTo(parentContent);
+                                var postInput = new JQ("#postInput");
+                                var removeBtn = new JQ("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>")
+                                    .appendTo(postInput);
+                                removeBtn.click(function (evt: JQEvent): Void {
+                                    parentContent.empty().hide();
+                                    removeBtn.remove();
+                                });
+                                parentContent.show();
                             }
+                            var postTabs = new JQ("#postSection .tabs").children(); 
+                            var textTab = postTabs[0];
+                            textTab.click();
+                            new JQ("#textInput_ta").focus();
                         });
 
                     var honeyButton: JQ = new JQ("<button title='honey'></button>")

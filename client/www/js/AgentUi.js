@@ -8935,12 +8935,8 @@ var defineWidget = function() {
 			var editPostComp = new $(comp).editPostComp({ content : self.options.content});
 		});
 		var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click(function(evt) {
-			switch( (content.type)[1] ) {
-			case 3:
-				var postTabs = new $("#postSection .tabs").children();
-				var textTab = postTabs[0];
-				textTab.click();
-				var parentContent = new $("#parentContent");
+			var parentContent = new $("#parentContent");
+			if(parentContent.children().length == 0) {
 				new $("<div></div>").contentComp({ content : content}).click(function(evt1) {
 				}).appendTo(parentContent);
 				var postInput = new $("#postInput");
@@ -8950,20 +8946,11 @@ var defineWidget = function() {
 					removeBtn.remove();
 				});
 				parentContent.show();
-				break;
-			case 2:
-				m3.util.JqueryUtil.alert("share link");
-				break;
-			case 1:
-				m3.util.JqueryUtil.alert("share image");
-				break;
-			case 0:
-				m3.util.JqueryUtil.alert("share sound");
-				break;
-			case 4:
-				m3.util.JqueryUtil.alert("share label");
-				break;
 			}
+			var postTabs = new $("#postSection .tabs").children();
+			var textTab = postTabs[0];
+			textTab.click();
+			new $("#textInput_ta").focus();
 		});
 		var honeyButton = new $("<button title='honey'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click(function(evt) {
 			m3.util.JqueryUtil.alert("provide support for content");
