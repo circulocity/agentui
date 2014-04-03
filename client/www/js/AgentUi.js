@@ -8968,6 +8968,8 @@ var defineWidget = function() {
 			++i;
 			content = content.parent;
 		} while(content != null);
+		selfElement.height(i * 100);
+		selfElement.append("<hr>");
 	}, _create : function() {
 		var self1 = this;
 		var selfElement1 = this.element;

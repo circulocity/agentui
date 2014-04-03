@@ -55,8 +55,8 @@ extern class ContentComp extends JQ {
                     selfElement.empty();
 
                     var content:Content = self.options.content;
-
                     var i: Int = 0;
+                    
                     do {
                         var postWr: JQ = new JQ("<section class='postWr'></section>");
                         selfElement.append(postWr);
@@ -209,7 +209,9 @@ extern class ContentComp extends JQ {
                         }
                         ++i;
                         content = content.parent;
-                    } while (content != null);                    
+                    } while (content != null);
+                    selfElement.height(i*100);
+                    selfElement.append("<hr>");
                 },
                 
                 _create: function(): Void {
