@@ -355,6 +355,7 @@ body {
 		}
 
 		#feed .postActive .postWr img {
+		    height: 100px;
 			max-height: 140px;
 		}
 
