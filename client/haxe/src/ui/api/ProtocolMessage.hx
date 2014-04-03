@@ -74,6 +74,7 @@ class CreateUserRequest extends ProtocolMessage<UserRequestData> {
 			public var email: String;
 			public var password: String;
 			public var jsonBlob: Dynamic;
+                        public var createBTCWallet: Bool;
 		}
 
 class CreateUserError extends ProtocolMessage<PayloadWithReason> {
