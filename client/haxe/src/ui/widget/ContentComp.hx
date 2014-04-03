@@ -197,7 +197,7 @@ extern class ContentComp extends JQ {
                                         .click(function(evt: JQEvent): Void {})
                                         .appendTo(parentContent);
                                     var postInput = new JQ("#postInput");
-                                    var removeBtn = new JQ("<button title='Remove'><span class='ui-button-text'>Remove</span></button>")
+                                    var removeBtn = new JQ("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>")
                                         .appendTo(postInput);
                                     removeBtn.click(function (evt: JQEvent): Void {
                                         parentContent.empty().hide();

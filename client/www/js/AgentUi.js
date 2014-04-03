@@ -8944,7 +8944,7 @@ var defineWidget = function() {
 				new $("<div></div>").contentComp({ content : content}).click(function(evt1) {
 				}).appendTo(parentContent);
 				var postInput = new $("#postInput");
-				var removeBtn = new $("<button title='Remove'><span class='ui-button-text'>Remove</span></button>").appendTo(postInput);
+				var removeBtn = new $("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>").appendTo(postInput);
 				removeBtn.click(function(evt1) {
 					parentContent.empty().hide();
 					removeBtn.remove();
