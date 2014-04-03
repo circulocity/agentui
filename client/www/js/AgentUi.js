@@ -8960,7 +8960,7 @@ var defineWidget = function() {
 		var honeyButton = new $("<button title='honey'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-heart"}}).css("height","15px").css("width","23px").click(function(evt) {
 			m3.util.JqueryUtil.alert("provide support for content");
 		});
-		selfElement.height(i * 100);
+		selfElement.height(i * 100 + 40);
 		selfElement.append("<hr>");
 	}, _create : function() {
 		var self1 = this;

@@ -212,7 +212,7 @@ extern class ContentComp extends JQ {
                             JqueryUtil.alert( "provide support for content" );
                         });
 
-                    selfElement.height(i*100);
+                    selfElement.height(i * 100 + 40);
                     selfElement.append("<hr>");
                 },
                 
