@@ -24,6 +24,7 @@ using ui.widget.LabelComp;
 using ui.widget.ConnectionAvatar;
 using ui.widget.LiveBuildToggle;
 using ui.widget.FilterComp;
+using ui.widget.ContentComp;
 
 
 typedef PostCompOptions = {
@@ -68,6 +69,10 @@ extern class PostComp extends JQ {
                         var msg: MessageContent = new MessageContent();
                         msg.type = contentType;
                         msg.text = value;
+                        var optParent = new JQ("#parentContent").children();
+                        if (optParent[0] != null) {
+                            msg.parent = new ContentComp(optParent).content();
+                        }
 
                         addConnectionsAndLabels(msg);
                         EM.change(EMEvent.NewContentCreated, msg);

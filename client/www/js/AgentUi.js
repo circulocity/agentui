@@ -9766,6 +9766,8 @@ var defineWidget = function() {
 			var msg = new ui.model.MessageContent();
 			msg.type = contentType;
 			msg.text = value;
+			var optParent = new $("#parentContent").children();
+			if(optParent[0] != null) msg.parent = ui.widget.ContentCompHelper.content(new $(optParent));
 			addConnectionsAndLabels(msg);
 			ui.model.EM.change(ui.model.EMEvent.NewContentCreated,msg);
 		};
