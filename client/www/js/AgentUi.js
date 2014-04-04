@@ -9899,7 +9899,7 @@ var defineWidget = function() {
 			});
 		};
 		var parentContent = new $("<div style='display:none' id='parentContent'></div>").appendTo(selfElement);
-		var removeBtn = new $("<button id='removeBtn' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>").appendTo(selfElement).button().hide();
+		var removeBtn = new $("<button id='removeBtn' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>Remove</button>").appendTo(selfElement).button().hide();
 		removeBtn.click(function(evt) {
 			parentContent.empty().hide();
 			removeBtn.hide();
