@@ -312,7 +312,7 @@ extern class PostComp extends JQ {
                     var parentContent = new JQ("<div style='display:none' id='parentContent'></div>")
                         .appendTo(selfElement);
 
-                    var removeBtn = new JQ("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>")
+                    var removeBtn = new JQ("<button id='removeBtn' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>")
                         .appendTo(selfElement)
                         .button()
                         .hide();
