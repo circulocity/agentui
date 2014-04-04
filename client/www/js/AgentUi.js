@@ -8958,13 +8958,11 @@ var defineWidget = function() {
 		selfElement1.addClass("contentComp post container shadow " + m3.widget.Widgets.getWidgetClasses());
 		selfElement1.click(function(evt) {
 			var parentContent = new $("#parentContent");
-			if(parentContent.children().length == 0) {
-				if(!selfElement1.hasClass("postActive")) {
-					new $(".postActive .button-block").toggle();
-					new $(".postActive").toggleClass("postActive");
-				}
-				self1.toggleActive();
+			if(!selfElement1.hasClass("postActive")) {
+				new $(".postActive .button-block").toggle();
+				new $(".postActive").toggleClass("postActive");
 			}
+			if(parentContent.children().length == 0) self1.toggleActive();
 		});
 		self1._createWidgets(selfElement1,self1);
 		ui.model.EM.addListener(ui.model.EMEvent.EditContentClosed,new ui.model.EMListener(function(content) {
