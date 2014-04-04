@@ -8937,6 +8937,8 @@ var defineWidget = function() {
 		var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click(function(evt) {
 			var parentContent = new $("#parentContent");
 			if(parentContent.children().length == 0) {
+				new $(".postActive .button-block").toggle();
+				new $(".postActive").toggleClass("postActive");
 				new $("<div></div>").contentComp({ content : content}).appendTo(parentContent);
 				var postInput = new $("#postInput");
 				new $("#removeBtn").show();
@@ -8957,11 +8959,11 @@ var defineWidget = function() {
 		if(!selfElement1["is"]("div")) throw new m3.exception.Exception("Root of ContentComp must be a div element");
 		selfElement1.addClass("contentComp post container shadow " + m3.widget.Widgets.getWidgetClasses());
 		selfElement1.click(function(evt) {
-			var parentContent = new $("#parentContent");
 			if(!selfElement1.hasClass("postActive")) {
 				new $(".postActive .button-block").toggle();
 				new $(".postActive").toggleClass("postActive");
 			}
+			var parentContent = new $("#parentContent");
 			if(parentContent.children().length == 0) self1.toggleActive();
 		});
 		self1._createWidgets(selfElement1,self1);

@@ -188,6 +188,8 @@ extern class ContentComp extends JQ {
                         .click(function(evt: JQEvent): Void {
                             var parentContent = new JQ("#parentContent");
                             if (parentContent.children().length == 0) {
+                                new JQ(".postActive .button-block").toggle();
+                                new JQ(".postActive").toggleClass("postActive");
                                 new ContentComp("<div></div>")
                                     .contentComp({content: content})
                                     .appendTo(parentContent);
@@ -222,11 +224,11 @@ extern class ContentComp extends JQ {
 
                     selfElement.addClass("contentComp post container shadow " + Widgets.getWidgetClasses());
                     selfElement.click(function(evt:js.JQuery.JqEvent){
-                        var parentContent = new JQ("#parentContent");
                         if (!selfElement.hasClass("postActive")) {
                             new JQ(".postActive .button-block").toggle();
                             new JQ(".postActive").toggleClass("postActive");
                         }
+                        var parentContent = new JQ("#parentContent");
                         if (parentContent.children().length == 0) {
                             self.toggleActive();
                         }
