@@ -190,15 +190,9 @@ extern class ContentComp extends JQ {
                             if (parentContent.children().length == 0) {
                                 new ContentComp("<div></div>")
                                     .contentComp({content: content})
-                                    .click(function(evt: JQEvent): Void {})
                                     .appendTo(parentContent);
                                 var postInput = new JQ("#postInput");
-                                var removeBtn = new JQ("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>")
-                                    .appendTo(postInput);
-                                removeBtn.click(function (evt: JQEvent): Void {
-                                    parentContent.empty().hide();
-                                    removeBtn.remove();
-                                });
+                                new JQ("#removeBtn").show();
                                 parentContent.show();
                             }
                             var postTabs = new JQ("#postSection .tabs").children(); 
@@ -228,11 +222,14 @@ extern class ContentComp extends JQ {
 
                     selfElement.addClass("contentComp post container shadow " + Widgets.getWidgetClasses());
                     selfElement.click(function(evt:js.JQuery.JqEvent){
-                        if (!selfElement.hasClass("postActive")) {
-                            new JQ(".postActive .button-block").toggle();
-                            new JQ(".postActive").toggleClass("postActive");
+                        var parentContent = new JQ("#parentContent");
+                        if (parentContent.children().length == 0) {
+                            if (!selfElement.hasClass("postActive")) {
+                                new JQ(".postActive .button-block").toggle();
+                                new JQ(".postActive").toggleClass("postActive");
+                            }
+                            self.toggleActive();
                         }
-                        self.toggleActive();
                     });
 
                     self._createWidgets(selfElement, self);

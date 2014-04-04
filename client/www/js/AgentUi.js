@@ -8937,14 +8937,9 @@ var defineWidget = function() {
 		var shareButton = new $("<button title='share'></button>").appendTo(self.buttonBlock).button({ text : false, icons : { primary : "ui-icon-arrowreturnthick-1-e"}}).css("height","15px").css("width","23px").click(function(evt) {
 			var parentContent = new $("#parentContent");
 			if(parentContent.children().length == 0) {
-				new $("<div></div>").contentComp({ content : content}).click(function(evt1) {
-				}).appendTo(parentContent);
+				new $("<div></div>").contentComp({ content : content}).appendTo(parentContent);
 				var postInput = new $("#postInput");
-				var removeBtn = new $("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>").appendTo(postInput);
-				removeBtn.click(function(evt1) {
-					parentContent.empty().hide();
-					removeBtn.remove();
-				});
+				new $("#removeBtn").show();
 				parentContent.show();
 			}
 			var postTabs = new $("#postSection .tabs").children();
@@ -8962,11 +8957,14 @@ var defineWidget = function() {
 		if(!selfElement1["is"]("div")) throw new m3.exception.Exception("Root of ContentComp must be a div element");
 		selfElement1.addClass("contentComp post container shadow " + m3.widget.Widgets.getWidgetClasses());
 		selfElement1.click(function(evt) {
-			if(!selfElement1.hasClass("postActive")) {
-				new $(".postActive .button-block").toggle();
-				new $(".postActive").toggleClass("postActive");
+			var parentContent = new $("#parentContent");
+			if(parentContent.children().length == 0) {
+				if(!selfElement1.hasClass("postActive")) {
+					new $(".postActive .button-block").toggle();
+					new $(".postActive").toggleClass("postActive");
+				}
+				self1.toggleActive();
 			}
-			self1.toggleActive();
 		});
 		self1._createWidgets(selfElement1,self1);
 		ui.model.EM.addListener(ui.model.EMEvent.EditContentClosed,new ui.model.EMListener(function(content) {
@@ -9901,6 +9899,11 @@ var defineWidget = function() {
 			});
 		};
 		var parentContent = new $("<div style='display:none' id='parentContent'></div>").appendTo(selfElement);
+		var removeBtn = new $("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>").appendTo(selfElement).button().hide();
+		removeBtn.click(function(evt) {
+			parentContent.empty().hide();
+			removeBtn.hide();
+		});
 		var postButton = new $("<button>Post</button>").appendTo(selfElement).button().click(function(evt) {
 			if(textInput.isVisible()) {
 				var ta1 = new $("#textInput_ta");
@@ -9917,6 +9920,7 @@ var defineWidget = function() {
 				doPost(evt,ui.model.ContentType.LABEL,value);
 				labelArea.empty();
 			}
+			removeBtn.hide();
 			parentContent.empty().hide();
 		});
 	}, destroy : function() {

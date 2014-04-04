@@ -312,6 +312,16 @@ extern class PostComp extends JQ {
                     var parentContent = new JQ("<div style='display:none' id='parentContent'></div>")
                         .appendTo(selfElement);
 
+                    var removeBtn = new JQ("<button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' title='Remove'><span class='ui-button-text'>Remove</span></button>")
+                        .appendTo(selfElement)
+                        .button()
+                        .hide();
+                    removeBtn.click(function (evt: JQEvent): Void {
+                        parentContent.empty().hide();
+                        removeBtn.hide();
+                    });
+                    
+
                     var postButton: JQ = new JQ("<button>Post</button>")
                         .appendTo(selfElement)
                         .button()
@@ -333,6 +343,7 @@ extern class PostComp extends JQ {
                                 doPost(evt, ContentType.LABEL, value);
                                 labelArea.empty();
                             }
+                            removeBtn.hide();
                             parentContent.empty().hide();
                         });
                 },
