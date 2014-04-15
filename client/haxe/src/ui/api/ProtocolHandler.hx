@@ -128,6 +128,10 @@ class ProtocolHandler {
     		})
         );
 
+        EM.addListener(EMEvent.SUPPORT_REQUEST, new EMListener(function(support: Support):Void{
+        		issueSupport( support );
+        }));
+
         EM.addListener(EMEvent.INTRODUCTION_REQUEST, new EMListener(function(intro: Introduction):Void{
         		beginIntroduction(intro);
         }));
@@ -226,6 +230,15 @@ class ProtocolHandler {
         	});
         processHash.set(MsgType.getAliasLabelsError, function(data: Dynamic){
         		AppContext.LOGGER.error("getAliasLabelsError was received from the server");
+        	});
+
+        processHash.set(MsgType.issueSupportResponse, function(data: Dynamic){
+        		AppContext.LOGGER.debug("issueSupportResponse was received from the server");
+        		EM.change(EMEvent.SUPPORT_RESPONSE);
+        	});
+        processHash.set(MsgType.supportIssuedNotification, function(data: Dynamic){
+        		AppContext.LOGGER.debug("issueSupportResponse was received from the server");
+        		EM.change(EMEvent.SUPPORT_NOTIFICATION);
         	});
 
         processHash.set(MsgType.introductionNotification, function(data: Dynamic){
@@ -465,6 +478,7 @@ class ProtocolHandler {
 		request.contentImpl.jsonBlob = {};
 		request.contentImpl.jsonBlob.name = newUser.name;
                 request.contentImpl.createBTCWallet = newUser.createBTCWallet;
+                request.contentImpl.btcWalletAddress = newUser.btcWalletAddress;
 		try {
 			new StandardRequest(request, function(data: Dynamic, textStatus: String, jqXHR: JQXHR){
 					if(data.msgType == MsgType.createUserResponse) {
@@ -671,6 +685,21 @@ class ProtocolHandler {
 			AppContext.LOGGER.error("Error executing getAliasLabels", ex);
 		}
 	}
+    
+        public function issueSupport( support : Support ) : Void {
+               var request : IssueSupportRequest = new IssueSupportRequest();
+               request.contentImpl.splix = support.splix;
+               request.contentImpl.cnxn = support.cnxn;
+               try {
+		   //we don't expect anything back here
+		   new StandardRequest(request, function(data: Dynamic, textStatus: String, jqXHR: JQXHR){
+		       AppContext.LOGGER.debug("issueSupportRequest successfully submitted");
+		   }).start({dataType: "text"});
+	       } catch (err: Dynamic) {
+		   var ex: Exception = Logga.getExceptionInst(err);
+		   AppContext.LOGGER.error("Error executing IssueSupportRequest", ex);
+	       }
+        }
 
 	public function beginIntroduction(intro: Introduction): Void {
 		var request: BeginIntroductionRequest = new BeginIntroductionRequest();

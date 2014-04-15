@@ -210,6 +210,8 @@ extern class ContentComp extends JQ {
                         .css("width", "23px")
                         .click(function(evt: JQEvent): Void {
                             JqueryUtil.alert( "provide support for content" );
+                            var support : Support = new Support();
+                            EM.change(EMEvent.SUPPORT_REQUEST, support);
                         });
 
                     selfElement.height(i * 100 + 40);

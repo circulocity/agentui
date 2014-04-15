@@ -22,10 +22,12 @@ typedef NewUserDialogWidgetDef = {
 	@:optional var input_un: JQ;
 	@:optional var input_pw: JQ;
 	@:optional var input_em: JQ;
+        @:optional var input_wallet: JQ;
 	@:optional var placeholder_n: JQ;
 	@:optional var placeholder_un: JQ;
 	@:optional var placeholder_pw: JQ;
 	@:optional var placeholder_em: JQ;
+        @:optional var placeholder_btc_wallet: JQ;
         @:optional var btcWalletChk: JQ;
 	
 	var initialized: Bool;
@@ -69,6 +71,7 @@ extern class NewUserDialog extends JQ {
                                 var pwRow : JQ = new JQ("<div style='display: table-row'/>").appendTo( newUserTable );
 //                                var pwRow : JQ = new JQ("<tr/>").appendTo( newUserTable );
 		        	var btcCheckBoxRow: JQ = new JQ("<div style='display: table-row'/>").appendTo( newUserTable );
+                                var btcWalletInputRow: JQ = new JQ("<div style='display: table-row'/>").appendTo( newUserTable );
 //		        	var btcCheckBoxRow: JQ = new JQ("<tr/>").appendTo( newUserTable );
 
                                 nameRow.append("<div class='labelDiv' style='display: table-cell'><label id='n_label' for='newu_n'>Name</label></div>");
@@ -92,20 +95,46 @@ extern class NewUserDialog extends JQ {
                                 self.input_pw = new JQ("<input type='password' id='newu_pw' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'/>").appendTo( pwInputCell );
 		        	self.placeholder_pw = new JQ("<input id='login_pw_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Password'/>").appendTo( pwInputCell );
 
-                                
-                                var btcEmptyCheckBoxCell: JQ = new JQ("<div style='display: table-cell'/>").appendTo( btcCheckBoxRow );
-                                var btcCheckBoxCell: JQ = new JQ("<div style='display: table-cell'/>").appendTo( btcCheckBoxRow );
-//                                var btcCheckBoxCell: JQ = new JQ("<td/>").appendTo( btcCheckBoxRow );
-                                var btcLabeledInput = new JQ("<label><input type='checkbox' id='btcCheck'>Create BTC Wallet?</label>").appendTo( btcCheckBoxCell );
-                                self.btcWalletChk = new JQ("#btcCheck");
-//                                btcCheckBoxCell.append( "<span>Create BTC Wallet?</span>" );
-//                                btcCheckBoxRow.append( "<td><label for='btcCheck'>Create BTC Wallet?</label></td>" );
-		        	
-		        	newUserTable.children("input").keypress(function(evt: JQEvent): Void {
+                                newUserTable.children("input").keypress(function(evt: JQEvent): Void {
 		        			if(evt.keyCode == 13) {
 		        				self._createNewUser();
 		        			}
 		        		});                                
+
+                                var btcEmptyCheckBoxCell: JQ = new JQ("<div style='display: table-cell'/>").appendTo( btcCheckBoxRow );
+                                var btcCheckBoxCell: JQ = new JQ("<div style='display: table-cell'/>").appendTo( btcCheckBoxRow );
+                                var btcLabeledInput = new JQ("<label>Create BTC Wallet?</label>").appendTo( btcCheckBoxCell );
+                                var btcCheckBox = new JQ("<input type='checkbox' id='btcCheck' class='ui-state-active ui-widget-content'/>");
+
+                                self.btcWalletChk = btcCheckBox;
+                                btcLabeledInput.prepend( btcCheckBox );
+                                self.btcWalletChk.prop( "checked", true );
+                                
+                                btcWalletInputRow.append("<div class='labelDiv' style='display: table-cell'><label id='btc_wallet_label' for='newu_btc_wallet'>Wallet</label></div>");
+                                var btcWalletInputCell : JQ = new JQ("<div style='display: table-cell'/>").appendTo( btcWalletInputRow );
+                                self.input_wallet = new JQ("<input type='password' id='newu_btc_wallet' style='display: none;' class='ui-corner-all ui-state-active ui-widget-content'/>").appendTo( btcWalletInputCell );
+                                self.placeholder_btc_wallet = new JQ("<input id='login_btc_wallet_f' class='placeholder ui-corner-all ui-widget-content' value='Please enter Wallet'/>").appendTo( btcWalletInputCell );
+                                btcWalletInputRow.hide();
+                                btcWalletInputCell.hide();
+                                self.input_wallet.hide();
+                                self.placeholder_btc_wallet.hide();
+
+                                self.btcWalletChk.click(function() {
+                                    AppContext.LOGGER.debug("in checkbox change");
+                                    if ( self.btcWalletChk.is( ":checked" ) ) {
+                                        btcWalletInputRow.hide();
+                                        btcWalletInputCell.hide();
+                                        self.input_wallet.hide();
+                                        self.placeholder_btc_wallet.hide();
+                                    }
+                                    else {
+                                        btcWalletInputRow.show();
+                                        btcWalletInputCell.show();
+                                        //self.input_wallet.show();
+                                        self.placeholder_btc_wallet.show();
+                                        self.input_wallet.focus();
+                                    }
+                                } );
 
 		        	self.placeholder_n.focus(function(evt: JQEvent): Void {
 		        			self.placeholder_n.hide();
@@ -155,6 +184,18 @@ extern class NewUserDialog extends JQ {
 		        			}
 		        		});
 
+                                self.placeholder_btc_wallet.focus(function(evt: JQEvent): Void {
+		        			self.placeholder_btc_wallet.hide();
+		        			self.input_wallet.show().focus();
+		        		});
+
+		        	self.input_wallet.blur(function(evt: JQEvent): Void {
+		        			if(self.input_wallet.val().isBlank()) {
+			        			self.placeholder_btc_wallet.show();
+			        			self.input_wallet.hide();
+		        			}
+		        		});
+
 		        	EM.addListener(EMEvent.USER, new EMListener(function(user: User): Void {
 	        				self._setUser(user);
 		        		},"NewUserDialog-User")
@@ -190,7 +231,14 @@ extern class NewUserDialog extends JQ {
     					valid = false;
     				}
                                 newUser.createBTCWallet = self.btcWalletChk.is( ':checked' );
-    				if(!valid) return;
+    				if ( !self.btcWalletChk.is( ':checked' )) {
+                                    newUser.btcWalletAddress = self.input_wallet.val();
+                                    if (newUser.btcWalletAddress.isBlank()) {
+                                        self.placeholder_n.addClass("ui-state-error");
+    					valid = false;
+                                    }
+                                }
+                                if(!valid) return;
     				selfElement.find(".ui-state-error").removeClass("ui-state-error");
     				EM.change(EMEvent.USER_CREATE, newUser);
 

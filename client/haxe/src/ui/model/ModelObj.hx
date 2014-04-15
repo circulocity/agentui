@@ -454,10 +454,16 @@ class NewUser extends ModelObj {
     public var email: String;
     public var pwd: String;
     public var createBTCWallet : Bool;
+    public var btcWalletAddress : String;
 
     public function new () {
         super();
     }
+}
+
+class Support extends ModelObj {
+    public var cnxn: Connection;
+    public var splix: Float;
 }
 
 class Introduction extends ModelObj {
@@ -478,5 +484,27 @@ class IntroductionConfirmation extends ModelObj {
         this.accepted       = accepted;
         this.introSessionId = introSessionId;
         this.correlationId  = correlationId;
+    }
+}
+
+class VerificationClaimant extends ModelObj {
+    public var relyingParty: Connection;
+    public var verifier: Connection;
+
+    public var claim: String;
+}
+
+class VerificationConfirmation extends ModelObj {
+    public var accepted: Bool;
+    public var sessionId: String;
+    public var correlationId: String;
+    public var evidence: String;
+
+    public function new(accepted:Bool, sessionId:String, correlationId:String, evidence:String) {
+        super();
+        this.accepted       = accepted;
+        this.sessionId      = sessionId;
+        this.correlationId  = correlationId;
+        this.evidence       = evidence;
     }
 }

@@ -75,6 +75,7 @@ class CreateUserRequest extends ProtocolMessage<UserRequestData> {
 			public var password: String;
 			public var jsonBlob: Dynamic;
                         public var createBTCWallet: Bool;
+                        public var btcWalletAddress: String;
 		}
 
 class CreateUserError extends ProtocolMessage<PayloadWithReason> {
@@ -457,6 +458,19 @@ class UpdateAliasLabelsResponse extends ProtocolMessage<PayloadWithSessionURI> {
 	}
 }
 
+/**
+   Support
+**/
+class IssueSupportRequest extends ProtocolMessage<IssueSupportRequestData> {
+    public function new() {
+	super(MsgType.issueSupportRequest, IssueSupportRequestData);
+    }
+}
+    class IssueSupportRequestData extends PayloadWithSessionURI {
+		public var splix: Float;
+	        public var cnxn: Connection;
+	}
+
 /** 
 	Introductions 
 **/
@@ -634,6 +648,10 @@ enum MsgType {
 	addAliasLabelsResponse;
 	updateAliasLabelsRequest;
 	updateAliasLabelsResponse;
+
+        issueSupportRequest;
+        issueSupportResponse;
+        supportIssuedNotification;
 
 	beginIntroductionRequest;
 	beginIntroductionResponse;

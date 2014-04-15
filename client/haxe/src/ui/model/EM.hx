@@ -118,6 +118,10 @@ enum EMEvent {
 	DeleteLabels;
 	UPDATE_LABELS; //occurs after a CreateLabel or DeleteLabels event, and should be called once the model has been updated
 
+        SUPPORT_REQUEST;
+        SUPPORT_NOTIFICATION;
+        SUPPORT_RESPONSE;
+
 	INTRODUCTION_REQUEST;
 	INTRODUCTION_RESPONSE;
 	INTRODUCTION_CONFIRMATION;

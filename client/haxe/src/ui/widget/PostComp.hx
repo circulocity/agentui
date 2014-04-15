@@ -76,22 +76,6 @@ extern class PostComp extends JQ {
 
                         addConnectionsAndLabels(msg);
                         EM.change(EMEvent.NewContentCreated, msg);
-
-//                        var root: Node = new JQ(".rootToggle").data("getNode")();
-//		        root.type = "ROOT";
-
-//                        var liveToggle : LiveBuildToggle = new LiveBuildToggle('.liveBuildToggle');
-                        
-//                        var filter: FilterComp = cast(new JQ("#filter"), FilterComp);
-//                        filter.fireFilter();
-
-//                         if(!liveToggle.isLive()) {
-//                             AppContext.LOGGER.debug( "not live; running FILTER_CHANGE" );
-// 			    EM.change(EMEvent.FILTER_CHANGE, new Filter(root));
-// 			} else {
-//                             AppContext.LOGGER.debug( "live; running FILTER_RUN" );
-// 		            EM.change(EMEvent.FILTER_RUN, new Filter(root));
-// 		        }
                     };
 
                     var doPostForElement: JQEvent->ContentType->JQ->Void = function(evt: JQEvent, contentType: ContentType, ele:JQ): Void {
