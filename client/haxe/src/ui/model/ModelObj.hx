@@ -463,6 +463,7 @@ class NewUser extends ModelObj {
 
 class Support extends ModelObj {
     public var cnxn: Connection;
+    public var postUUID : String;
     public var splix: Float;
 }
 

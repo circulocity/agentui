@@ -211,6 +211,13 @@ extern class ContentComp extends JQ {
                         .click(function(evt: JQEvent): Void {
                             JqueryUtil.alert( "provide support for content" );
                             var support : Support = new Support();
+                            var connection: Connection = AppContext.USER.currentAlias.connectionSet.getElementComplex(content.creator);
+                            if(connection == null) {
+                                connection = AppContext.USER.currentAlias.asConnection();
+                            }
+                            support.cnxn = connection;
+                            support.postUUID = content.uid;
+                            support.splix = 1.0;
                             EM.change(EMEvent.SUPPORT_REQUEST, support);
                         });
 

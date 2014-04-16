@@ -690,6 +690,7 @@ class ProtocolHandler {
                var request : IssueSupportRequest = new IssueSupportRequest();
                request.contentImpl.splix = support.splix;
                request.contentImpl.cnxn = support.cnxn;
+               request.contentImpl.postUUID = support.postUUID;
                try {
 		   //we don't expect anything back here
 		   new StandardRequest(request, function(data: Dynamic, textStatus: String, jqXHR: JQXHR){

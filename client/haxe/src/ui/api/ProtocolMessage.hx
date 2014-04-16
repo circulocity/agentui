@@ -469,6 +469,7 @@ class IssueSupportRequest extends ProtocolMessage<IssueSupportRequestData> {
     class IssueSupportRequestData extends PayloadWithSessionURI {
 		public var splix: Float;
 	        public var cnxn: Connection;
+                public var postUUID: String;
 	}
 
 /** 
