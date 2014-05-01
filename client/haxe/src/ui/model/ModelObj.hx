@@ -263,6 +263,7 @@ class Connection extends ModelObj implements Filterable {
     public var source: String;
     public var target: String;
     public var label: String;
+    public var cnxnType: String;
 
     @:transient public var profile: UserData;
 
@@ -292,7 +293,8 @@ class Connection extends ModelObj implements Filterable {
         return 
             this.source == c.source &&
             this.target == c.target &&
-            this.label == c.label;
+            this.label == c.label &&
+            this.cnxnType == c.cnxnType;
     }
 }
 
