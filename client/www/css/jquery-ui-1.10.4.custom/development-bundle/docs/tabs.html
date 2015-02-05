@@ -50,6 +50,8 @@
 <div><a href="#method-option">option</a></div>
 <div><a href="#method-refresh">refresh</a></div>
 <div><a href="#method-widget">widget</a></div>
+<br/><h3>Extension Points</h3>
+<div><a href="#method-_getList">_getList</a></div>
 </div>
 <div class="quick-nav-section">
 <h3>Events</h3>
@@ -958,6 +960,48 @@
 				</td>
 				<td class="code">
 					<pre><div class="container"><div class="line"><code><span class="keyword">var</span> widget = $( <span class="string">".selector"</span> ).tabs( <span class="string">"widget"</span> );</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</div>
+</div></div></section><section id="extension-points"><header><h2>Extension Points</h2></header><p>
+				The tabs widget is built with the
+				<a href="http://api.jqueryui.com/jQuery.widget/">widget factory</a> and can be
+				extended. When extending widgets, you have the ability to override or add to the
+				behavior of existing methods. The following methods are provided as extension points
+				with the same API stability as the <a href="#methods">plugin methods</a> listed
+				above. For more information on widget extensions, see
+				<a href="http://learn.jquery.com/jquery-ui/widget-factory/extending-widgets/">Extending
+				Widgets with the Widget Factory</a>.
+			</p>
+<hr/>
+<div id="method-_getList"><div class="api-item first-item">
+<h3>_getList()<span class="returns">Returns: <a href="http://api.jquery.com/Types/#jQuery">jQuery</a></span>
+</h3>
+<div>Determine which list should be converted to tabs. By default the first descendant list is used.</div>
+<ul><li><div class="null-signature">This method does not accept any arguments.</div></li></ul>
+<div>
+<strong>Code examples:</strong><p>Use the list with the class <code>my-tabs</code> or fall back to the default implementation.</p>
+<div class="syntaxhighlighter javascript nogutter">
+	<table>
+		<tbody>
+			<tr>
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+				</td>
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>_getList: <span class="keyword">function</span>() {</code></div></div><div class="container"><div class="line"><code>  <span class="keyword">var</span> list = <span class="keyword">this</span>.element.find( <span class="string">".my-tabs"</span> );</code></div></div><div class="container"><div class="line"><code>  <span class="keyword">return</span> list.length ? list.eq( <span class="number">0</span> ) : <span class="keyword">this</span>._super();</code></div></div><div class="container"><div class="line"><code>}</code></div></div></pre>
 				</td>
 			</tr>
 		</tbody>

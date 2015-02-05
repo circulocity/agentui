@@ -891,7 +891,7 @@
 <h3>_renderMenu( ul, items )<span class="returns">Returns: <a href="http://api.jquery.com/Types/#jQuery">jQuery</a> (<a href="http://learn.jquery.com/jquery-ui/widget-factory/widget-method-invocation/">plugin only</a>)</span>
 </h3>
 <div>
-				Method that controls building the widget's menu. The method is passed an empty <code>&lt;ul&gt;</code> and an array of items that match the user typed term. Creation of the individual <code>&lt;li&gt;</code> elements should be delegated to <code>_renderItemData()</code>.
+				Method that controls building the widget's menu. The method is passed an empty <code>&lt;ul&gt;</code> and an array of items that match the user typed term. Creation of the individual <code>&lt;li&gt;</code> elements should be delegated to <code>_renderItemData()</code>, which in turn delegates to the <a href="#method-_renderItem"><code>_renderItem()</code></a> extension point.
 			</div>
 <ul>
 <li>
